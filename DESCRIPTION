@@ -14,4 +14,3 @@ Suggests:
     testthat,
     knitr
 Config/Needs/website: rmarkdown
-VignetteBuilder: knitr
