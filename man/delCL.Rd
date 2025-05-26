@@ -10,7 +10,7 @@ delCL(data)
 \item{data}{is an object of the factor class}
 }
 \value{
-{data} Returns the input object, now with empty category levels removed
+\item{data}{Returns the input object, now with empty category levels removed}
 }
 \description{
 This function removes unobserved category levels before applying multivariate techniques.

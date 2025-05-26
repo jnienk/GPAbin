@@ -5,7 +5,7 @@
 #' @param data is an object of the factor class
 #'
 #' @return
-#' {data} Returns the input object, now with empty category levels removed
+#' \item{data}{Returns the input object, now with empty category levels removed}
 #' @export
 #'
 delCL <- function(data)

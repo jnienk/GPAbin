@@ -11,10 +11,12 @@ use_mit_license()
 #Rbuild file will ignore the vignette
 use_article("GPAbin", "Getting started with GPAbin")
 
-build_vignettes()
-
 document()
 
 install()
 check()
-build_vignettes()
+#build_vignettes() #causing problems
+
+load_all()
+
+
