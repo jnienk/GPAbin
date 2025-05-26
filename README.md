@@ -1,15 +1,15 @@
-# GPAbin
-GPAbin biplots to align multidimensional visualisations from multiple imputations.
+# **GPAbin**
 
-In order to effortlessly apply the presented methodology in "GPAbin: unifying visualizations of multiple mputations for missing values" in **Communications in Statistics: Simulation and Computation**. 52:6, 2666-2685. (https://doi.org/10.1080/03610918.2021.1914089)
+## Getting started
 
-Authors: J Nienkemper-Swanepoel, NJ le Roux & S Gardner-Lubbe
-Centre for Multi-dimensional data visualisation (MuViSU), Department of Statistics and Actuarial Science, Stellenbosch University.
+The package is not available on CRAN yet. To install the package from Github and load using
 
-To start:
-Open Code > GPAbincalls.R
-Run the function calls in line 30-63.
+```
+remotes::install_github("jnienkie/GPAbin")
+library(GPAbin)
+```
 
-Users have the option of utilising an example data set, *comp.dat.txt*, which is a fully observed simulated data set (uniform distribution n=100, p=5). This is accompanied by *miss.dat.txt* which is the incomplete version of *comp.dat.txt* with 10% missing values inserted with a missing at random mechanism.
+## About the name
 
-Alternatively, incomplete categorical multivariate data sets may be inserted in the place of object *miss.dat*.
+GPA - Generalised orthogonal Procrustes analysis
+-bin - Ru**bin's** rules.
