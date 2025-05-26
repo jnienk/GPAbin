@@ -1,4 +1,6 @@
 ^GPAbin\.Rproj$
 ^\.Rproj\.user$
 ^LICENSE\.md$
-^vignettes/articles$
+^inst$
+^doc$
+^Meta$

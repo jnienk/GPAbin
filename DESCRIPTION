@@ -1,5 +1,5 @@
 Package: GPAbin
-Title: This package unifies multiple biplot visualisations into a single display
+Title: Unifying multiple biplot visualisations into a single display
 Version: 0.0.0.9000
 Authors@R: 
     person("Johané", "Nienkemper-Swanepoel", , "nienkemperj@sun.ac.za", role = c("aut", "cre"), 
@@ -11,7 +11,7 @@ Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.2
 Depends: R (>= 4.0.0)
 Suggests: 
-    testthat (>= 4.0.0)
-Config/testthat/edition: 3
+    testthat,
+    knitr
 Config/Needs/website: rmarkdown
-
+VignetteBuilder: knitr

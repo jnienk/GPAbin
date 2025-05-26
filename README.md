@@ -5,7 +5,7 @@
 The package is not available on CRAN yet. To install the package from Github and load using
 
 ```
-remotes::install_github("jnienkie/GPAbin")
+remotes::install_github("jnienk/GPAbin")
 library(GPAbin)
 ```
 
