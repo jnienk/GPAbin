@@ -1,5 +1,5 @@
 ### JNS
-### GPAbin functions
+### GPAbin package functions
 ### ========================================================
 
 .onAttach <- function(libname,pkgname){
@@ -26,32 +26,30 @@ missmi <- function(data)
 {
   #think about separating continuous and categorical data for applications of PCA GPAbin
     
-    if(is.data.frame(data[[1]]))
+    if(!is.data.frame(data))
     {
       X <- lapply(data, apply, 2, as.factor) #ensuring all columns are factors
-      
       m <- length(X)
-      n <- nrow(X[[1]])
-      p <- ncol(X[[1]])
+      n <- nrow(X[[1]]) #assuming all lists will be the same size
+      p <- ncol(X[[1]]) #assuming all lists will be the same size
       miss_pct <- NULL
       print(paste("There are", m, "imputations / variations of your data available."))
     }
     else
     {
-      
-      #X <- apply(data, 2, as.factor) #ensuring all columns are factors
       X <- data
       n <- nrow(X)
       p <- ncol(X)
-      miss_pct <- colSums(is.na(X))/nrow(X)*100
+      miss_pct <- colSums(is.na(X))/n*100
       miss_over <- sum(miss_pct)/p
       m <- NULL
-      if(sum(miss_pct==0) && is.null(m)) stop("The data is complete.")
-      print(paste("Missing data with a total of ", round(miss_over,0), "% missing values."))
+      if((miss_over==0) && is.null(m)) stop("The data is complete.")
+      print(paste("Missing data with a total of", round(miss_over,0), "% missing values."))
     }
 
-  object <- list(X = X, imputations = m, n = n, p=p, miss_pct = miss_pct)
-  class(object) <- "missmi"
+  missbp <- list(X = X, m = m, n = n, p=p, miss_pct = miss_pct)
+
+  class(missbp) <- "missmi"
   
-  object
+  missbp
 }
