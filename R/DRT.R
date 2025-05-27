@@ -38,7 +38,7 @@ DRT <- function(missbp, method=c("MCA"))
   
   missbp$Z <- Z.list
   missbp$CLP <- CLP.list
-  missbp$levels <- lvls.list
+  missbp$lvls <- lvls.list
   
   missbp
   }

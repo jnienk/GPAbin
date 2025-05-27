@@ -134,3 +134,77 @@ GPA <- function(Xk, G.target=NULL, iter=500, eps=0.001)
   list(Xk.F=Xk.F, sk.F=sk.F, Qk.F=Qk.F, Gmat=Gmat, sum.sq=sum.sq)
 }
 ###################################################################################
+
+myOPA <- function(missbp, compdat, centring = TRUE)
+{
+  ###################################################################################
+  ###################################################################################
+  #Information
+  #This function performs Orthogonal Procrustes Analysis on centred data
+  ###################################################################################
+  #Arguments
+  #"target" target configuration (complete simulated configuration when available)
+  #"testee" testee configuration
+  #"centring" by centring the data before OPA, translation step is redundant
+  ###################################################################################
+  #Value
+  #"X.new" is the updated testee configuration
+  #"ProStat" is the Procrustes Statistic
+  #"Res.SS" is the residual sum of squares (Gower & Dijksterhuis 2004)
+  #"Tot.SS" is the total sum of squares (Gower & Dijksterhuis 2004)
+  #"Fitted.SS" is the fitted sum of squares (Gower & Dijksterhuis 2004)
+  ###################################################################################
+  ###################################################################################
+  #creating coordinates of complete set
+  #DRT on complete data
+  temp <- ca::mjca(compdat,lambda="indicator")
+  compZ <-temp[[16]]
+  compCLP <- temp[[23]]
+  complvls <- temp[[6]]
+  target <- rbind(compZ, compCLP)
+  #target <- as.matrix(target) #target complete
+  
+  #testee from missbp object
+  testee <- rbind(missbp$Z.GPAbin, missbp$CLP.GPAbin)
+  #testee <- as.matrix(testee)
+  
+  # n <- missbp$n
+  # p <- missbp$p
+  
+  n <- nrow(target)
+  
+  if(!centring)
+  {
+    testee <- testee
+    target <- target
+  }
+  else
+  {
+    testee <- scale(testee,T,F)
+    #centre=T, scale=F results are similar to Cox and Cox, Gower and #Dijkersthuis, Borg and Groenen
+    target <- scale(target,T,F)
+  }
+  
+  #transformations
+  C.mat <- t(target)%*%testee
+  svd.C <- svd(C.mat)
+  A.mat <- svd.C[[3]]%*%t(svd.C[[2]])
+  s.fact <- sum(diag(t(target)%*%testee%*%A.mat))/sum(diag(t(testee)%*%testee))
+  #Gower and Dijksterhuis P32
+  b.fact <- as.vector(1/n * t(target - s.fact * testee %*% A.mat)%*%rep(1,n))
+  
+  X.new <- b.fact + s.fact*testee%*%A.mat
+  
+  Res.SS <- sum(diag(t(((s.fact*testee%*%A.mat)-target))%*%((s.fact*testee%*%A.mat)-target)))
+  PS <- Res.SS/sum(diag(t(target)%*%target))
+  
+  #Tot.SS <- s.fact^2*sum(diag(t(testee)%*%testee))+sum(diag(t(target)%*%target))
+  #Fitted.SS <- 2*s.fact*sum(diag(svd.C[[1]]))
+  
+  # missbp$ProcStat <- PS
+  # missbp$compZ <- compZ
+  # missbp$compCLP <- compCLP
+  # missbp$complvls <- complvls
+  # missbp$compdat <- compdat
+  return(list(ProcStat = PS, compZ=compZ, compCLP=compCLP, complvls=complvls, compdat=compdat))
+}

@@ -25,8 +25,11 @@ document()
 #possible work-flow
 missmi() |> impute() |> DRT() |> GPAbin() |> plot()
 #test
-a <- missmi(missdat)|> impute(imp.method="DPMPM", m=5) |> DRT() |> GPAbin() |> biplFig() 
-a <- missmi(implist)|> DRT() |> GPAbin() |> biplFig() 
+
+data(missdat)
+data(implist)
+a <- missmi(missdat)|> impute(imp.method="DPMPM", m=5) |> DRT() |> GPAbin() |> biplFig() |> evalMeas(compdat=comp.sim, dim="2D")
+a <- missmi(implist)|> DRT() |> GPAbin() |> biplFig() |> evalMeas(compdat=comp.sim, dim="2D")
 
 #data check
 #imputation if needed
@@ -39,4 +42,4 @@ a <- missmi(implist)|> DRT() |> GPAbin() |> biplFig()
 
 
 ##ggplot
-a <- missmi(implist)|> DRT() |> GPAbin() |> biplFig()
+

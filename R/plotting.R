@@ -22,7 +22,7 @@ biplFig <- function (missbp, Z.col="#61223b", CLP.col="#b79962", Z.pch=19,
   ###################################################################################
   CLPs <- missbp$CLP.GPAbin
   Zs <- missbp$Z.GPAbin
-  levels <- missbp$levels[[1]] #use the first list element for levels, check for other cases (to do)
+  lvls <- missbp$lvls[[1]] #use the first list element for levels, check for other cases (to do)
   
   dev.new()
   par(pty="s")
@@ -30,13 +30,13 @@ biplFig <- function (missbp, Z.col="#61223b", CLP.col="#b79962", Z.pch=19,
   points(Zs, pch=Z.pch, col=Z.col)
   points(CLPs, pch=CLP.pch, col=CLP.col)
   
-  is.null(levels)
+  is.null(lvls)
   {
     text(CLPs, cex=0.7, label=rownames(CLPs), pos=3)
   }
-  !is.null(levels)
+  !is.null(lvls)
   {
-    text(CLPs, cex=0.7, label=levels, pos=3)
+    text(CLPs, cex=0.7, label=lvls, pos=3)
   }
   missbp
 }

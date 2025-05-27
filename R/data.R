@@ -1,6 +1,25 @@
+#' Complete data example
+#'
+#' Simulated data example
+#' 
+#' \describe{
+#'   \item{V1}{Variable 1}
+#'   \item{V1}{Variable 2}
+#'   \item{V1}{Variable 3}
+#'   \item{V1}{Variable 4}
+#'   \item{V1}{Variable 5}
+#' }
+#' 
+#' @name compdat
+#' @docType data
+#' @format A data frame with 1000 rows and 5 columns.
+#' @keywords datasets
+#' @source Simulated data from a uniform distribution that is categorised into levels.
+NULL
+
 #' Missing data example
 #'
-#' Simulated data example containing missing values
+#' `compdat` containing approximately 35% simulated missing values according to a missing at random (MAR) missing data mechanism
 #' 
 #' \describe{
 #'   \item{V1}{Variable 1}
