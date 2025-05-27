@@ -48,7 +48,6 @@ missmi <- function(data)
     }
 
   missbp <- list(X = X, m = m, n = n, p=p, miss_pct = miss_pct)
-
   class(missbp) <- "missmi"
   
   missbp
