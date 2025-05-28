@@ -1,6 +1,6 @@
 Package: GPAbin
 Title: Unifying multiple biplot visualisations into a single display
-Version: 0.0.0.9000
+Version: 1.0.0
 Authors@R: 
     person("Johané", "Nienkemper-Swanepoel", , "nienkemperj@sun.ac.za", role = c("aut", "cre"), 
     comment = c(ORCID ="0000-0001-6086-8272"))
@@ -12,11 +12,11 @@ RoxygenNote: 7.3.2
 Depends: R (>= 4.0.0)
 Imports:
     ca,
+    jomo,
+    mi,
     mice,
     missMDA,
-    jomo,
     mitools,
-    mi,
     stringr
 Suggests: 
     testthat,

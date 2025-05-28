@@ -3,7 +3,6 @@
 DRT <- function(missbp, method=c("MCA"))
 {
   #in this version only multiple correspondence analysis
-  require(ca) 
   
   #if completed data were provided
   if(is.null(missbp$miss_pct)) 

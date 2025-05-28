@@ -24,21 +24,20 @@ biplFig <- function (missbp, Z.col="#61223b", CLP.col="#b79962", Z.pch=19,
   Zs <- missbp$Z.GPAbin
   lvls <- missbp$lvls[[1]] #use the first list element for levels, check for other cases (to do)
   
-  dev.new()
-  par(pty="s")
+  grDevices::dev.new()
+  graphics::par(pty="s")
   plot(rbind(CLPs[,1:2],Zs[,1:2]), pch="", xaxt="n", yaxt="n", xlab="", ylab="", main=title)
-  points(Zs, pch=Z.pch, col=Z.col)
-  points(CLPs, pch=CLP.pch, col=CLP.col)
+  graphics::points(Zs, pch=Z.pch, col=Z.col)
+  graphics::points(CLPs, pch=CLP.pch, col=CLP.col)
   
   is.null(lvls)
   {
-    text(CLPs, cex=0.7, label=rownames(CLPs), pos=3)
+    graphics::text(CLPs, cex=0.7, label=rownames(CLPs), pos=3)
   }
   !is.null(lvls)
   {
-    text(CLPs, cex=0.7, label=lvls, pos=3)
+    graphics::text(CLPs, cex=0.7, label=lvls, pos=3)
   }
-  missbp
 }
 
 ###################################################################################

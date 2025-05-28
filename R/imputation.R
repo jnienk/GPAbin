@@ -1,4 +1,18 @@
-#imputation
+#' Multiple imputation
+#' 
+#' Choose between four available multiple imputation strategies in `R`.
+#'
+#' @param missbp An object of class \code{missmi} obtained from preceding function \code{missmi()}.
+#' @param imp.method Select one of four imputation methods: `MIMCA`, `jomo`, `DPMPM`, `mice`
+#' @param m Number of multiple imputations
+#' @param dim Number of dimensions to use in final solutions (`2D` or `All` available dimensions.)
+#'
+#' @returns
+#' \item{dataimp} List of imputed data
+#' 
+#' @export
+#'
+#' @examples
 impute <- function(missbp, imp.method=c("MIMCA","jomo","DPMPM","mice"), m=5, dim=c("2D","All"))
 {
   if(is.null(missbp$miss_pct)) stop("Don't apply an imputation method. Your data is already complete, continue to DRT().")
@@ -10,11 +24,10 @@ impute <- function(missbp, imp.method=c("MIMCA","jomo","DPMPM","mice"), m=5, dim
   
   if (imp.method=="MIMCA")
   {
-    require(missMDA)
     
     #Imputation
-    ncp.out <- estim_ncpMCA(data, method="Regularized", method.cv="Kfold") #regularisation step parameter
-    MIMCA.imp <- MIMCA(data, nboot=m, ncp=ncp.out[[1]]) #multiple imputation
+    ncp.out <- missMDA::estim_ncpMCA(data, method="Regularized", method.cv="Kfold") #regularisation step parameter
+    MIMCA.imp <- missMDA::MIMCA(data, nboot=m, ncp=ncp.out[[1]]) #multiple imputation
     
     MIMCA.list <- MIMCA.imp[[1]] #list of m imputed data sets
     MIMCA.list <- FormatImpList(MIMCA.list) #preparing colnames and rownames
@@ -25,8 +38,6 @@ impute <- function(missbp, imp.method=c("MIMCA","jomo","DPMPM","mice"), m=5, dim
   } else
     if (imp.method=="jomo")
     {
-      require(jomo)
-      require(mitools)
       ##Imputation
       cat.vec <- vector("numeric",ncol(data))
       for (j in 1:ncol(data))
@@ -34,8 +45,8 @@ impute <- function(missbp, imp.method=c("MIMCA","jomo","DPMPM","mice"), m=5, dim
         cat.vec[j] <-length(levels(data[,j]))
       }
       
-      jomo.out <- jomo1cat(data,cat.vec,nimp=m, output=0)
-      jomo.list <- imputationList(split(jomo.out,jomo.out$Imputation)[-1])[[1]]
+      jomo.out <- jomo::jomo1cat(data,cat.vec,nimp=m, output=0)
+      jomo.list <- mitools::imputationList(split(jomo.out,jomo.out$Imputation)[-1])[[1]]
       
       samp.nams <- paste("s",1:n,sep="")
       jomo.list <- FormatImpList(jomo.list) #preparing colnames and rownames
@@ -51,11 +62,10 @@ impute <- function(missbp, imp.method=c("MIMCA","jomo","DPMPM","mice"), m=5, dim
     } else
       if (imp.method=="DPMPM")
       {
-        require(mi)
         
         ##Imputation
-        DPMPM.prep <- missing_data.frame(data, subclass = "allcategorical")
-        DPMPM.out <- mi(DPMPM.prep, n.chains = m)
+        DPMPM.prep <- mi::missing_data.frame(data, subclass = "allcategorical")
+        DPMPM.out <- mi::mi(DPMPM.prep, n.chains = m)
         DPMPM.out <- mi::complete(DPMPM.out, m = m)
         DPMPM.list <- lapply(DPMPM.out,'[',1:p)
         
@@ -72,12 +82,11 @@ impute <- function(missbp, imp.method=c("MIMCA","jomo","DPMPM","mice"), m=5, dim
       } else
         if (imp.method=="mice")
         {
-          require(mice)
-          require(mitools)
+        
           ##Imputation
-          mice.imp <- mice(data,m=m,method="polyreg", maxit=10,remove.collinear=FALSE, printFlag = FALSE)
+          mice.imp <- mice::mice(data,m=m,method="polyreg", maxit=10,remove.collinear=FALSE, printFlag = FALSE)
           mice.out <- mice::complete(mice.imp, "long")
-          mice.list <- imputationList(split(mice.out,mice.out$.imp))[[1]]
+          mice.list <- mitools::imputationList(split(mice.out,mice.out$.imp))[[1]]
           
           samp.nams <- paste("s",1:n,sep="")
           for (imp in 1:m)

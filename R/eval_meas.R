@@ -34,7 +34,7 @@ CLPpred <- function (CLPs=CLPs, Zs=Zs, p=p, n=n, lvls=lvls, datIN = datIN)
   
   for (i in 1:n)
   {
-    d <- as.matrix(as.matrix(dist(rbind(Zs[i,],CLPs)))[1,-1]) #distance matrix between first row of Z.list[[i]][1,] and all rows of CLP.list[[i]] (distances for first sample over all variables)
+    d <- as.matrix(as.matrix(stats::dist(rbind(Zs[i,],CLPs)))[1,-1]) #distance matrix between first row of Z.list[[i]][1,] and all rows of CLP.list[[i]] (distances for first sample over all variables)
     pluggin <- matrix(0,p,1)
     inds <- matrix(0,p,1)
     for(j in 1:p)
@@ -123,8 +123,6 @@ evalMeas <- function (missbp, compdat=NULL, dim=c("All", "2D"))
   Z.Testee <- missbp$Z.GPAbin
   CLP.Testee <- missbp$CLP.GPAbin
   
-  require(stringr)
-  
   counter <- 0
   Target <- rbind(Z.Target, CLP.Target)
   Testee <- rbind(Z.Testee, CLP.Testee)
@@ -165,8 +163,8 @@ evalMeas <- function (missbp, compdat=NULL, dim=c("All", "2D"))
   
   SP <- match.count/(p*n)
 
-  comp_flat <- apply(compPred,1,str_flatten)
-  imp_flat <- apply(GPAPred,1,str_flatten)
+  comp_flat <- apply(compPred,1,stringr::str_flatten)
+  imp_flat <- apply(GPAPred,1,stringr::str_flatten)
   
   RPR <- sum(comp_flat == imp_flat)/nrow(compPred)
 

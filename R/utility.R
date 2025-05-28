@@ -1,19 +1,17 @@
-#utility functions
+#' Converting data frames to factors
+#' 
+#' Transforms each column of a data frame into factor variables.
+#'
+#' @param in.df a data.frame containing factors
+#' @param ordered logical argument. If TRUE (T) factor levels are ordered, if FALSE (F) factor levels are unordered.
+#'
+#' @return  
+#' \item{out.df}{Returns a transformed data frame according to "ordered" argument.}
+#' 
+#' @noRd
+#'
 df2fact <- function (in.df, ordered=FALSE)
 {
-  ###############################################################################################
-  ###############################################################################################
-  #Information
-  #This function transforms each column of a data.frame into unordered factor #variables (ordered=F) or ordered factor variables (ordered=T)
-  ###############################################################################################
-  #Arugments
-  #"in.df" a data.frame containing factors
-  #"ordered" if TRUE (T) factor levels are ordered, if FALSE (F) factor levels are #unordered
-  ###############################################################################################
-  #Value
-  #Returns a transformed data.frame according to "ordered" argument.
-  ###############################################################################################
-  ###############################################################################################
   out.df <- factor(in.df[,1],ordered=ordered)
   
   for(i in 2:ncol(in.df)) out.df <- data.frame(out.df, factor(in.df[,i], ordered=ordered))
@@ -22,42 +20,39 @@ df2fact <- function (in.df, ordered=FALSE)
   rownames(out.df) <- rownames(in.df)
   return(out.df)
 }
-###################################################################################
-###################################################################################
+#########################################################################
+
+#' Formatting Imputation Lists
+#' 
+#' Adding consistent names to list elements from imputations
+#'
+#' @param mylist list containing MIs
+#'
+#' @return
+#' \item{mylist}{formatted `mylist`}
+#' 
+#' @noRd
+#'
 FormatImpList <- function (mylist)
 {
-  ###################################################################################
-  ###################################################################################
-  #Information
-  #This function adds names to elements of the list containing the imputations
-  ###################################################################################
-  #Arguments
-  #"mylist" is a list containing MIs
-  ###################################################################################
-  #Value
-  #Returns formatted "mylist"
-  ###################################################################################
-  ###################################################################################
   imp <- length(mylist)
   names(mylist) <- paste('Imputation',1:imp,sep='.')
   return(mylist)
 }
 ###################################################################################
-###################################################################################
+
+#' Removing empty category levels
+#'
+#' Removes columns with only one CL before applying dimension reduction
+#' @param inlist list of factor objects
+#'
+#' @return
+#' \item{inlist}{Returns the input list, now with removed columns}
+#' 
+#' @noRd
+#'
 rmOneCL <- function(inlist)
 {
-  ###################################################################################
-  ###################################################################################
-  #Information
-  #This function removes columns with only one CL before applying MCA
-  ###################################################################################
-  #Arguments
-  #"inlist" list of factor objects
-  ###################################################################################
-  #Value
-  #Returns the input list, now with removed columns
-  ###################################################################################
-  ###################################################################################
   M <- length(inlist)
   
   for(m in 1:M)
@@ -82,20 +77,18 @@ rmOneCL <- function(inlist)
   return(inlist)
 }
 ###################################################################################
+#' Removing empty category levels specifically for `jomo` imputation
+#'
+#' Removes columns with only one CL before applying MCA specifically for output from jomo
+#' @param inlist list of factor objects
+#'
+#' @return
+#' \item{inlist}{Returns the input list, now with removed columns}
+#' 
+#' @noRd
+#'
 rmOneCLjom <- function(inlist)
 {
-  ###################################################################################
-  ###################################################################################
-  #Information
-  #This function removes columns with only one CL before applying MCA specifically for output from jomo
-  ###################################################################################
-  #Arguments
-  #"inlist" list of factor objects
-  ###################################################################################
-  #Value
-  #Returns the input list, now with removed columns
-  ###################################################################################
-  ###################################################################################
   M <- length(inlist)
   
   for(m in 1:M)
@@ -120,42 +113,35 @@ rmOneCLjom <- function(inlist)
   return(inlist)
 }
 ###################################################################################
-###################################################################################
+
+#' Detects integers with zero length
+#'
+#' Used as a precaution to eliminate possible errors
+#' @param x scalar value
+#'
+#' @return
+#' TRUE or FALSE
+#'
+#' @noRd
 is.integer0 <- function(x)
 {
-  ###################################################################################
-  ###################################################################################
-  #Information
-  #This function detects integers with zero length
-  #This function is used as a precaution to eliminate possible errors
-  ###################################################################################
-  #Argument
-  #"x" scalar value
-  ###################################################################################
-  #Value
-  #Returns a TRUE or FALSE
-  ###################################################################################
-  ###################################################################################
   is.integer(x) && length(x) == 0L
 }
 
 ###################################################################################
-###################################################################################
 
+#' Removing empty factor levels
+#'
+#' Removes empty factor levels
+#' @param data object of the factor class
+#'
+#' @return
+#' \item{data} Returns the input object, now with empty category levels removed
+#'
+#' @noRd
+#'
 delCL <- function(data)
 {
-  ###################################################################################
-  ###################################################################################
-  #Information
-  #This function removes empty factor levels
-  ###################################################################################
-  #Arguments
-  #"data" is an object of the factor class
-  ###################################################################################
-  #Value
-  #"Returns the input object, now with empty category levels removed
-  ###################################################################################
-  ###################################################################################
   for (j in 1:ncol(data))
   {
     col <- data[,j]
@@ -169,5 +155,3 @@ delCL <- function(data)
   }
   return(data)
 }
-
-###################################################################################

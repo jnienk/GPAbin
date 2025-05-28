@@ -28,8 +28,9 @@ missmi() |> impute() |> DRT() |> GPAbin() |> plot()
 
 data(missdat)
 data(implist)
-a <- missmi(missdat)|> impute(imp.method="DPMPM", m=5) |> DRT() |> GPAbin() |> biplFig() |> evalMeas(compdat=comp.sim, dim="2D")
-a <- missmi(implist)|> DRT() |> GPAbin() |> biplFig() |> evalMeas(compdat=comp.sim, dim="2D")
+data(compdat)
+a <- missmi(missdat)|> impute(imp.method="DPMPM", m=5) |> DRT() |> GPAbin() |> biplFig() |> evalMeas(compdat=compdat, dim="2D")
+a <- missmi(implist)|> DRT() |> GPAbin() |> biplFig() |> evalMeas(compdat=compdat, dim="2D")
 
 #data check
 #imputation if needed
@@ -43,3 +44,27 @@ a <- missmi(implist)|> DRT() |> GPAbin() |> biplFig() |> evalMeas(compdat=comp.s
 
 ##ggplot
 
+#CRAN steps
+#build() - should build tar.zip
+#terminal
+#R CMD CHECK ...tar.gz
+#official cran check
+
+#description file version 1.0.0
+
+#rhub_check()
+#usethis_create github token
+#create token, run 1:5 of the selection list
+
+#workflow in github actions
+
+#create file cran comments
+#?release
+#showing the check results in a .md (typesetting no code)
+#buildignore 
+#check di
+
+#release()
+
+
+#add NEWS.md

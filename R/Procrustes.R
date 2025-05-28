@@ -1,4 +1,14 @@
-#GPA related functions
+#' Title
+#'
+#' Combines multiple configurations from a list of 
+#' 
+#' @param missbp 
+#' @param G.target 
+#'
+#' @returns
+#' @export
+#'
+#' @examples
 GPAbin <- function(missbp, G.target=NULL)
 {
   ###################################################################################
@@ -103,7 +113,7 @@ GPA <- function(Xk, G.target=NULL, iter=500, eps=0.001)
   repeat
   {tel <- tel + 1
   if(tel > iter)
-    stop(paste("Maximum number of specified iterations reached! Increase iter \n",II))
+    stop(paste("Maximum number of specified iterations reached! Increase iter \n",iter))
   Xk.F <- sapply(1:K, function(k, Xk, sk, Qk) sk[k] * Xk[[k]] %*% Qk[[k]], Xk = Xk.F, sk = sk, Qk = Qk, simplify = F)
   if (is.null(G.target))
   {Gmat <- Xk.F[[1]]
