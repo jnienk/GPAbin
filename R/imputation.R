@@ -8,11 +8,14 @@
 #' @param dim Number of dimensions to use in final solutions (`2D` or `All` available dimensions.)
 #'
 #' @returns
-#' \item{dataimp} List of imputed data
+#' \item{dataimp}{List of imputed data}
 #' 
 #' @export
 #'
 #' @examples
+#' data(missdat)
+#' missmi(missdat) |> impute(imp.method="DPMPM", m=5)
+#' 
 impute <- function(missbp, imp.method=c("MIMCA","jomo","DPMPM","mice"), m=5, dim=c("2D","All"))
 {
   if(is.null(missbp$miss_pct)) stop("Don't apply an imputation method. Your data is already complete, continue to DRT().")

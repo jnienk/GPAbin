@@ -21,7 +21,13 @@
 #' \item{miss_pct}{Percentage of missing values}
 #'  
 #' @export
-#'
+#' 
+#' @examples
+#' data(missdat)
+#' missmi(missdat)
+#' data(implist)
+#' missmi(implist)
+#' 
 missmi <- function(data)
 {
   #think about separating continuous and categorical data for applications of PCA GPAbin

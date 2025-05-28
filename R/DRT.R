@@ -1,5 +1,22 @@
-#Dimension reduction
-
+#' Dimension reduction
+#' 
+#' Multiple correspondence analysis is performed on the multiple imputed datasets
+#'
+#' @param missbp An object of class \code{missbp} obtained from preceding function \code{missmi()}
+#' @param method Select a dimension reduction technique. In the current version `MCA` is available.
+#'
+#' @return
+#' \item{Z}{List of sample coordinates}
+#' \item{CLP}{List of category level point coordinates}
+#' \item{lvls}{List of category level names}
+#' \item{m}{Number of multiple imputations}
+#' 
+#' @export
+#'
+#' @examples
+#' data(implist)
+#' missmi(implist) |> DRT()
+#' 
 DRT <- function(missbp, method=c("MCA"))
 {
   #in this version only multiple correspondence analysis

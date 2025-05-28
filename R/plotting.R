@@ -1,25 +1,29 @@
-#plotting
 ###################################################################################
+#' Biplot function
+#' 
+#' Creates a multiple correspondence analysis (MCA) biplot
+#'
+#' @param missbp An object of class \code{missbp} obtained from preceding function \code{missmi()}
+#' @param Z.col Colour of sample coordinates
+#' @param CLP.col Colour of category level point coordinates 
+#' @param Z.pch Plotting character of sample coordinates
+#' @param CLP.pch Plotting character of category level point coordinates
+#' @param Z.cex Size of plotting character for sample points
+#' @param CLP.cex Size of plotting character for category level point points 
+#' @param title Title of the plot
+#'
+#' @export
+#' 
+#' @return
+#' A biplot.
+#' 
+#' @examples
+#' data(implist)
+#' missmi(implist)|> DRT() |> GPAbin() |> biplFig()
+#' 
 biplFig <- function (missbp, Z.col="#61223b", CLP.col="#b79962", Z.pch=19,
                      CLP.pch=15,Z.cex=1.5,CLP.cex=1.7,title="") 
 {
-  ###################################################################################
-  ###################################################################################
-  #Information
-  #This function constructs a biplot after MCA
-  ###################################################################################
-  #Arguments
-  #"CLPs" category level points (standard coordinates for variables)
-  #"Zs" sample principal coordinates
-  #"Lvls" names of the CLPs
-  #"Z.col", "CLP.col" are the colour specifications for samples and CLPs
-  #"Z.pch", "CLP.pch" are the plotting character specifications for samples and CLPs
-  #"title" title of the figure
-  ###################################################################################
-  #Value
-  #Returns a biplot.
-  ###################################################################################
-  ###################################################################################
   CLPs <- missbp$CLP.GPAbin
   Zs <- missbp$Z.GPAbin
   lvls <- missbp$lvls[[1]] #use the first list element for levels, check for other cases (to do)

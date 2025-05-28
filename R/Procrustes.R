@@ -1,35 +1,25 @@
-#' Title
+#' Function to unify coordinates of multiple configurations
 #'
-#' Combines multiple configurations from a list of 
+#' Combines multiple configurations from dimension reduction solutions applied to multiple imputed data sets
 #' 
-#' @param missbp 
-#' @param G.target 
+#' @param missbp An object of class \code{missmi} obtained from preceding function \code{missmi()}
+#' @param G.target Target configuration. If not specified the centroid configuration will be used as the target.
 #'
-#' @returns
+#' @return
+#' \item{Z.GPA.list}{List containing the sample coordinates for each MI after GPA}
+#' \item{CLP.GPA.list}{List containing the CLPs for each MI after GPA}
+#' \item{G.target}{Target configuration}
+#' \item{Z.GPAbin}{Sample coordinates for the GPAbin biplot}
+#' \item{CLP.GPAbin}{CLPs for the GPAbin biplot}
+#' 
 #' @export
 #'
 #' @examples
+#' data(implist)
+#' missmi(implist) |> DRT() |> GPAbin()
+#'
 GPAbin <- function(missbp, G.target=NULL)
 {
-  ###################################################################################
-  ###################################################################################
-  #Information
-  #This function combines multiple configurations obtained from the output of the #MI.impute() function
-  ####################################################################################Arguments
-  #"CLP.list" argument is the list contains the CLPs of the multiple imputations
-  #"Z.list" argument is the list contains the sample points of the multiple #imputations
-  #"G.target" argument is the target configuration. If not specified the centroid #configuration will be used as the target
-  ###################################################################################
-  #Value
-  #"Z.GPAbin" is the sample coordinates for the GPAbin biplot
-  #"CLP.GPAbin" is the CLPs for the GPAbin biplot
-  #"Z.GPA.list" is a list containing the sample coordinates for each MI after GPA
-  #"CLP.GPA.list" is a list containing the CLPs for each MI after GPA
-  ###################################################################################
-  #Required functions
-  #GPA()
-  ###################################################################################
-  ###################################################################################
   m <- missbp$m
   
   z_split <- nrow(missbp$Z[[1]])
@@ -72,27 +62,27 @@ missbp
 
 ###################################################################################
 ###################################################################################
+#' Generalised Orthogonal Procrustes Analysis
+#' 
+#' This function contains the OPA function to compare two configurations and the GPA function for multiple configuration comparisons
+#'
+#' @param Xk list containing the testee configurations which is updated on #each iteration
+#' @param G.target Target configuration. If not specified the centroid configuration will be used as the target
+#' @param iter Number of iterations allowed before convergence
+#' @param eps Threshold value for convergence of the alogrithm
+#'
+#' @return
+#' \item{Xk.F}{List containing the updated testee configurations}
+#' \item{sk.F}{Vector containing the final scaling factors}
+#' \item{Qk.F}{List containing the final rotation matrices}
+#' \item{Gmat}{Final target configuration}
+#' \item{sum.sq}{Final minimised sum of squared distance}
+#' 
+#' @export
+#'
 GPA <- function(Xk, G.target=NULL, iter=500, eps=0.001)
 {
-  ###################################################################################
-  ###################################################################################
-  #Information
-  #This function contains the OPA function to compare two configurations and the GPA #function for multiple configuration comparisons
-  ####################################################################################Arguments
-  #"Xk" argument is a list containing the testee configurations which is updated on #each iteration
-  #"G.target" argument is the target configuration. If not specified the centroid #configuration will be used as the target
-  #"iter" is the number of iterations allowed before convergence
-  #"eps" is the threshold value for convergence of the alogrithm
-  ###################################################################################
-  #Value
-  #"Xk.F" is a list containing the updated testee configurations
-  #"sk.F" is a vector containing the final scaling factors
-  #"Qk.F" is a list containing the final rotation matrices
-  #"Gmat" is the final target configuration
-  #"sum.sq" is the final minimised sum of squared distance
-  ###################################################################################
-  ###################################################################################
-  OPA <- function(X.mat, Z.mat)
+  OPA.steps <- function(X.mat, Z.mat)
   {
     svd.zx <- svd(t(Z.mat) %*% X.mat)
     svd.zx[[3]] %*% t(svd.zx[[2]])
@@ -121,7 +111,7 @@ GPA <- function(Xk, G.target=NULL, iter=500, eps=0.001)
   Gmat <- Gmat/K
   }
   else Gmat <- G.target
-  Qk <- sapply(1:K, function(k, Xind, Gmat) OPA(Xind[[k]], Gmat), Xind = Xk.F, Gmat = Gmat, simplify = F)
+  Qk <- sapply(1:K, function(k, Xind, Gmat) OPA.steps(Xind[[k]], Gmat), Xind = Xk.F, Gmat = Gmat, simplify = F)
   Qk.F <- sapply(1:K, function(k, Qk, QF) QF[[k]] %*% Qk[[k]], Qk = Qk, QF = Qk.F, simplify = F)
   Smat <- matrix(0, ncol = K, nrow = K)
   for(i in 1:K)
@@ -145,26 +135,24 @@ GPA <- function(Xk, G.target=NULL, iter=500, eps=0.001)
 }
 ###################################################################################
 
-myOPA <- function(missbp, compdat, centring = TRUE)
+#' Orthogonal Procrustes Analysis
+#' 
+#' This function performs Orthogonal Procrustes Analysis on centred data
+#'
+#' @param missbp An object of class \code{missmi} obtained from preceding function \code{missmi()}
+#' @param compdat Complete data set, only available for simulated data examples.
+#' @param centring Logical argument to apply centering, default is `TRUE`.
+#'
+#' @return
+#' \item{ProcStat}{Procrustes Statistic}
+#' \item{compZ}{Sample coordinates representing the complete data set}
+#' \item{compCLP}{Category level point coordinates representing the complete data set}
+#' \item{complvls}{Category levels}
+#' \item{compdat}{Complete data set, only available for simulated data examples}
+#' @export
+#' 
+OPA <- function(missbp, compdat, centring = TRUE)
 {
-  ###################################################################################
-  ###################################################################################
-  #Information
-  #This function performs Orthogonal Procrustes Analysis on centred data
-  ###################################################################################
-  #Arguments
-  #"target" target configuration (complete simulated configuration when available)
-  #"testee" testee configuration
-  #"centring" by centring the data before OPA, translation step is redundant
-  ###################################################################################
-  #Value
-  #"X.new" is the updated testee configuration
-  #"ProStat" is the Procrustes Statistic
-  #"Res.SS" is the residual sum of squares (Gower & Dijksterhuis 2004)
-  #"Tot.SS" is the total sum of squares (Gower & Dijksterhuis 2004)
-  #"Fitted.SS" is the fitted sum of squares (Gower & Dijksterhuis 2004)
-  ###################################################################################
-  ###################################################################################
   #creating coordinates of complete set
   #DRT on complete data
   temp <- ca::mjca(compdat,lambda="indicator")
@@ -208,13 +196,5 @@ myOPA <- function(missbp, compdat, centring = TRUE)
   Res.SS <- sum(diag(t(((s.fact*testee%*%A.mat)-target))%*%((s.fact*testee%*%A.mat)-target)))
   PS <- Res.SS/sum(diag(t(target)%*%target))
   
-  #Tot.SS <- s.fact^2*sum(diag(t(testee)%*%testee))+sum(diag(t(target)%*%target))
-  #Fitted.SS <- 2*s.fact*sum(diag(svd.C[[1]]))
-  
-  # missbp$ProcStat <- PS
-  # missbp$compZ <- compZ
-  # missbp$compCLP <- compCLP
-  # missbp$complvls <- complvls
-  # missbp$compdat <- compdat
   return(list(ProcStat = PS, compZ=compZ, compCLP=compCLP, complvls=complvls, compdat=compdat))
 }

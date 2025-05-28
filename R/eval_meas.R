@@ -1,27 +1,22 @@
 ###################################################################################
+#' Category level prediction
+#'
+#' Predicts category levels from an MCA based biplot using the distances between coordinates
+#'
+#' @param CLPs Category level point coordinates
+#' @param Zs Sample coordinates
+#' @param p Number of variables
+#' @param n Number of samples
+#' @param lvls Names of category levels
+#' @param datIN Input data from which `CLPs` and `Zs` are obtained
+#'
+#' @return
+#' \item{predCL}{Final predicted categorical data set}
+#' 
+#' @export
+#'
 CLPpred <- function (CLPs=CLPs, Zs=Zs, p=p, n=n, lvls=lvls, datIN = datIN)
 {
-  #should be general for any given Z and CLP coordinates to predict CLs
-  ###################################################################################
-  ###################################################################################
-  #Information
-  #This function predicts category levels for an MCA based biplot using the distances #between samples and CLPs
-  ###################################################################################
-  #Arguments
-  #"mca.comp" MCA solution of original simulated case if available
-  #"datIN" is input data set (could contain missing values)
-  #"CLPs" and "Zs" contains the coordinate matrices of the GPAbin biplot
-  #"nsamples" is the number of samples (rows) in the data sets
-  #"pvar" is the number of variables (columns) in the data set
-  ###################################################################################
-  #Value
-  #"Pred" a final predicted categorical data set
-  ###################################################################################
-  #Required functions
-  #Auxiliary functions: is.integer0(), df2fact(), delCL()
-  ###################################################################################
-  ###################################################################################
-  
   X.pred <- as.data.frame(matrix(0,n,p))
   X.pred <- df2fact(X.pred)
   
@@ -69,42 +64,33 @@ CLPpred <- function (CLPs=CLPs, Zs=Zs, p=p, n=n, lvls=lvls, datIN = datIN)
   return(predCL = X.pred)
   
 }
-
-#continue work on this
-#only to use if you have the complete data, as in a simulation study
-
-
+###################################################################################
+#' Evaluation measures when complete data is available
+#'
+#' Calculates measures of comparison based on distances between two configurations
+#' 
+#' @param missbp An object of class \code{missbp} obtained from preceding function \code{missmi()}.
+#' @param compdat Complete data matrix representing the input data of \code{missmi()}
+#' @param dim Compare the configurations in 2D or the maximum available ("All") dimensions, default is `2D`.
+#'
+#' @return
+#' \item{eval}{Returns a data table with five evaluation measures: Procrustes Statistic (PS), Similarity Proportion (SP), Response Profile Recovery (RPR), Absolute Mean Bias (AMB), Root Mean Squared Bias (RMSB)}
+#' 
+#' @export
+#'
+#' @examples
+#' data(compdat)
+#' data(implist)
+#' missmi(implist) |> DRT() |> GPAbin() |> evalMeas(compdat=compdat, dim="2D")
+#'
 evalMeas <- function (missbp, compdat=NULL, dim=c("All", "2D"))
-                      #Z.Target=Z.comp , CLP.Target=CLP.comp, Z.Testee=Z.imp, CLP.Testee=CLP.imp,
-                   #   dim=c("All", "2D"),pred.dat1=pred.comp, pred.dat2=pred.imp,nsamples=n, pvar=vars)
 {
   if(is.null(compdat)) stop("No complete data set available for comparison. \nThis function is only applicable for simulated data.")
-  
-  ###################################################################################
-  ###################################################################################
-  #Information
-  #This function calculates the following measures of comparison between two #configurations
-  #PS, SP, RPR, AMB, RMSB
-  ###################################################################################
-  #Arguments
-  #"Z.Target" is the sample coordinates of target configuration
-  #"CLP.Target" is the category level point coordinates of target configuration
-  #"Z.Testee" is the sample coordinates of testee configuration
-  #"CLP.Testee" is the category level point coordinates of testee configuration
-  #"dim" to compare the configurations in 2D or the maximum available ("All") dims
-  #"pred.dat1" and "pred.dat2" are the predicted responses obtained from the CLPred() function
-  #"nsamples" number of samples in original data set
-  #"pvar" number of variables original data set
-  ###################################################################################
-  #Value
-  #Returns a data frame with the evaluation measures as stated above.
-  ###################################################################################
-  ###################################################################################
-  
+
   p <- missbp$p
   n <- missbp$n
   
-  tempcomp <- myOPA(missbp, compdat)
+  tempcomp <- OPA(missbp, compdat)
   PS <- tempcomp[[1]]
   
   compPred <- CLPpred(CLPs=tempcomp$compCLP, Zs=tempcomp$compZ, p=ncol(compdat), n=nrow(compdat), lvls=tempcomp$complvls, datIN = compdat)

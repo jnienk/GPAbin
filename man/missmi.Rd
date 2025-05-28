@@ -19,3 +19,10 @@ missmi(data)
 \description{
 This function produces a list of elements to be used when producing a GPAbin biplot.
 }
+\examples{
+data(missdat)
+missmi(missdat)
+data(implist)
+missmi(implist)
+
+}
