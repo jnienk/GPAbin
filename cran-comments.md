@@ -2,11 +2,13 @@
 
 -   Unified
 
-── R CMD check results ────────────────────────────────────────────────────────────────────────────────────────── GPAbin 1.0.0 ──── Duration: 39.8s
+── R CMD check results ─────────────────────────────────────────────────────────────────────────── GPAbin 1.0.0 ────
+Duration: 3m 7.7s
 
-❯ checking for future file timestamps ... NOTE unable to verify current time
+❯ checking for future file timestamps ... NOTE
+  unable to verify current time
 
-0 errors ✔ \| 0 warnings ✔ \| 1 note ✖
+0 errors ✔ | 0 warnings ✔ | 1 note ✖
 
 ## Test environment
 

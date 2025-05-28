@@ -2,7 +2,7 @@ Package: GPAbin
 Title: Unifying multiple biplot visualisations into a single display
 Version: 1.0.0
 Authors@R: 
-    person("Johané", "Nienkemper-Swanepoel", , "nienkemperj@sun.ac.za", role = c("aut", "cre"), 
+    person("Johané", "Nienkemper-Swanepoel", , "nienkemperj@sun.ac.za", role = c("aut", "cre", "cph"), 
     comment = c(ORCID ="0000-0001-6086-8272"))
 Description: The package aligns multiple visualisations by utilising generalised orthogonal Procrustes analysis (GPA) before combining coordinates into a single biplot display. This is mainly suitable to combine visualisations constructed from multiple imputations, however, it can be generalised to combine variations of visualisations from the same datasets (i.e. resamples).
 License: MIT + file LICENSE
