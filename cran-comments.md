@@ -1,11 +1,14 @@
 ## Overview
 
-Fixed the automated check issue reported with submission 1.0.0.
+Fixed the automated check issue reported with submission 1.0.0. and 1.0.1.
 
-── R CMD check results ──────────────────────────────────────────────────── GPAbin 1.0.1 ────
-Duration: 44.6s
+── R CMD check results ──────────────────────────────────────────────────── GPAbin 1.0.2 ────
+Duration: 1m 34.3s
 
-0 errors ✔ | 0 warnings ✔ | 0 notes ✔
+❯ checking for future file timestamps ... NOTE
+  unable to verify current time
+
+0 errors ✔ | 0 warnings ✔ | 1 note ✖
 
 ## Test environment
 

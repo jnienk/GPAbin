@@ -1,6 +1,6 @@
 Package: GPAbin
-Title: Unifying Multiple Biplot Visualisations Into A Single Display
-Version: 1.0.1
+Title: Unifying Multiple Biplot Visualisations Into a Single Display
+Version: 1.0.2
 Authors@R: 
     person("Johané", "Nienkemper-Swanepoel", , "nienkemperj@sun.ac.za", role = c("aut", "cre", "cph"), 
     comment = c(ORCID ="0000-0001-6086-8272"))
