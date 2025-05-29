@@ -13,4 +13,4 @@ Duration: 3m 7.7s
 ## Test environment
 
 -   local R installation: R version 4.5.0 (2025-04-11 ucrt) -- "How About a Twenty-Six"
--   other platforms checked using `check_rhub()`: add
+-   other platforms checked using `check_rhub()`: `linux`, `macos`, `windows`

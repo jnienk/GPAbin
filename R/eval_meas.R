@@ -79,9 +79,10 @@ CLPpred <- function (CLPs=CLPs, Zs=Zs, p=p, n=n, lvls=lvls, datIN = datIN)
 #' @export
 #'
 #' @examples
+#' \dontrun{
 #' data(compdat)
 #' data(implist)
-#' missmi(implist) |> DRT() |> GPAbin() |> evalMeas(compdat=compdat, dim="2D")
+#' missmi(implist) |> DRT() |> GPAbin() |> evalMeas(compdat=compdat, dim="2D")}
 #'
 evalMeas <- function (missbp, compdat=NULL, dim=c("All", "2D"))
 {
