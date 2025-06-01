@@ -1,10 +1,10 @@
 Package: GPAbin
-Title: Unifying Multiple Biplot Visualisations Into a Single Display
-Version: 1.0.2
+Title: Unifying Multiple Biplot Visualisations into a Single Display
+Version: 1.0.3
 Authors@R: 
     person("Johané", "Nienkemper-Swanepoel", , "nienkemperj@sun.ac.za", role = c("aut", "cre", "cph"), 
     comment = c(ORCID ="0000-0001-6086-8272"))
-Description: Aligning multiple visualisations by utilising generalised orthogonal Procrustes analysis (GPA) before combining coordinates into a single biplot display. This is mainly suitable to combine visualisations constructed from multiple imputations, however, it can be generalised to combine variations of visualisations from the same datasets (i.e. resamples).
+Description: Aligning multiple visualisations by utilising generalised orthogonal Procrustes analysis (GPA) before combining coordinates into a single biplot display. This is mainly suitable to combine visualisations constructed from multiple imputations, however, it can be generalised to combine variations of visualisations from the same datasets (i.e. resamples). Methods are described in: Nienkemper-Swanepoel, le Roux and Lubbe (2023): <doi:10.1080/03610918.2021.1914089>.
 License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
@@ -22,3 +22,4 @@ Suggests:
     testthat,
     knitr
 Config/Needs/website: rmarkdown
+Resource: 10.1080/03610918.2021.1914089
