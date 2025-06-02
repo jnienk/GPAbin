@@ -2,8 +2,8 @@
 
 Fixed the automated check issue reported with submission 1.0.0., 1.0.1 and 1.0.2.
 
-── R CMD check results ──────────────────────────────────────────────────── GPAbin 1.0.3 ────
-Duration: 1m 28.2s
+── R CMD check results ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────── GPAbin 1.0.3 ────
+Duration: 43.8s
 
 0 errors ✔ | 0 warnings ✔ | 0 notes ✔
 
