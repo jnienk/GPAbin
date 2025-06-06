@@ -13,9 +13,9 @@
 #' @export
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' data(missdat)
-#' missmi(missdat) |> impute(imp.method="DPMPM", m=5)}
+#' missbp <- missmi(missdat) |> impute(imp.method="DPMPM", m=5)}
 #' 
 impute <- function(missbp, imp.method=c("MIMCA","jomo","DPMPM","mice"), m=5, dim=c("2D","All"))
 {

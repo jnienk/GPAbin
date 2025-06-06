@@ -27,8 +27,8 @@ impute(
 Choose between four available multiple imputation strategies in \code{R}.
 }
 \examples{
-\dontrun{
+\donttest{
 data(missdat)
-missmi(missdat) |> impute(imp.method="DPMPM", m=5)}
+missbp <- missmi(missdat) |> impute(imp.method="DPMPM", m=5)}
 
 }

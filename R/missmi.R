@@ -24,9 +24,9 @@
 #' 
 #' @examples
 #' data(missdat)
-#' missmi(missdat)
+#' missbp <- missmi(missdat)
 #' data(implist)
-#' missmi(implist)
+#' missbp <- missmi(implist)
 #' 
 missmi <- function(data)
 {

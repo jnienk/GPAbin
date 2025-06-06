@@ -21,8 +21,8 @@ This function produces a list of elements to be used when producing a GPAbin bip
 }
 \examples{
 data(missdat)
-missmi(missdat)
+missbp <- missmi(missdat)
 data(implist)
-missmi(implist)
+missbp <- missmi(implist)
 
 }

@@ -40,6 +40,6 @@ Creates a multiple correspondence analysis (MCA) biplot
 }
 \examples{
 data(implist)
-missmi(implist)|> DRT() |> GPAbin() |> biplFig()
+missbp <- missmi(implist)|> DRT() |> GPAbin() |> biplFig()
 
 }

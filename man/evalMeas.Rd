@@ -20,9 +20,9 @@ evalMeas(missbp, compdat = NULL, dim = c("All", "2D"))
 Calculates measures of comparison based on distances between two configurations
 }
 \examples{
-\dontrun{
+\donttest{
 data(compdat)
 data(implist)
-missmi(implist) |> DRT() |> GPAbin() |> evalMeas(compdat=compdat, dim="2D")}
+missbp <- missmi(implist) |> DRT() |> GPAbin() |> evalMeas(compdat=compdat, dim="2D")}
 
 }

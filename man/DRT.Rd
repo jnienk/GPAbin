@@ -22,6 +22,6 @@ Multiple correspondence analysis is performed on the multiple imputed datasets
 }
 \examples{
 data(implist)
-missmi(implist) |> DRT()
+missbp <- missmi(implist) |> DRT()
 
 }

@@ -23,6 +23,6 @@ Combines multiple configurations from dimension reduction solutions applied to m
 }
 \examples{
 data(implist)
-missmi(implist) |> DRT() |> GPAbin()
+missbp <- missmi(implist) |> DRT() |> GPAbin()
 
 }

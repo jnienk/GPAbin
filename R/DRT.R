@@ -15,7 +15,7 @@
 #'
 #' @examples
 #' data(implist)
-#' missmi(implist) |> DRT()
+#' missbp <- missmi(implist) |> DRT()
 #' 
 DRT <- function(missbp, method=c("MCA"))
 {

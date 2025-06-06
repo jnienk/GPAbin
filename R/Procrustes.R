@@ -16,7 +16,7 @@
 #'
 #' @examples
 #' data(implist)
-#' missmi(implist) |> DRT() |> GPAbin()
+#' missbp <- missmi(implist) |> DRT() |> GPAbin()
 #'
 GPAbin <- function(missbp, G.target=NULL)
 {
