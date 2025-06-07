@@ -4,12 +4,7 @@
 \alias{impute}
 \title{Multiple imputation}
 \usage{
-impute(
-  missbp,
-  imp.method = c("MIMCA", "jomo", "DPMPM", "mice"),
-  m = 5,
-  dim = c("2D", "All")
-)
+impute(missbp, imp.method = c("MIMCA", "jomo", "DPMPM", "mice"), m = 5)
 }
 \arguments{
 \item{missbp}{An object of class \code{missmi} obtained from preceding function \code{missmi()}.}
@@ -17,8 +12,6 @@ impute(
 \item{imp.method}{Select one of four imputation methods: \code{MIMCA}, \code{jomo}, \code{DPMPM}, \code{mice}}
 
 \item{m}{Number of multiple imputations}
-
-\item{dim}{Number of dimensions to use in final solutions (\verb{2D} or \code{All} available dimensions.)}
 }
 \value{
 \item{dataimp}{List of imputed data}

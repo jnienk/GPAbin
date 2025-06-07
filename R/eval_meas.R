@@ -93,6 +93,8 @@ evalMeas <- function (missbp, compdat=NULL, dim=c("All", "2D"))
   
   tempcomp <- OPA(missbp, compdat)
   PS <- tempcomp[[1]]
+  RMSB <- tempcomp[[2]]
+  AMB <- tempcomp[[3]]
   
   compPred <- CLPpred(CLPs=tempcomp$compCLP, Zs=tempcomp$compZ, p=ncol(compdat), n=nrow(compdat), lvls=tempcomp$complvls, datIN = compdat)
   if(is.data.frame(missbp$X)) 
@@ -104,48 +106,6 @@ evalMeas <- function (missbp, compdat=NULL, dim=c("All", "2D"))
       }
   GPAPred <-  CLPpred(CLPs=missbp$CLP.GPAbin,Zs=missbp$Z.GPAbin, p=missbp$p, n=missbp$n, lvls=missbp$lvlv[[1]], datIN=datIN)
   
-  Z.Target <- tempcomp[[2]]
-  CLP.Target <- tempcomp[[3]]
-  
-  Z.Testee <- missbp$Z.GPAbin
-  CLP.Testee <- missbp$CLP.GPAbin
-  
-  counter <- 0
-  Target <- rbind(Z.Target, CLP.Target)
-  Testee <- rbind(Z.Testee, CLP.Testee)
-  
-  nCLTar <- nrow(Target)
-  nCLTes <- nrow(Testee)
-  
-  Tarnam <- rownames(Target)
-  Tesnam <- rownames(Testee)
-  
-  #finding the CLs that occur in both Target and Testee and deleting the CLs that do #not appear in both in order to obtain a one-to-one comparison
-  rem <- which(is.na(match(Tarnam,Tesnam)))
-  if(is.integer0(rem))
-  {
-    Target <- Target
-    counter <- counter+1#counts the matched cases
-  } else {Target<- Target[-rem,]}
-  
-  if(dim=="All")
-  {
-    pY <- ncol(Target)
-    pX <- ncol(Testee)
-    #the maximum number of common columns to use
-    colUse <- min(pY,pX)
-    Target <- Target[,1:colUse]
-    Testee <- Testee[,1:colUse]
-  } else
-    if (dim=="2D")
-    {
-      Target <- Target[,1:2]
-      Testee <- Testee[,1:2]
-    }
-  
-  RMSB <- ((sum(sum((Target-Testee)^2)))/length(Testee))^(0.5)
-  AMB <- (sum(sum(abs(Target-Testee))))/length(Testee)
-
   match.count <- sum(mapply(as.character,compPred)==mapply(as.character,GPAPred))
   
   SP <- match.count/(p*n)
@@ -160,5 +120,8 @@ evalMeas <- function (missbp, compdat=NULL, dim=c("All", "2D"))
   rownames(EVALtable)<- c("PS","SP","RPR", "AMB", "RMSB")
   
   missbp$eval <- round(EVALtable,4)
+  missbp$GPApred <-GPAPred
+  missbp$compPred <- compPred
+  
   missbp
 }

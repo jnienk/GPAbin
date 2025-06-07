@@ -142,6 +142,7 @@ GPA <- function(Xk, G.target=NULL, iter=500, eps=0.001)
 #' @param missbp An object of class \code{missmi} obtained from preceding function \code{missmi()}
 #' @param compdat Complete data set, only available for simulated data examples.
 #' @param centring Logical argument to apply centering, default is `TRUE`.
+#' @param dim Number of dimensions to use in final solutions (`2D` or `All` available dimensions.)
 #'
 #' @return
 #' \item{ProcStat}{Procrustes Statistic}
@@ -151,7 +152,7 @@ GPA <- function(Xk, G.target=NULL, iter=500, eps=0.001)
 #' \item{compdat}{Complete data set, only available for simulated data examples}
 #' @export
 #' 
-OPA <- function(missbp, compdat, centring = TRUE)
+OPA <- function(missbp, compdat, centring = TRUE, dim = "2D")
 {
   #creating coordinates of complete set
   #DRT on complete data
@@ -160,23 +161,45 @@ OPA <- function(missbp, compdat, centring = TRUE)
   compCLP <- temp[[23]]
   complvls <- temp[[6]]
   target <- rbind(compZ, compCLP)
-  #target <- as.matrix(target) #target complete
   
   #testee from missbp object
   testee <- rbind(missbp$Z.GPAbin, missbp$CLP.GPAbin)
-  #testee <- as.matrix(testee)
   
-  # n <- missbp$n
-  # p <- missbp$p
+  nCLTar <- nrow(target)
+  nCLTes <- nrow(testee)
   
-  n <- nrow(target)
+  Tarnam <- rownames(target)
+  Tesnam <- rownames(testee)
+  
+  #finding the CLs that occur in both Target and Testee and deleting the CLs that do #not appear in both in order to obtain a one-to-one comparison
+  counter <- 0
+  rem <- which(is.na(match(Tarnam,Tesnam)))
+  if(is.integer0(rem))
+  {
+    target <- target
+    counter <- counter+1#counts the matched cases
+  } else {Target<- Target[-rem,]}
+  
+  if(dim=="All")
+  {
+    pY <- ncol(target)
+    pX <- ncol(testee)
+    #the maximum number of common columns to use
+    colUse <- min(pY,pX)
+    target <- target[,1:colUse]
+    testee <- testee[,1:colUse]
+  } else
+    if (dim=="2D")
+    {
+      target <- target[,1:2]
+      testee <- testee[,1:2]
+    }
   
   if(!centring)
   {
     testee <- testee
     target <- target
-  }
-  else
+  } else
   {
     testee <- scale(testee,T,F)
     #centre=T, scale=F results are similar to Cox and Cox, Gower and #Dijkersthuis, Borg and Groenen
@@ -189,12 +212,14 @@ OPA <- function(missbp, compdat, centring = TRUE)
   A.mat <- svd.C[[3]]%*%t(svd.C[[2]])
   s.fact <- sum(diag(t(target)%*%testee%*%A.mat))/sum(diag(t(testee)%*%testee))
   #Gower and Dijksterhuis P32
-  b.fact <- as.vector(1/n * t(target - s.fact * testee %*% A.mat)%*%rep(1,n))
+  b.fact <- as.vector(1/nCLTar * t(target - s.fact * testee %*% A.mat)%*%rep(1,nCLTar))
   
   X.new <- b.fact + s.fact*testee%*%A.mat
   
   Res.SS <- sum(diag(t(((s.fact*testee%*%A.mat)-target))%*%((s.fact*testee%*%A.mat)-target)))
   PS <- Res.SS/sum(diag(t(target)%*%target))
+  RMSB <- ((sum(sum((target-testee)^2)))/length(testee))^(0.5)
+  AMB <- (sum(sum(abs(target-testee))))/length(testee)
   
-  return(list(ProcStat = PS, compZ=compZ, compCLP=compCLP, complvls=complvls, compdat=compdat))
+  return(list(ProcStat = PS, RMSB = RMSB, AMB = AMB, compZ=compZ, compCLP=compCLP, complvls=complvls, compdat=compdat))
 }

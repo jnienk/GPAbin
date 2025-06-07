@@ -5,7 +5,6 @@
 #' @param missbp An object of class \code{missmi} obtained from preceding function \code{missmi()}.
 #' @param imp.method Select one of four imputation methods: `MIMCA`, `jomo`, `DPMPM`, `mice`
 #' @param m Number of multiple imputations
-#' @param dim Number of dimensions to use in final solutions (`2D` or `All` available dimensions.)
 #'
 #' @returns
 #' \item{dataimp}{List of imputed data}
@@ -17,7 +16,7 @@
 #' data(missdat)
 #' missbp <- missmi(missdat) |> impute(imp.method="DPMPM", m=5)}
 #' 
-impute <- function(missbp, imp.method=c("MIMCA","jomo","DPMPM","mice"), m=5, dim=c("2D","All"))
+impute <- function(missbp, imp.method=c("MIMCA","jomo","DPMPM","mice"), m=5)
 {
   if(is.null(missbp$miss_pct)) stop("Don't apply an imputation method. Your data is already complete, continue to DRT().")
   

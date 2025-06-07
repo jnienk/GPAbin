@@ -1,11 +1,9 @@
 ## Overview
 
-Fixed the automated check issue reported with submission 1.0.3.
+Examples were updated to write output to an object, as well as adding \donttest{} to some examples reported with submission 1.0.4.
 
-── R CMD check results ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────── GPAbin 1.0.4 ────
-Duration: 1m 3.6s
-
-0 errors ✔ | 0 warnings ✔ | 0 notes ✔
+── R CMD check results ──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────── GPAbin 1.0.5 ────
+Duration: 1m 8s
 
 ## Test environment
 
