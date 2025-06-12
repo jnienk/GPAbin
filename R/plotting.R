@@ -28,11 +28,13 @@ biplFig <- function (missbp, Z.col="#61223b", CLP.col="#b79962", Z.pch=19,
   Zs <- missbp$Z.GPAbin
   lvls <- missbp$lvls[[1]] #use the first list element for levels, check for other cases (to do)
   
+  oldpar <- graphics::par(no.readonly = TRUE) 
+  on.exit(graphics::par(oldpar))
+
   grDevices::dev.new()
   
-  old.par <- graphics::par(pty = "s")
-  withr::defer(graphics::par(old.par))
-
+  graphics::par(pty = "s")
+  
   plot(rbind(CLPs[,1:2],Zs[,1:2]), pch="", xaxt="n", yaxt="n", xlab="", ylab="", main=title)
   graphics::points(Zs, pch=Z.pch, col=Z.col)
   graphics::points(CLPs, pch=CLP.pch, col=CLP.col)
@@ -45,6 +47,7 @@ biplFig <- function (missbp, Z.col="#61223b", CLP.col="#b79962", Z.pch=19,
   {
     graphics::text(CLPs, cex=0.7, label=lvls, pos=3)
   }
+  missbp
 }
 
 ###################################################################################

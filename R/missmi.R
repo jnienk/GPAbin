@@ -39,7 +39,6 @@ missmi <- function(data)
       n <- nrow(X[[1]]) #assuming all lists will be the same size
       p <- ncol(X[[1]]) #assuming all lists will be the same size
       miss_pct <- NULL
-      print(paste("There are", m, "imputations / variations of your data available."))
     }
     else
     {
@@ -50,11 +49,40 @@ missmi <- function(data)
       miss_over <- sum(miss_pct)/p
       m <- NULL
       if((miss_over==0) && is.null(m)) stop("The data is complete.")
-      print(paste("Missing data with a total of", round(miss_over,0), "% missing values."))
     }
 
   missbp <- list(X = X, m = m, n = n, p=p, miss_pct = miss_pct)
   class(missbp) <- "missmi"
   
   missbp
+}
+
+###################################################################################
+###################################################################################
+#' Generic print function for objects of class missmi
+#' @description
+#' This function is used to print output when the missmi biplot object is created.
+#' 
+#' @param x an object of class \code{missmi}.
+#' @param ... additional arguments.
+#'
+#' @return This function will not produce a return value, it is called for side effects.
+#'
+#' @export
+#' @examples
+#' data(missdat)
+#' missbp <- missmi(missdat)
+#' data(implist)
+#' missbp <- missmi(implist)
+#' print(missbp)
+#' 
+print.missmi <- function (x, ...)
+{
+  if(!is.data.frame(x$X))
+  {
+    print(paste("There are", x$m, "imputations / variations of your data available."))
+  } else
+  {
+    print(paste("Missing data with a total of", round(mean(x$miss_pct),0), "% missing values."))
+  }
 }

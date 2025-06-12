@@ -1,11 +1,15 @@
 ## Overview
 
-Examples were updated to write output to an object, as well as adding \donttest{} to some examples reported with submission 1.0.4.
+Plotting parameters have been restored with on.exit() in the plotting() function (see R/plotting.R lines 31-32).
+A generic print function has been added (print.missmi) to address the problem with the information that was printed to the console (see R/missmi.R lines 60-88).
 
-── R CMD check results ──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────── GPAbin 1.0.5 ────
-Duration: 1m 8s
+── R CMD check results ──── GPAbin 1.0.6 ────
+Duration: 2m 9.4s
 
-0 errors ✔ | 0 warnings ✔ | 0 notes ✔
+❯ checking for future file timestamps ... NOTE
+  unable to verify current time
+
+0 errors ✔ | 0 warnings ✔ | 1 note ✖
 
 ## Test environment
 
