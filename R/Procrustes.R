@@ -168,9 +168,9 @@ OPA <- function(missbp, compdat, centring = TRUE, dim = "2D")
   nCLTar <- nrow(target)
   nCLTes <- nrow(testee)
   
-  Tarnam <- rownames(target)
-  Tesnam <- rownames(testee)
-  
+  Tarnam <- complvls#rownames(target)
+  Tesnam <- missbp$lvls[[1]]#rownames(testee)
+
   #finding the CLs that occur in both Target and Testee and deleting the CLs that do #not appear in both in order to obtain a one-to-one comparison
   counter <- 0
   rem <- which(is.na(match(Tarnam,Tesnam)))
@@ -178,7 +178,7 @@ OPA <- function(missbp, compdat, centring = TRUE, dim = "2D")
   {
     target <- target
     counter <- counter+1#counts the matched cases
-  } else {Target<- Target[-rem,]}
+  } else {target <- target[-rem,]}
   
   if(dim=="All")
   {
@@ -212,7 +212,7 @@ OPA <- function(missbp, compdat, centring = TRUE, dim = "2D")
   A.mat <- svd.C[[3]]%*%t(svd.C[[2]])
   s.fact <- sum(diag(t(target)%*%testee%*%A.mat))/sum(diag(t(testee)%*%testee))
   #Gower and Dijksterhuis P32
-  b.fact <- as.vector(1/nCLTar * t(target - s.fact * testee %*% A.mat)%*%rep(1,nCLTar))
+  b.fact <- as.vector(1/nrow(target) * t(target - s.fact * testee %*% A.mat)%*%rep(1,nrow(target)))
   
   X.new <- b.fact + s.fact*testee%*%A.mat
   

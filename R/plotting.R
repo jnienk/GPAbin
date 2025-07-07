@@ -22,7 +22,7 @@
 #' missbp <- missmi(implist)|> DRT() |> GPAbin() |> biplFig()
 #' 
 biplFig <- function (missbp, Z.col="#61223b", CLP.col="#b79962", Z.pch=19,
-                     CLP.pch=15,Z.cex=1.5,CLP.cex=1.7,title="") 
+                     CLP.pch=15, Z.cex=1.5, CLP.cex=1.7, title="") 
 {
   CLPs <- missbp$CLP.GPAbin
   Zs <- missbp$Z.GPAbin
