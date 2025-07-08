@@ -11,8 +11,7 @@ You can install the development version of GPAbin from
 [GitHub](https://github.com/) with:
 
 ``` r
-# install.packages("pak")
-pak::pak("jnienk/GPAbin")
+devtools::install_github("jnienk/GPAbin")
 ```
 
 ## About the name
