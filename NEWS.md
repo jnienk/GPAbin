@@ -1,3 +1,3 @@
-# GPAbin 1.0.0
+# GPAbin 1.1.0
 
-* Initial CRAN submission.
+* This version includes the possibility to calculate evaluation measures for complete and completed datasets with different number of response levels.

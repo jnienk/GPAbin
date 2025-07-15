@@ -1,15 +1,12 @@
 ## Overview
 
-Plotting parameters have been restored with on.exit() in the plotting() function (see R/plotting.R lines 31-32).
-A generic print function has been added (print.missmi) to address the problem with the information that was printed to the console (see R/missmi.R lines 60-88).
+This version includes updates to the `evalMeas()` function which now allows the comparison of a complete dataset and completed dataset (via imputation) even if the number of response levels are not equal.
 
-── R CMD check results ──── GPAbin 1.0.6 ────
-Duration: 2m 9.4s
+── R CMD check results ───────────────────────────────────────────────────────────────────────────────────── GPAbin 1.1.0 ────
+Duration: 2m 3.8s
 
 ❯ checking for future file timestamps ... NOTE
   unable to verify current time
-
-0 errors ✔ | 0 warnings ✔ | 1 note ✖
 
 ## Test environment
 
