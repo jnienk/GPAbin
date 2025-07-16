@@ -1,6 +1,6 @@
 ## Overview
 
-This version includes updates to the `evalMeas()` function which now allows the comparison of a complete dataset and completed dataset (via imputation) even if the number of response levels are not equal.
+MINOR change: This version includes updates to the `evalMeas()` function which now allows the comparison of a complete dataset and completed dataset (via imputation) even if the number of response levels are not equal.
 
 ── R CMD check results ───────────────────────────────────────────────────────────────────────────────────── GPAbin 1.1.0 ────
 Duration: 2m 3.8s

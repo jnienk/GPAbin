@@ -1,0 +1,105 @@
+
+R version 4.5.0 (2025-04-11 ucrt) -- "How About a Twenty-Six"
+Copyright (C) 2025 The R Foundation for Statistical Computing
+Platform: x86_64-w64-mingw32/x64
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> pkgname <- "moveEZ"
+> source(file.path(R.home("share"), "R", "examples-header.R"))
+> options(warn = 1)
+> options(pager = "console")
+> library('moveEZ')
+> 
+> base::assign(".oldSearch", base::search(), pos = 'CheckExEnv')
+> base::assign(".old_wd", base::getwd(), pos = 'CheckExEnv')
+> cleanEx()
+> nameEx("moveplot")
+> ### * moveplot
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: moveplot
+> ### Title: Move plot
+> ### Aliases: moveplot
+> 
+> ### ** Examples
+> 
+> data(Africa_climate)
+> bp <- biplotEZ::biplot(Africa_climate, scaled = TRUE) |> biplotEZ::PCA()
+> bp |> moveplot(time.var = "Year", group.var = "Region", hulls = TRUE, move = FALSE)
+> bp |> moveplot(time.var = "Year", group.var = "Region", hulls = FALSE, move = FALSE)
+> 
+> 
+> 
+> cleanEx()
+> nameEx("moveplot2")
+> ### * moveplot2
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: moveplot2
+> ### Title: Move plot 2
+> ### Aliases: moveplot2
+> 
+> ### ** Examples
+> 
+> data(Africa_climate)
+> bp <- biplotEZ::biplot(Africa_climate, scaled = TRUE) |> biplotEZ::PCA()
+> 
+> 
+> 
+> cleanEx()
+> nameEx("moveplot3")
+> ### * moveplot3
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: moveplot3
+> ### Title: Move plot 3
+> ### Aliases: moveplot3
+> 
+> ### ** Examples
+> 
+> data(Africa_climate)
+> data(Africa_climate_target)
+> bp <- biplotEZ::biplot(Africa_climate, scaled = TRUE) |> biplotEZ::PCA()
+> bp |> moveplot3(time.var = "Year", group.var = "Region", hulls = TRUE,
++ move = FALSE, target = NULL)
+Warning: The `x` argument of `as_tibble.matrix()` must have unique column names if
+`.name_repair` is omitted as of tibble 2.0.0.
+ℹ Using compatibility `.name_repair`.
+ℹ The deprecated feature was likely used in the moveEZ package.
+  Please report the issue to the authors.
+> bp |> moveplot3(time.var = "Year", group.var = "Region", hulls = TRUE,
++ move = FALSE, target = Africa_climate_target)
+> 
+> 
+> 
+> ### * <FOOTER>
+> ###
+> cleanEx()
+> options(digits = 7L)
+> base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
+Time elapsed:  3.58 0.18 3.75 NA NA 
+> grDevices::dev.off()
+null device 
+          1 
+> ###
+> ### Local variables: ***
+> ### mode: outline-minor ***
+> ### outline-regexp: "\\(> \\)?### [*]+" ***
+> ### End: ***
+> quit('no')
