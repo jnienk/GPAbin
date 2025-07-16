@@ -23,3 +23,4 @@ Suggests:
     knitr
 Config/Needs/website: rmarkdown
 BugReports: https://github.com/jnienk/GPAbin/issues
+URL: https://jnienk.github.io/GPAbin/

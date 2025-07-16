@@ -10,3 +10,7 @@
 ^CRAN-SUBMISSION$
 ^revdep$
 ^\.gitignore$
+^_pkgdown\.yml$
+^docs$
+^pkgdown$
+^\.github$
