@@ -1,10 +1,12 @@
 ## Overview
 
-MINOR change: This version includes updates to the `evalMeas()` function which now allows the comparison of a complete dataset and completed dataset (via imputation) even if the number of response levels are not equal.
+PATCH release: This version includes the construction of a complete MCA biplot when biplFig() is called. In the previous version only the GPAbin biplot was constructed.
 
-── R CMD check results ───────────────────────────────────────────────────────────────────────────────────── GPAbin 1.1.0 ────
-Duration: 1m 10.8s
+── R CMD check results ─────────────────────────────────────────────────────────────────────── GPAbin 1.1.1 ────
+Duration: 2m 30.4s
 
+❯ checking for future file timestamps ... NOTE
+  unable to verify current time
 
 ## Test environment
 
