@@ -67,24 +67,32 @@ CLPpred <- function (CLPs=CLPs, Zs=Zs, p=p, n=n, lvls=lvls, datIN = datIN)
 ###################################################################################
 #' Evaluation measures when complete data is available
 #'
-#' Calculates measures of comparison based on distances between two configurations
+#' Calculates measures of comparison based on distances between two configurations in two dimensions.
 #' 
 #' @param missbp An object of class \code{missbp} obtained from preceding function \code{missmi()}.
 #' @param compdat Complete data matrix representing the input data of \code{missmi()}
-#' @param dim Compare the configurations in 2D or the maximum available ("All") dimensions, default is `2D`.
 #'
 #' @return
+#' The `missbp` object is appended with the following objects:
 #' \item{eval}{Returns a data table with five evaluation measures: Procrustes Statistic (PS), Similarity Proportion (SP), Response Profile Recovery (RPR), Absolute Mean Bias (AMB), Root Mean Squared Bias (RMSB)}
+#' \item{GPApred}{A dataframe representing predicted categorical responses from the GPAbin biplot.}
+#' \item{compPred}{A dataframe representing predicted categorical responses from the complete MCA biplot.}
+#' \item{compZs}{Sample coordinates for the MCA biplot of the complete data.}
+#' \item{compCLPs}{CLPs for the MCA biplot of the complete data.}
+#' \item{complvls}{Names of the CLPs for the MCA biplot of the complete data.}
 #' 
+#' See also \code{\link{missmi}}, \code{\link{impute}}, \code{\link{DRT}} and \code{\link{GPAbin}}.
+#' 
+#' For more detail, refer to Nienkemper-Swanepoel, J., le Roux, N. J., & Gardner-Lubbe, S. (2021). GPAbin: unifying visualizations of multiple imputations for missing values. Communications in Statistics - Simulation and Computation, 52(6), 2666–2685. https://doi.org/10.1080/03610918.2021.1914089.
 #' @export
 #'
 #' @examples
 #' \donttest{
 #' data(compdat)
 #' data(implist)
-#' missbp <- missmi(implist) |> DRT() |> GPAbin() |> evalMeas(compdat=compdat, dim="2D")}
+#' missbp <- missmi(implist) |> DRT() |> GPAbin() |> evalMeas(compdat=compdat)}
 #'
-evalMeas <- function (missbp, compdat=NULL, dim=c("All", "2D"))
+evalMeas <- function (missbp, compdat=NULL)
 {
   if(is.null(compdat)) stop("No complete data set available for comparison. \nThis function is only applicable for simulated data.")
 
@@ -95,6 +103,11 @@ evalMeas <- function (missbp, compdat=NULL, dim=c("All", "2D"))
   PS <- tempcomp[[1]]
   RMSB <- tempcomp[[2]]
   AMB <- tempcomp[[3]]
+  
+  #to extract complete data coordinates
+  compZs <- tempcomp[[4]]
+  compCLPs <- tempcomp[[5]]
+  complvls <- tempcomp[[6]]
   
   compPred <- CLPpred(CLPs=tempcomp$compCLP, Zs=tempcomp$compZ, p=ncol(compdat), n=nrow(compdat), lvls=tempcomp$complvls, datIN = compdat)
   if(is.data.frame(missbp$X)) 
@@ -122,6 +135,9 @@ evalMeas <- function (missbp, compdat=NULL, dim=c("All", "2D"))
   missbp$eval <- round(EVALtable,4)
   missbp$GPApred <-GPAPred
   missbp$compPred <- compPred
+  missbp$compZs <- compZs
+  missbp$compCLPs <- compCLPs
+  missbp$complvls <- complvls
   
   missbp
 }

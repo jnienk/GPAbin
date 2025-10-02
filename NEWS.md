@@ -1,3 +1,6 @@
+# GPAbin 1.1.1
+* This version includes the construction of a complete MCA biplot when biplFig() is called. In the previous version only the GPAbin biplot was constructed.
+
 # GPAbin 1.1.0
 
 * This version includes the possibility to calculate evaluation measures for complete and completed datasets with different number of response levels.

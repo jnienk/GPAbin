@@ -15,7 +15,7 @@
 #'
 #' @returns
 #' \item{X}{The processed data}
-#' \item{imputations}{Number of multiple imputations applied}
+#' \item{m}{Number of multiple imputations applied}
 #' \item{n}{The number of samples}
 #' \item{p}{The number of variables}
 #' \item{miss_pct}{Percentage of missing values}

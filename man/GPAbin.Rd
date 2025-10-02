@@ -12,11 +12,16 @@ GPAbin(missbp, G.target = NULL)
 \item{G.target}{Target configuration. If not specified the centroid configuration will be used as the target.}
 }
 \value{
+The \code{missbp} object is appended with the following objects:
 \item{Z.GPA.list}{List containing the sample coordinates for each MI after GPA}
 \item{CLP.GPA.list}{List containing the CLPs for each MI after GPA}
 \item{G.target}{Target configuration}
 \item{Z.GPAbin}{Sample coordinates for the GPAbin biplot}
 \item{CLP.GPAbin}{CLPs for the GPAbin biplot}
+
+See also \code{\link{missmi}}, \code{\link{impute}} and \code{\link{DRT}}.
+
+For more detail, refer to Nienkemper-Swanepoel, J., le Roux, N. J., & Gardner-Lubbe, S. (2021). GPAbin: unifying visualizations of multiple imputations for missing values. Communications in Statistics - Simulation and Computation, 52(6), 2666–2685. https://doi.org/10.1080/03610918.2021.1914089.
 }
 \description{
 Combines multiple configurations from dimension reduction solutions applied to multiple imputed data sets

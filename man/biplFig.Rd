@@ -33,7 +33,10 @@ biplFig(
 \item{title}{Title of the plot}
 }
 \value{
-A biplot.
+\itemize{
+\item If \code{compdat = NULL} in \code{\link{evalMeas}}, only a GPAbin biplot will be constructed.
+\item If a complete data set (\code{compdat}) was specified in \code{\link{evalMeas}}, two biplots will be constructed: (1) Complete MCA biplot and (2) GPAbin biplot.
+}
 }
 \description{
 Creates a multiple correspondence analysis (MCA) biplot

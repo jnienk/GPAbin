@@ -12,10 +12,13 @@ DRT(missbp, method = c("MCA"))
 \item{method}{Select a dimension reduction technique. In the current version \code{MCA} is available.}
 }
 \value{
+The \code{missbp} object is appended with the following objects:
 \item{Z}{List of sample coordinates}
 \item{CLP}{List of category level point coordinates}
 \item{lvls}{List of category level names}
 \item{m}{Number of multiple imputations}
+
+See also \code{\link{missmi}} and \code{\link{impute}}.
 }
 \description{
 Multiple correspondence analysis is performed on the multiple imputed datasets

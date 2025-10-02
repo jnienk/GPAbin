@@ -6,11 +6,13 @@
 #' @param method Select a dimension reduction technique. In the current version `MCA` is available.
 #'
 #' @return
+#' The `missbp` object is appended with the following objects:
 #' \item{Z}{List of sample coordinates}
 #' \item{CLP}{List of category level point coordinates}
 #' \item{lvls}{List of category level names}
 #' \item{m}{Number of multiple imputations}
 #' 
+#' See also \code{\link{missmi}} and \code{\link{impute}}.
 #' @export
 #'
 #' @examples
@@ -57,4 +59,4 @@ DRT <- function(missbp, method=c("MCA"))
   missbp$lvls <- lvls.list
   
   missbp
-  }
+}
