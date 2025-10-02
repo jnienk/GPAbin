@@ -6,10 +6,10 @@ knitr::opts_chunk$set(
 library(stringr)
 
 ## ----eval = FALSE-------------------------------------------------------------
-#  # The regular call:
-#  str_extract(fruit, "nana")
-#  # Is shorthand for
-#  str_extract(fruit, regex("nana"))
+# # The regular call:
+# str_extract(fruit, "nana")
+# # Is shorthand for
+# str_extract(fruit, regex("nana"))
 
 ## -----------------------------------------------------------------------------
 x <- c("apple", "banana", "pear")

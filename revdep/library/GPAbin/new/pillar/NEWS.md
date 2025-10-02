@@ -1,10 +1,13 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# pillar 1.11.1
+
+## Features
+
+- `glimpse()` also works for stingy duckplyr data frames.
+
+
 # pillar 1.11.0
-
-## fledge
-
-- CRAN pre-release v1.10.99.9900 (#787).
 
 ## Bug fixes
 

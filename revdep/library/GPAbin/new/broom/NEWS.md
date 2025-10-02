@@ -1,3 +1,14 @@
+# broom 1.0.10
+
+* Resolves an R CMD check WARNING related to namespacing on 
+  r-devel (pre-4.6.0, #1255).
+
+# broom 1.0.9
+
+* Increased minimum required R verison to 4.1.
+
+* Resolved errors with the 2.0.85 update of the epiR package.
+
 # broom 1.0.8
 
 ## Deprecations

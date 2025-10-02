@@ -46,12 +46,12 @@ filenames
 vroom(purrr::map(filenames[c(1, 3)], ~ unz(zip_file, .x)))
 
 ## ----eval = as.logical(Sys.getenv("NOT_CRAN", "false"))-----------------------
-#  file <- "https://raw.githubusercontent.com/tidyverse/vroom/main/inst/extdata/mtcars.csv"
-#  vroom(file)
+# file <- "https://raw.githubusercontent.com/tidyverse/vroom/main/inst/extdata/mtcars.csv"
+# vroom(file)
 
 ## ----eval = as.logical(Sys.getenv("NOT_CRAN", "false"))-----------------------
-#  file <- "https://raw.githubusercontent.com/tidyverse/vroom/main/inst/extdata/mtcars.csv.gz"
-#  vroom(file)
+# file <- "https://raw.githubusercontent.com/tidyverse/vroom/main/inst/extdata/mtcars.csv.gz"
+# vroom(file)
 
 ## -----------------------------------------------------------------------------
 file <- vroom_example("mtcars.csv.gz")
@@ -112,10 +112,10 @@ vroom(
 )
 
 ## ----eval = FALSE-------------------------------------------------------------
-#  vroom(
-#    vroom_example("mtcars.csv"),
-#    .name_repair = ~ janitor::make_clean_names(., case = "all_caps")
-#  )
+# vroom(
+#   vroom_example("mtcars.csv"),
+#   .name_repair = ~ janitor::make_clean_names(., case = "all_caps")
+# )
 
 ## -----------------------------------------------------------------------------
 vroom_write(mtcars, "mtcars.tsv")
@@ -140,7 +140,7 @@ vroom_write(mtcars, "mtcars.tsv.xz")
 unlink(c("mtcars.tsv.gz", "mtcars.tsv.bz2", "mtcars.tsv.xz"))
 
 ## ----eval = nzchar(Sys.which("pigz"))-----------------------------------------
-#  vroom_write(mtcars, pipe("pigz > mtcars.tsv.gz"))
+# vroom_write(mtcars, pipe("pigz > mtcars.tsv.gz"))
 
 ## ----include = FALSE----------------------------------------------------------
 unlink("mtcars.tsv.gz")

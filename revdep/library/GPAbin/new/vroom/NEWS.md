@@ -1,3 +1,7 @@
+# vroom 1.6.6
+
+* Fixed a bad URL in the README at CRAN's request.
+
 # vroom 1.6.5
 
 * Internal changes requested by CRAN around format specification (#524).

@@ -1,7 +1,7 @@
 Package: xfun
 Type: Package
 Title: Supporting Functions for Packages Maintained by 'Yihui Xie'
-Version: 0.52
+Version: 0.53
 Authors@R: c(
   person("Yihui", "Xie", role = c("aut", "cre", "cph"), email = "xie@yihui.name", comment = c(ORCID = "0000-0003-0645-5666", URL = "https://yihui.org")),
   person("Wush", "Wu", role = "ctb"),
@@ -15,8 +15,9 @@ Description: Miscellaneous functions commonly used in other packages maintained 
 Depends: R (>= 3.2.0)
 Imports: grDevices, stats, tools
 Suggests: testit, parallel, codetools, methods, rstudioapi, tinytex (>=
-        0.30), mime, litedown (>= 0.4), commonmark, knitr (>= 1.50),
-        remotes, pak, curl, xml2, jsonlite, magick, yaml, qs
+        0.30), mime, litedown (>= 0.6), commonmark, knitr (>= 1.50),
+        remotes, pak, curl, xml2, jsonlite, magick, yaml, data.table,
+        qs
 License: MIT + file LICENSE
 URL: https://github.com/yihui/xfun
 BugReports: https://github.com/yihui/xfun/issues
@@ -24,16 +25,16 @@ Encoding: UTF-8
 RoxygenNote: 7.3.2
 VignetteBuilder: litedown
 NeedsCompilation: yes
-Packaged: 2025-04-02 19:53:53 UTC; runner
-Author: Yihui Xie [aut, cre, cph] (<https://orcid.org/0000-0003-0645-5666>,
-    https://yihui.org),
+Packaged: 2025-08-18 23:51:54 UTC; yihui
+Author: Yihui Xie [aut, cre, cph] (ORCID:
+    <https://orcid.org/0000-0003-0645-5666>, URL: https://yihui.org),
   Wush Wu [ctb],
   Daijiang Li [ctb],
   Xianying Tan [ctb],
-  Salim Brüggemann [ctb] (<https://orcid.org/0000-0002-5329-5987>),
+  Salim Brüggemann [ctb] (ORCID: <https://orcid.org/0000-0002-5329-5987>),
   Christophe Dervieux [ctb]
 Maintainer: Yihui Xie <xie@yihui.name>
 Repository: CRAN
-Date/Publication: 2025-04-02 20:40:02 UTC
-Built: R 4.5.1; x86_64-w64-mingw32; 2025-07-14 00:35:59 UTC; windows
+Date/Publication: 2025-08-19 02:50:02 UTC
+Built: R 4.5.1; x86_64-w64-mingw32; 2025-09-29 00:31:04 UTC; windows
 Archs: x64

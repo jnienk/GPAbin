@@ -1,3 +1,15 @@
+# later 1.4.4
+
+* Fixed timings in a test (#237). No user-facing changes.
+
+# later 1.4.3
+
+* Fixed #215: The `autorun` argument of `create_loop()`, long deprecated, is removed (#222).
+
+* Fixed #167: `.Random.seed` is no longer affected when the package is loaded (#220).
+
+* Set file-level variables as `static` to avoid triggering `-Wmissing-variable-declarations` (@michaelchirico, #163).
+
 # later 1.4.2
 
 * Fixed #208: Fixed `keyword is hidden by macro definition` compiler warning when using a C23 compiler. (@shikokuchuo, #209)

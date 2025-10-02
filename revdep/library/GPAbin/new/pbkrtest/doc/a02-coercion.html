@@ -117,7 +117,7 @@ section.footnotes {
 <div class="author"><h2>Søren Højsgaard and Ulrich Halekoh</h2></div>
 </div>
 <div class="body">
-<p><strong>Package version: 0.5.4</strong></p>
+<p><strong>Package version: 0.5.5</strong></p>
 <p>Consider two linear models; the smaller is a submodel of the large:</p>
 <pre><code class="language-r">N &lt;- 4
 dat &lt;- data.frame(int=rep(1, N), x=1:N, y=rnorm(N))
@@ -132,7 +132,7 @@ lg
 ## 
 ## Coefficients:
 ## (Intercept)            x       I(x^2)  
-##     -0.8903      -0.2191       0.1543
+##      1.3032      -2.1246       0.5443
 </code></pre>
 <pre><code class="language-r">sm
 </code></pre>
@@ -142,7 +142,7 @@ lg
 ## 
 ## Coefficients:
 ## (Intercept)            x  
-##     -1.6620       0.5526
+##     -1.4181       0.5967
 </code></pre>
 <p>The corresponding model matrices are</p>
 <pre><code class="language-r">Xlg &lt;- model.matrix(lg)
@@ -201,14 +201,14 @@ sm_2
 <pre><code>## 
 ## Call:
 ## lm(formula = y ~ .X1 + .X2 - 1, data = structure(list(.X1 = c(1, 
-## 2, 3, 4), .X2 = c(1, 1, 1, 1), y = c(-1.20301638416839, 0.0324813569827314, 
-## -0.902338828208958, 0.950505583336091), x = 1:4, `I(x^2)` = structure(c(1, 
+## 2, 3, 4), .X2 = c(1, 1, 1, 1), y = c(-0.0246086801960964, -1.52646545622158, 
+## 0.585275909677089, 1.26047116172588), x = 1:4, `I(x^2)` = structure(c(1, 
 ## 4, 9, 16), class = &quot;AsIs&quot;)), class = &quot;data.frame&quot;, row.names = c(NA, 
 ## 4L)))
 ## 
 ## Coefficients:
 ##     .X1      .X2  
-##  0.5526  -1.6620
+##  0.5967  -1.4181
 </code></pre>
 <pre><code class="language-r">sm_2 |&gt; model.matrix()
 </code></pre>

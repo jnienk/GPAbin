@@ -1,3 +1,9 @@
+# glmnet 4.1-10
+
+Adjusted plotting again. Default is now using -log(lambda) as default
+for plotting, which is option xvar='lambda'. Also fixed labeling
+issues with predict and coef
+
 # glmnet 4.1-9
 
 Changed default plotting xvar = "lambda". Corrected some minor issues

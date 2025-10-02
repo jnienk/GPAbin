@@ -5,7 +5,6 @@ emmeans-package	emmeans-package
 .cmpMM	extending-emmeans
 .combine.terms	extending-emmeans
 .diag	extending-emmeans
-.emm_basis	extending-emmeans
 .emm_register	extending-emmeans
 .emm_vignette	extending-emmeans
 .get.excl	extending-emmeans
@@ -13,7 +12,6 @@ emmeans-package	emmeans-package
 .hurdle.support	extending-emmeans
 .my.vcov	extending-emmeans
 .num.key	extending-emmeans
-.recover_data	extending-emmeans
 .std.link.labels	extending-emmeans
 .zi.support	extending-emmeans
 add_grouping	manip-factors

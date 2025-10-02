@@ -48,8 +48,9 @@ overflow: visible;
 }
 </style>
 <style type="text/css" data-origin="pandoc">
+html { -webkit-text-size-adjust: 100%; }
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -375,7 +376,7 @@ examples and tests. Access it with
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="co"># See where the example file is stored on your machine</span></span>
 <span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a>file <span class="ot">&lt;-</span> <span class="fu">vroom_example</span>(<span class="st">&quot;mtcars.csv&quot;</span>)</span>
 <span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a>file</span>
-<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a><span class="co">#&gt; [1] &quot;/private/tmp/RtmpDxlsSX/Rinst130257392eda0/vroom/extdata/mtcars.csv&quot;</span></span>
+<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a><span class="co">#&gt; [1] &quot;/private/tmp/Rtmp1sTwRu/Rinst110e04bd4e79a/vroom/extdata/mtcars.csv&quot;</span></span>
 <span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a></span>
 <span id="cb2-6"><a href="#cb2-6" tabindex="-1"></a><span class="co"># Read the file, by default vroom will guess the delimiter automatically.</span></span>
 <span id="cb2-7"><a href="#cb2-7" tabindex="-1"></a><span class="fu">vroom</span>(file)</span>
@@ -427,11 +428,11 @@ First, we get a character vector of these filepaths.</p>
 <span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a>files <span class="ot">&lt;-</span> <span class="fu">sapply</span>(ve, vroom_example)</span>
 <span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a>files</span>
 <span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a><span class="co">#&gt;                                                            mtcars-4.csv </span></span>
-<span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a><span class="co">#&gt; &quot;/private/tmp/RtmpDxlsSX/Rinst130257392eda0/vroom/extdata/mtcars-4.csv&quot; </span></span>
+<span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a><span class="co">#&gt; &quot;/private/tmp/Rtmp1sTwRu/Rinst110e04bd4e79a/vroom/extdata/mtcars-4.csv&quot; </span></span>
 <span id="cb3-6"><a href="#cb3-6" tabindex="-1"></a><span class="co">#&gt;                                                            mtcars-6.csv </span></span>
-<span id="cb3-7"><a href="#cb3-7" tabindex="-1"></a><span class="co">#&gt; &quot;/private/tmp/RtmpDxlsSX/Rinst130257392eda0/vroom/extdata/mtcars-6.csv&quot; </span></span>
+<span id="cb3-7"><a href="#cb3-7" tabindex="-1"></a><span class="co">#&gt; &quot;/private/tmp/Rtmp1sTwRu/Rinst110e04bd4e79a/vroom/extdata/mtcars-6.csv&quot; </span></span>
 <span id="cb3-8"><a href="#cb3-8" tabindex="-1"></a><span class="co">#&gt;                                                            mtcars-8.csv </span></span>
-<span id="cb3-9"><a href="#cb3-9" tabindex="-1"></a><span class="co">#&gt; &quot;/private/tmp/RtmpDxlsSX/Rinst130257392eda0/vroom/extdata/mtcars-8.csv&quot;</span></span></code></pre></div>
+<span id="cb3-9"><a href="#cb3-9" tabindex="-1"></a><span class="co">#&gt; &quot;/private/tmp/Rtmp1sTwRu/Rinst110e04bd4e79a/vroom/extdata/mtcars-8.csv&quot;</span></span></code></pre></div>
 <p>Now we can efficiently read them into one table by passing the
 filenames directly to vroom.</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="fu">vroom</span>(files)</span>

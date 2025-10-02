@@ -49,8 +49,9 @@ overflow: visible;
 }
 </style>
 <style type="text/css" data-origin="pandoc">
+html { -webkit-text-size-adjust: 100%; }
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -353,20 +354,20 @@ functions and their base R equivalents.</p>
 #&gt; Caused by warning:
 #&gt; ! Using `across()` without supplying `.cols` was deprecated in dplyr 1.1.0.
 #&gt; ℹ Please supply `.cols` instead.</code></pre>
-<div id="kkaegzkprp" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#kkaegzkprp table {
+<div id="otnjezwuog" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#otnjezwuog table {
 font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
 -webkit-font-smoothing: antialiased;
 -moz-osx-font-smoothing: grayscale;
 }
-#kkaegzkprp thead, #kkaegzkprp tbody, #kkaegzkprp tfoot, #kkaegzkprp tr, #kkaegzkprp td, #kkaegzkprp th {
+#otnjezwuog thead, #otnjezwuog tbody, #otnjezwuog tfoot, #otnjezwuog tr, #otnjezwuog td, #otnjezwuog th {
 border-style: none;
 }
-#kkaegzkprp p {
+#otnjezwuog p {
 margin: 0;
 padding: 0;
 }
-#kkaegzkprp .gt_table {
+#otnjezwuog .gt_table {
 display: table;
 border-collapse: collapse;
 line-height: normal;
@@ -391,11 +392,11 @@ border-left-style: none;
 border-left-width: 2px;
 border-left-color: #D3D3D3;
 }
-#kkaegzkprp .gt_caption {
+#otnjezwuog .gt_caption {
 padding-top: 4px;
 padding-bottom: 4px;
 }
-#kkaegzkprp .gt_title {
+#otnjezwuog .gt_title {
 color: #333333;
 font-size: 125%;
 font-weight: initial;
@@ -406,7 +407,7 @@ padding-right: 5px;
 border-bottom-color: #FFFFFF;
 border-bottom-width: 0;
 }
-#kkaegzkprp .gt_subtitle {
+#otnjezwuog .gt_subtitle {
 color: #333333;
 font-size: 85%;
 font-weight: initial;
@@ -417,7 +418,7 @@ padding-right: 5px;
 border-top-color: #FFFFFF;
 border-top-width: 0;
 }
-#kkaegzkprp .gt_heading {
+#otnjezwuog .gt_heading {
 background-color: #FFFFFF;
 text-align: center;
 border-bottom-color: #FFFFFF;
@@ -428,12 +429,12 @@ border-right-style: none;
 border-right-width: 1px;
 border-right-color: #D3D3D3;
 }
-#kkaegzkprp .gt_bottom_border {
+#otnjezwuog .gt_bottom_border {
 border-bottom-style: solid;
 border-bottom-width: 2px;
 border-bottom-color: #D3D3D3;
 }
-#kkaegzkprp .gt_col_headings {
+#otnjezwuog .gt_col_headings {
 border-top-style: solid;
 border-top-width: 2px;
 border-top-color: #D3D3D3;
@@ -447,7 +448,7 @@ border-right-style: none;
 border-right-width: 1px;
 border-right-color: #D3D3D3;
 }
-#kkaegzkprp .gt_col_heading {
+#otnjezwuog .gt_col_heading {
 color: #333333;
 background-color: #FFFFFF;
 font-size: 100%;
@@ -466,7 +467,7 @@ padding-left: 5px;
 padding-right: 5px;
 overflow-x: hidden;
 }
-#kkaegzkprp .gt_column_spanner_outer {
+#otnjezwuog .gt_column_spanner_outer {
 color: #333333;
 background-color: #FFFFFF;
 font-size: 100%;
@@ -477,13 +478,13 @@ padding-bottom: 0;
 padding-left: 4px;
 padding-right: 4px;
 }
-#kkaegzkprp .gt_column_spanner_outer:first-child {
+#otnjezwuog .gt_column_spanner_outer:first-child {
 padding-left: 0;
 }
-#kkaegzkprp .gt_column_spanner_outer:last-child {
+#otnjezwuog .gt_column_spanner_outer:last-child {
 padding-right: 0;
 }
-#kkaegzkprp .gt_column_spanner {
+#otnjezwuog .gt_column_spanner {
 border-bottom-style: solid;
 border-bottom-width: 2px;
 border-bottom-color: #D3D3D3;
@@ -494,10 +495,10 @@ overflow-x: hidden;
 display: inline-block;
 width: 100%;
 }
-#kkaegzkprp .gt_spanner_row {
+#otnjezwuog .gt_spanner_row {
 border-bottom-style: hidden;
 }
-#kkaegzkprp .gt_group_heading {
+#otnjezwuog .gt_group_heading {
 padding-top: 8px;
 padding-bottom: 8px;
 padding-left: 5px;
@@ -522,7 +523,7 @@ border-right-color: #D3D3D3;
 vertical-align: middle;
 text-align: left;
 }
-#kkaegzkprp .gt_empty_group_heading {
+#otnjezwuog .gt_empty_group_heading {
 padding: 0.5px;
 color: #333333;
 background-color: #FFFFFF;
@@ -536,13 +537,13 @@ border-bottom-width: 2px;
 border-bottom-color: #D3D3D3;
 vertical-align: middle;
 }
-#kkaegzkprp .gt_from_md > :first-child {
+#otnjezwuog .gt_from_md > :first-child {
 margin-top: 0;
 }
-#kkaegzkprp .gt_from_md > :last-child {
+#otnjezwuog .gt_from_md > :last-child {
 margin-bottom: 0;
 }
-#kkaegzkprp .gt_row {
+#otnjezwuog .gt_row {
 padding-top: 8px;
 padding-bottom: 8px;
 padding-left: 5px;
@@ -560,7 +561,7 @@ border-right-color: #D3D3D3;
 vertical-align: middle;
 overflow-x: hidden;
 }
-#kkaegzkprp .gt_stub {
+#otnjezwuog .gt_stub {
 color: #333333;
 background-color: #FFFFFF;
 font-size: 100%;
@@ -572,7 +573,7 @@ border-right-color: #D3D3D3;
 padding-left: 5px;
 padding-right: 5px;
 }
-#kkaegzkprp .gt_stub_row_group {
+#otnjezwuog .gt_stub_row_group {
 color: #333333;
 background-color: #FFFFFF;
 font-size: 100%;
@@ -585,13 +586,13 @@ padding-left: 5px;
 padding-right: 5px;
 vertical-align: top;
 }
-#kkaegzkprp .gt_row_group_first td {
+#otnjezwuog .gt_row_group_first td {
 border-top-width: 2px;
 }
-#kkaegzkprp .gt_row_group_first th {
+#otnjezwuog .gt_row_group_first th {
 border-top-width: 2px;
 }
-#kkaegzkprp .gt_summary_row {
+#otnjezwuog .gt_summary_row {
 color: #333333;
 background-color: #FFFFFF;
 text-transform: inherit;
@@ -600,14 +601,14 @@ padding-bottom: 8px;
 padding-left: 5px;
 padding-right: 5px;
 }
-#kkaegzkprp .gt_first_summary_row {
+#otnjezwuog .gt_first_summary_row {
 border-top-style: solid;
 border-top-color: #D3D3D3;
 }
-#kkaegzkprp .gt_first_summary_row.thick {
+#otnjezwuog .gt_first_summary_row.thick {
 border-top-width: 2px;
 }
-#kkaegzkprp .gt_last_summary_row {
+#otnjezwuog .gt_last_summary_row {
 padding-top: 8px;
 padding-bottom: 8px;
 padding-left: 5px;
@@ -616,7 +617,7 @@ border-bottom-style: solid;
 border-bottom-width: 2px;
 border-bottom-color: #D3D3D3;
 }
-#kkaegzkprp .gt_grand_summary_row {
+#otnjezwuog .gt_grand_summary_row {
 color: #333333;
 background-color: #FFFFFF;
 text-transform: inherit;
@@ -625,7 +626,7 @@ padding-bottom: 8px;
 padding-left: 5px;
 padding-right: 5px;
 }
-#kkaegzkprp .gt_first_grand_summary_row {
+#otnjezwuog .gt_first_grand_summary_row {
 padding-top: 8px;
 padding-bottom: 8px;
 padding-left: 5px;
@@ -634,7 +635,7 @@ border-top-style: double;
 border-top-width: 6px;
 border-top-color: #D3D3D3;
 }
-#kkaegzkprp .gt_last_grand_summary_row_top {
+#otnjezwuog .gt_last_grand_summary_row_top {
 padding-top: 8px;
 padding-bottom: 8px;
 padding-left: 5px;
@@ -643,10 +644,10 @@ border-bottom-style: double;
 border-bottom-width: 6px;
 border-bottom-color: #D3D3D3;
 }
-#kkaegzkprp .gt_striped {
+#otnjezwuog .gt_striped {
 background-color: rgba(128, 128, 128, 0.05);
 }
-#kkaegzkprp .gt_table_body {
+#otnjezwuog .gt_table_body {
 border-top-style: solid;
 border-top-width: 2px;
 border-top-color: #D3D3D3;
@@ -654,7 +655,7 @@ border-bottom-style: solid;
 border-bottom-width: 2px;
 border-bottom-color: #D3D3D3;
 }
-#kkaegzkprp .gt_footnotes {
+#otnjezwuog .gt_footnotes {
 color: #333333;
 background-color: #FFFFFF;
 border-bottom-style: none;
@@ -667,7 +668,7 @@ border-right-style: none;
 border-right-width: 2px;
 border-right-color: #D3D3D3;
 }
-#kkaegzkprp .gt_footnote {
+#otnjezwuog .gt_footnote {
 margin: 0px;
 font-size: 90%;
 padding-top: 4px;
@@ -675,7 +676,7 @@ padding-bottom: 4px;
 padding-left: 5px;
 padding-right: 5px;
 }
-#kkaegzkprp .gt_sourcenotes {
+#otnjezwuog .gt_sourcenotes {
 color: #333333;
 background-color: #FFFFFF;
 border-bottom-style: none;
@@ -688,153 +689,117 @@ border-right-style: none;
 border-right-width: 2px;
 border-right-color: #D3D3D3;
 }
-#kkaegzkprp .gt_sourcenote {
+#otnjezwuog .gt_sourcenote {
 font-size: 90%;
 padding-top: 4px;
 padding-bottom: 4px;
 padding-left: 5px;
 padding-right: 5px;
 }
-#kkaegzkprp .gt_left {
+#otnjezwuog .gt_left {
 text-align: left;
 }
-#kkaegzkprp .gt_center {
+#otnjezwuog .gt_center {
 text-align: center;
 }
-#kkaegzkprp .gt_right {
+#otnjezwuog .gt_right {
 text-align: right;
 font-variant-numeric: tabular-nums;
 }
-#kkaegzkprp .gt_font_normal {
+#otnjezwuog .gt_font_normal {
 font-weight: normal;
 }
-#kkaegzkprp .gt_font_bold {
+#otnjezwuog .gt_font_bold {
 font-weight: bold;
 }
-#kkaegzkprp .gt_font_italic {
+#otnjezwuog .gt_font_italic {
 font-style: italic;
 }
-#kkaegzkprp .gt_super {
+#otnjezwuog .gt_super {
 font-size: 65%;
 }
-#kkaegzkprp .gt_footnote_marks {
+#otnjezwuog .gt_footnote_marks {
 font-size: 75%;
 vertical-align: 0.4em;
 position: initial;
 }
-#kkaegzkprp .gt_asterisk {
+#otnjezwuog .gt_asterisk {
 font-size: 100%;
 vertical-align: 0;
 }
-#kkaegzkprp .gt_indent_1 {
+#otnjezwuog .gt_indent_1 {
 text-indent: 5px;
 }
-#kkaegzkprp .gt_indent_2 {
+#otnjezwuog .gt_indent_2 {
 text-indent: 10px;
 }
-#kkaegzkprp .gt_indent_3 {
+#otnjezwuog .gt_indent_3 {
 text-indent: 15px;
 }
-#kkaegzkprp .gt_indent_4 {
+#otnjezwuog .gt_indent_4 {
 text-indent: 20px;
 }
-#kkaegzkprp .gt_indent_5 {
+#otnjezwuog .gt_indent_5 {
 text-indent: 25px;
+}
+#otnjezwuog .katex-display {
+display: inline-flex !important;
+margin-bottom: 0.75em !important;
+}
+#otnjezwuog div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+height: 0px !important;
 }
 </style>
 <table class="gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
   <thead>
-    
     <tr class="gt_col_headings">
       <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="stringr">stringr</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="base R">base R</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="base-R">base R</th>
     </tr>
   </thead>
   <tbody class="gt_table_body">
-    <tr><td headers="stringr" class="gt_row gt_left"><div class="gt_from_md"><p><code>str_detect(string, pattern)</code></p>
-</div></td>
-<td headers="base R" class="gt_row gt_left"><div class="gt_from_md"><p><code>grepl(pattern, x)</code></p>
-</div></td></tr>
-    <tr><td headers="stringr" class="gt_row gt_left"><div class="gt_from_md"><p><code>str_dup(string, times)</code></p>
-</div></td>
-<td headers="base R" class="gt_row gt_left"><div class="gt_from_md"><p><code>strrep(x, times)</code></p>
-</div></td></tr>
-    <tr><td headers="stringr" class="gt_row gt_left"><div class="gt_from_md"><p><code>str_extract(string, pattern)</code></p>
-</div></td>
-<td headers="base R" class="gt_row gt_left"><div class="gt_from_md"><p><code>regmatches(x, m = regexpr(pattern, text))</code></p>
-</div></td></tr>
-    <tr><td headers="stringr" class="gt_row gt_left"><div class="gt_from_md"><p><code>str_extract_all(string, pattern)</code></p>
-</div></td>
-<td headers="base R" class="gt_row gt_left"><div class="gt_from_md"><p><code>regmatches(x, m = gregexpr(pattern, text))</code></p>
-</div></td></tr>
-    <tr><td headers="stringr" class="gt_row gt_left"><div class="gt_from_md"><p><code>str_length(string)</code></p>
-</div></td>
-<td headers="base R" class="gt_row gt_left"><div class="gt_from_md"><p><code>nchar(x)</code></p>
-</div></td></tr>
-    <tr><td headers="stringr" class="gt_row gt_left"><div class="gt_from_md"><p><code>str_locate(string, pattern)</code></p>
-</div></td>
-<td headers="base R" class="gt_row gt_left"><div class="gt_from_md"><p><code>regexpr(pattern, text)</code></p>
-</div></td></tr>
-    <tr><td headers="stringr" class="gt_row gt_left"><div class="gt_from_md"><p><code>str_locate_all(string, pattern)</code></p>
-</div></td>
-<td headers="base R" class="gt_row gt_left"><div class="gt_from_md"><p><code>gregexpr(pattern, text)</code></p>
-</div></td></tr>
-    <tr><td headers="stringr" class="gt_row gt_left"><div class="gt_from_md"><p><code>str_match(string, pattern)</code></p>
-</div></td>
-<td headers="base R" class="gt_row gt_left"><div class="gt_from_md"><p><code>regmatches(x, m = regexec(pattern, text))</code></p>
-</div></td></tr>
-    <tr><td headers="stringr" class="gt_row gt_left"><div class="gt_from_md"><p><code>str_order(string)</code></p>
-</div></td>
-<td headers="base R" class="gt_row gt_left"><div class="gt_from_md"><p><code>order(...)</code></p>
-</div></td></tr>
-    <tr><td headers="stringr" class="gt_row gt_left"><div class="gt_from_md"><p><code>str_replace(string, pattern, replacement)</code></p>
-</div></td>
-<td headers="base R" class="gt_row gt_left"><div class="gt_from_md"><p><code>sub(pattern, replacement, x)</code></p>
-</div></td></tr>
-    <tr><td headers="stringr" class="gt_row gt_left"><div class="gt_from_md"><p><code>str_replace_all(string, pattern, replacement)</code></p>
-</div></td>
-<td headers="base R" class="gt_row gt_left"><div class="gt_from_md"><p><code>gsub(pattern, replacement, x)</code></p>
-</div></td></tr>
-    <tr><td headers="stringr" class="gt_row gt_left"><div class="gt_from_md"><p><code>str_sort(string)</code></p>
-</div></td>
-<td headers="base R" class="gt_row gt_left"><div class="gt_from_md"><p><code>sort(x)</code></p>
-</div></td></tr>
-    <tr><td headers="stringr" class="gt_row gt_left"><div class="gt_from_md"><p><code>str_split(string, pattern)</code></p>
-</div></td>
-<td headers="base R" class="gt_row gt_left"><div class="gt_from_md"><p><code>strsplit(x, split)</code></p>
-</div></td></tr>
-    <tr><td headers="stringr" class="gt_row gt_left"><div class="gt_from_md"><p><code>str_sub(string, start, end)</code></p>
-</div></td>
-<td headers="base R" class="gt_row gt_left"><div class="gt_from_md"><p><code>substr(x, start, stop)</code></p>
-</div></td></tr>
-    <tr><td headers="stringr" class="gt_row gt_left"><div class="gt_from_md"><p><code>str_subset(string, pattern)</code></p>
-</div></td>
-<td headers="base R" class="gt_row gt_left"><div class="gt_from_md"><p><code>grep(pattern, x, value = TRUE)</code></p>
-</div></td></tr>
-    <tr><td headers="stringr" class="gt_row gt_left"><div class="gt_from_md"><p><code>str_to_lower(string)</code></p>
-</div></td>
-<td headers="base R" class="gt_row gt_left"><div class="gt_from_md"><p><code>tolower(x)</code></p>
-</div></td></tr>
-    <tr><td headers="stringr" class="gt_row gt_left"><div class="gt_from_md"><p><code>str_to_title(string)</code></p>
-</div></td>
-<td headers="base R" class="gt_row gt_left"><div class="gt_from_md"><p><code>tools::toTitleCase(text)</code></p>
-</div></td></tr>
-    <tr><td headers="stringr" class="gt_row gt_left"><div class="gt_from_md"><p><code>str_to_upper(string)</code></p>
-</div></td>
-<td headers="base R" class="gt_row gt_left"><div class="gt_from_md"><p><code>toupper(x)</code></p>
-</div></td></tr>
-    <tr><td headers="stringr" class="gt_row gt_left"><div class="gt_from_md"><p><code>str_trim(string)</code></p>
-</div></td>
-<td headers="base R" class="gt_row gt_left"><div class="gt_from_md"><p><code>trimws(x)</code></p>
-</div></td></tr>
-    <tr><td headers="stringr" class="gt_row gt_left"><div class="gt_from_md"><p><code>str_which(string, pattern)</code></p>
-</div></td>
-<td headers="base R" class="gt_row gt_left"><div class="gt_from_md"><p><code>grep(pattern, x)</code></p>
-</div></td></tr>
-    <tr><td headers="stringr" class="gt_row gt_left"><div class="gt_from_md"><p><code>str_wrap(string)</code></p>
-</div></td>
-<td headers="base R" class="gt_row gt_left"><div class="gt_from_md"><p><code>strwrap(x)</code></p>
-</div></td></tr>
+    <tr><td headers="stringr" class="gt_row gt_left"><span class="gt_from_md"><code>str_detect(string, pattern)</code></span></td>
+<td headers="base R" class="gt_row gt_left"><span class="gt_from_md"><code>grepl(pattern, x)</code></span></td></tr>
+    <tr><td headers="stringr" class="gt_row gt_left"><span class="gt_from_md"><code>str_dup(string, times)</code></span></td>
+<td headers="base R" class="gt_row gt_left"><span class="gt_from_md"><code>strrep(x, times)</code></span></td></tr>
+    <tr><td headers="stringr" class="gt_row gt_left"><span class="gt_from_md"><code>str_extract(string, pattern)</code></span></td>
+<td headers="base R" class="gt_row gt_left"><span class="gt_from_md"><code>regmatches(x, m = regexpr(pattern, text))</code></span></td></tr>
+    <tr><td headers="stringr" class="gt_row gt_left"><span class="gt_from_md"><code>str_extract_all(string, pattern)</code></span></td>
+<td headers="base R" class="gt_row gt_left"><span class="gt_from_md"><code>regmatches(x, m = gregexpr(pattern, text))</code></span></td></tr>
+    <tr><td headers="stringr" class="gt_row gt_left"><span class="gt_from_md"><code>str_length(string)</code></span></td>
+<td headers="base R" class="gt_row gt_left"><span class="gt_from_md"><code>nchar(x)</code></span></td></tr>
+    <tr><td headers="stringr" class="gt_row gt_left"><span class="gt_from_md"><code>str_locate(string, pattern)</code></span></td>
+<td headers="base R" class="gt_row gt_left"><span class="gt_from_md"><code>regexpr(pattern, text)</code></span></td></tr>
+    <tr><td headers="stringr" class="gt_row gt_left"><span class="gt_from_md"><code>str_locate_all(string, pattern)</code></span></td>
+<td headers="base R" class="gt_row gt_left"><span class="gt_from_md"><code>gregexpr(pattern, text)</code></span></td></tr>
+    <tr><td headers="stringr" class="gt_row gt_left"><span class="gt_from_md"><code>str_match(string, pattern)</code></span></td>
+<td headers="base R" class="gt_row gt_left"><span class="gt_from_md"><code>regmatches(x, m = regexec(pattern, text))</code></span></td></tr>
+    <tr><td headers="stringr" class="gt_row gt_left"><span class="gt_from_md"><code>str_order(string)</code></span></td>
+<td headers="base R" class="gt_row gt_left"><span class="gt_from_md"><code>order(...)</code></span></td></tr>
+    <tr><td headers="stringr" class="gt_row gt_left"><span class="gt_from_md"><code>str_replace(string, pattern, replacement)</code></span></td>
+<td headers="base R" class="gt_row gt_left"><span class="gt_from_md"><code>sub(pattern, replacement, x)</code></span></td></tr>
+    <tr><td headers="stringr" class="gt_row gt_left"><span class="gt_from_md"><code>str_replace_all(string, pattern, replacement)</code></span></td>
+<td headers="base R" class="gt_row gt_left"><span class="gt_from_md"><code>gsub(pattern, replacement, x)</code></span></td></tr>
+    <tr><td headers="stringr" class="gt_row gt_left"><span class="gt_from_md"><code>str_sort(string)</code></span></td>
+<td headers="base R" class="gt_row gt_left"><span class="gt_from_md"><code>sort(x)</code></span></td></tr>
+    <tr><td headers="stringr" class="gt_row gt_left"><span class="gt_from_md"><code>str_split(string, pattern)</code></span></td>
+<td headers="base R" class="gt_row gt_left"><span class="gt_from_md"><code>strsplit(x, split)</code></span></td></tr>
+    <tr><td headers="stringr" class="gt_row gt_left"><span class="gt_from_md"><code>str_sub(string, start, end)</code></span></td>
+<td headers="base R" class="gt_row gt_left"><span class="gt_from_md"><code>substr(x, start, stop)</code></span></td></tr>
+    <tr><td headers="stringr" class="gt_row gt_left"><span class="gt_from_md"><code>str_subset(string, pattern)</code></span></td>
+<td headers="base R" class="gt_row gt_left"><span class="gt_from_md"><code>grep(pattern, x, value = TRUE)</code></span></td></tr>
+    <tr><td headers="stringr" class="gt_row gt_left"><span class="gt_from_md"><code>str_to_lower(string)</code></span></td>
+<td headers="base R" class="gt_row gt_left"><span class="gt_from_md"><code>tolower(x)</code></span></td></tr>
+    <tr><td headers="stringr" class="gt_row gt_left"><span class="gt_from_md"><code>str_to_title(string)</code></span></td>
+<td headers="base R" class="gt_row gt_left"><span class="gt_from_md"><code>tools::toTitleCase(text)</code></span></td></tr>
+    <tr><td headers="stringr" class="gt_row gt_left"><span class="gt_from_md"><code>str_to_upper(string)</code></span></td>
+<td headers="base R" class="gt_row gt_left"><span class="gt_from_md"><code>toupper(x)</code></span></td></tr>
+    <tr><td headers="stringr" class="gt_row gt_left"><span class="gt_from_md"><code>str_trim(string)</code></span></td>
+<td headers="base R" class="gt_row gt_left"><span class="gt_from_md"><code>trimws(x)</code></span></td></tr>
+    <tr><td headers="stringr" class="gt_row gt_left"><span class="gt_from_md"><code>str_which(string, pattern)</code></span></td>
+<td headers="base R" class="gt_row gt_left"><span class="gt_from_md"><code>grep(pattern, x)</code></span></td></tr>
+    <tr><td headers="stringr" class="gt_row gt_left"><span class="gt_from_md"><code>str_wrap(string)</code></span></td>
+<td headers="base R" class="gt_row gt_left"><span class="gt_from_md"><code>strwrap(x)</code></span></td></tr>
   </tbody>
   
   
