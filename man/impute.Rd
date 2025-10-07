@@ -17,7 +17,7 @@ impute(missbp, imp.method = c("MIMCA", "jomo", "DPMPM", "mice"), m = 5)
 The \code{missbp} object is appended with the following object:
 \item{dataimp}{List of imputed data}
 
-See also \code{\link[missMDA]{MIMCA}}, \code{\link[jomo]{jomo1cat}} and \code{\link[mi]{mi}} and \code{\link[mice]{mice}}.
+See also \code{\link[missMDA]{MIMCA}}, \code{\link[jomo]{jomo1cat}}, \code{\link[mi]{mi}} and \code{\link[mice]{mice}}.
 }
 \description{
 Choose between four available multiple imputation strategies in \code{R}.

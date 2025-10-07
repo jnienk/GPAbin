@@ -164,26 +164,25 @@ OPA <- function(missbp, compdat, centring = TRUE, dim = "2D")
   compZ <-temp[[16]]
   compCLP <- temp[[23]]
   complvls <- temp[[6]]
-  target <- rbind(compZ, compCLP)
   
+  Tarnam <- complvls        #rownames(target)
+  Tesnam <- missbp$lvls[[1]] #rownames(testee)
+  
+  #finding the CLs that occur in both Target and Testee and deleting the CLs that do 
+  #not appear in both in order to obtain a one-to-one comparison
+  
+  keepTar <- which(Tarnam %in% Tesnam)
+  #this is an unlikely case, since new categories cannot be imputed that does not exist in target
+  keepTes <- which(Tesnam %in% Tarnam)
+  Tarnam <- Tarnam[keepTar]
+  Tesnam <- Tesnam[keepTes]
+    
+  target <- rbind(compZ, compCLP[keepTar,])
+    
   #testee from missbp object
-  testee <- rbind(missbp$Z.GPAbin, missbp$CLP.GPAbin)
+  testee <- rbind(missbp$Z.GPAbin, missbp$CLP.GPAbin[keepTes,])
   
-  nCLTar <- nrow(target)
-  nCLTes <- nrow(testee)
-  
-  Tarnam <- complvls#rownames(target)
-  Tesnam <- missbp$lvls[[1]]#rownames(testee)
-
-  #finding the CLs that occur in both Target and Testee and deleting the CLs that do #not appear in both in order to obtain a one-to-one comparison
-  counter <- 0
-  rem <- which(is.na(match(Tarnam,Tesnam)))
-  if(is.integer0(rem))
-  {
-    target <- target
-    counter <- counter+1#counts the matched cases
-  } else {target <- target[-rem,]}
-  
+    #only considers 2D in the package, could add this as an argument later
   if(dim=="All")
   {
     pY <- ncol(target)

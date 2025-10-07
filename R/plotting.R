@@ -39,7 +39,7 @@ biplFig <- function (missbp, Z.col="#61223b", CLP.col="#b79962", Z.pch=19, CLP.p
   
   #construct two plots if coordinates for complete case is available
   if(is.null(missbp$compCLPs)) {
-    plot(rbind(CLPs[,1:2],Zs[,1:2]), pch="", xaxt="n", yaxt="n", xlab="", ylab="", main=title)
+    plot(rbind(CLPs[,1:2], Zs[,1:2]), pch="", xaxt="n", yaxt="n", xlab="", ylab="", main=title)
     graphics::points(Zs, pch=Z.pch, col=Z.col)
     graphics::points(CLPs, pch=CLP.pch, col=CLP.col)
     
