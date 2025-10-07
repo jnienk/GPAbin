@@ -69,6 +69,7 @@ biplFig <- function (missbp, Z.col="#61223b", CLP.col="#b79962", Z.pch=19, CLP.p
       graphics::text(compCLPs, cex=0.7, label=complvls, pos=3)
     }
     grDevices::dev.new()
+    graphics::par(pty = "s")
     plot(rbind(CLPs[,1:2],Zs[,1:2]), pch="", xaxt="n", yaxt="n", xlab="", ylab="", main=title)
     graphics::points(Zs, pch=Z.pch, col=Z.col)
     graphics::points(CLPs, pch=CLP.pch, col=CLP.col)
