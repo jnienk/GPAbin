@@ -86,4 +86,13 @@ biplFig <- function (missbp, Z.col="#61223b", CLP.col="#b79962", Z.pch=19, CLP.p
   missbp
 }
 
-###################################################################################
+
+##
+
+# This works 
+# ggplot() + geom_point(data=test_dat, colour="#61223b", aes(V1, V2), size = 4, shape = 16) + 
+#   geom_point(data=test_dat2, colour= "#b79962", aes(V1, V2), size = 4, shape = 17) +
+#   theme_classic() +
+#   theme(aspect.ratio = 1, axis.ticks = element_blank(), axis.text.x = element_blank(), 
+#         axis.text.y = element_blank(), axis.title.x = element_blank(), 
+#         axis.title.y = element_blank())
