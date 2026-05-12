@@ -87,12 +87,79 @@ biplFig <- function (missbp, Z.col="#61223b", CLP.col="#b79962", Z.pch=19, CLP.p
 }
 
 
-##
-
-# This works 
-# ggplot() + geom_point(data=test_dat, colour="#61223b", aes(V1, V2), size = 4, shape = 16) + 
-#   geom_point(data=test_dat2, colour= "#b79962", aes(V1, V2), size = 4, shape = 17) +
-#   theme_classic() +
-#   theme(aspect.ratio = 1, axis.ticks = element_blank(), axis.text.x = element_blank(), 
-#         axis.text.y = element_blank(), axis.title.x = element_blank(), 
-#         axis.title.y = element_blank())
+#' ggBiplot function
+#'
+#' @param missbp An object of class \code{missbp} obtained from preceding function \code{missmi()}
+#' @param Z.col Colour of sample coordinates
+#' @param CLP.col Colour of category level point coordinates 
+#' @param Z.pch Plotting character of sample coordinates
+#' @param CLP.pch Plotting character of category level point coordinates
+#'
+#' @returns
+#' @export
+#'
+#' @examples
+#' data(implist)
+#' missbp <- missmi(implist)|> DRT() |> GPAbin() |> ggbiplFig()
+#' 
+#' ### GPAbin biplot
+#' 
+#' missbp$plot
+#' 
+#' ### MCA biplot
+#' 
+#' missbp$plotC
+#' 
+ggbiplFig <- function (missbp, Z.col="#61223b", CLP.col="#b79962", Z.pch=19, CLP.pch=15) 
+{
+  Zs <- as.data.frame(missbp$Z.GPAbin)[,1:2]
+  lvls <- missbp$lvls[[1]] #use the first list element for levels, check for other cases (to do)
+  CLPs <- as.data.frame(missbp$CLP.GPAbin) |> dplyr::mutate(source = lvls)
+  
+  all_coords <- dplyr::bind_rows(Zs |> dplyr::select("V1","V2"), 
+                          CLPs |> dplyr::select("V1","V2", "source"))
+  
+  #construct two plots if coordinates for complete case is available
+    all_coords <- dplyr::bind_rows(Zs |> dplyr::select("V1","V2"), 
+                                   CLPs |> dplyr::select("V1","V2", "source"))
+    
+    missbp$plot <- ggplot2::ggplot() +
+      ggplot2::geom_blank(data = all_coords, ggplot2::aes(x = V1, y = V2)) +
+      ggplot2::geom_point(data = Zs, ggplot2::aes(x = V1, y = V2)
+                 , size = 2.5, colour = "#61223b", shape = Z.pch) +
+      ggplot2::geom_point(data = CLPs, ggplot2::aes(x = V1, y = V2),
+                 colour = "#b79962", size = 3, shape = CLP.pch) +
+      ggrepel::geom_text_repel(data = CLPs,
+                               ggplot2::aes(V1, V2, label = source),
+                      box.padding = 0.6,
+                      point.padding = 0.4,
+                      force = 1.5) +
+      ggplot2::coord_fixed(ratio = 1) +
+      ggplot2::labs(title = "GPAbin biplot", x = NULL, y = NULL) +
+      ggplot2::theme_void()
+    
+    if(!is.null(missbp$compCLPs)) {
+    compZs <- as.data.frame(missbp$compZs)[,1:2]
+    complvls <- missbp$complvls
+    compCLPs <- as.data.frame(missbp$compCLPs) |> dplyr::mutate(source = complvls)
+    
+    all_coordsC <- dplyr::bind_rows(compZs |> dplyr::select("V1","V2"), 
+                            compCLPs |> dplyr::select("V1","V2", "source"))
+    
+    missbp$plotC <- ggplot2::ggplot() +
+      ggplot2::geom_blank(data = all_coordsC, ggplot2::aes(x = V1, y = V2)) +
+      ggplot2::geom_point(data = compZs, ggplot2::aes(x = V1, y = V2)
+                 , size = 2.5, colour =  "#61223b", shape = Z.pch) +
+      ggplot2::geom_point(data = CLPs, ggplot2::aes(x = V1, y = V2),
+                 colour = "#b79962", size = 3, shape = CLP.pch) +
+      ggrepel::geom_text_repel(data = compCLPs,
+                               ggplot2::aes(V1, V2, label = source),
+                      box.padding = 0.6,
+                      point.padding = 0.4,
+                      force = 1.5) +
+      ggplot2::coord_fixed(ratio = 1) +
+      ggplot2::labs(title = "MCA biplot", x = NULL, y = NULL) +
+      ggplot2::theme_void()
+  }  
+  missbp
+}
