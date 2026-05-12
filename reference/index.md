@@ -18,6 +18,8 @@
   Complete data example
 - [`evalMeas()`](https://jnienk.github.io/GPAbin/reference/evalMeas.md)
   : Evaluation measures when complete data is available
+- [`ggbiplFig()`](https://jnienk.github.io/GPAbin/reference/ggbiplFig.md)
+  : ggBiplot function
 - [`implist`](https://jnienk.github.io/GPAbin/reference/implist.md) :
   List of multiple imputed data sets
 - [`impute()`](https://jnienk.github.io/GPAbin/reference/impute.md) :
