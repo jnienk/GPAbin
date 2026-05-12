@@ -88,6 +88,8 @@ biplFig <- function (missbp, Z.col="#61223b", CLP.col="#b79962", Z.pch=19, CLP.p
 
 
 #' ggBiplot function
+#' 
+#' Creates a multiple correspondence analysis (MCA) biplot in `ggplot`.
 #'
 #' @param missbp An object of class \code{missbp} obtained from preceding function \code{missmi()}
 #' @param Z.col Colour of sample coordinates
@@ -96,11 +98,17 @@ biplFig <- function (missbp, Z.col="#61223b", CLP.col="#b79962", Z.pch=19, CLP.p
 #' @param CLP.pch Plotting character of category level point coordinates
 #'
 #' @returns
+#' \itemize{
+#' \item {plot}{Returns a GPAbin ggplot biplot.}
+#' \item {plotC}{Returns an MCA ggplot biplot of the complete data set, if provided.}
+#' }
 #' @export
 #'
 #' @examples
 #' data(implist)
-#' missbp <- missmi(implist)|> DRT() |> GPAbin() |> ggbiplFig()
+#' data(compdat)
+#' missbp <- missmi(implist)|> DRT() |> GPAbin() |> 
+#' evalMeas(compdat = compdat) |> ggbiplFig()
 #' 
 #' ### GPAbin biplot
 #' 
@@ -126,9 +134,9 @@ ggbiplFig <- function (missbp, Z.col="#61223b", CLP.col="#b79962", Z.pch=19, CLP
     missbp$plot <- ggplot2::ggplot() +
       ggplot2::geom_blank(data = all_coords, ggplot2::aes(x = V1, y = V2)) +
       ggplot2::geom_point(data = Zs, ggplot2::aes(x = V1, y = V2)
-                 , size = 2.5, colour = "#61223b", shape = Z.pch) +
+                 , size = 2.5, colour =  Z.col, shape = Z.pch) +
       ggplot2::geom_point(data = CLPs, ggplot2::aes(x = V1, y = V2),
-                 colour = "#b79962", size = 3, shape = CLP.pch) +
+                 colour = CLP.col, size = 3, shape = CLP.pch) +
       ggrepel::geom_text_repel(data = CLPs,
                                ggplot2::aes(V1, V2, label = source),
                       box.padding = 0.6,
@@ -149,9 +157,9 @@ ggbiplFig <- function (missbp, Z.col="#61223b", CLP.col="#b79962", Z.pch=19, CLP
     missbp$plotC <- ggplot2::ggplot() +
       ggplot2::geom_blank(data = all_coordsC, ggplot2::aes(x = V1, y = V2)) +
       ggplot2::geom_point(data = compZs, ggplot2::aes(x = V1, y = V2)
-                 , size = 2.5, colour =  "#61223b", shape = Z.pch) +
+                 , size = 2.5, colour = Z.col, shape = Z.pch) +
       ggplot2::geom_point(data = CLPs, ggplot2::aes(x = V1, y = V2),
-                 colour = "#b79962", size = 3, shape = CLP.pch) +
+                 colour = CLP.col, size = 3, shape = CLP.pch) +
       ggrepel::geom_text_repel(data = compCLPs,
                                ggplot2::aes(V1, V2, label = source),
                       box.padding = 0.6,
