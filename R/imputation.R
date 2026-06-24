@@ -3,7 +3,7 @@
 #' Choose between four available multiple imputation strategies in `R`.
 #'
 #' @param missbp An object of class \code{missmi} obtained from preceding function \code{missmi()}.
-#' @param imp.method Select one of four imputation methods: `MIMCA`, `jomo`, `DPMPM`, `mice`
+#' @param imp.method Select one of four imputation methods: `MIMCA`, `jomo`, `miceB`, `mice`
 #' @param m Number of multiple imputations
 #'
 #' @returns
@@ -17,9 +17,9 @@
 #' @examples
 #' \donttest{
 #' data(missdat)
-#' missbp <- missmi(missdat) |> impute(imp.method="DPMPM", m=5)}
+#' missbp <- missmi(missdat) |> impute(imp.method="miceB", m=5)}
 #' 
-impute <- function(missbp, imp.method=c("MIMCA","jomo","DPMPM","mice"), m=5)
+impute <- function(missbp, imp.method=c("MIMCA","jomo","miceB","mice"), m=5)
 {
   if(is.null(missbp$miss_pct)) stop("Don't apply an imputation method. Your data is already complete, continue to DRT().")
   
@@ -66,24 +66,24 @@ impute <- function(missbp, imp.method=c("MIMCA","jomo","DPMPM","mice"), m=5)
       missbp$dataimp <- jomo.list
       
     } else
-      if (imp.method=="DPMPM")
+      if (imp.method=="miceB")
       {
         
         ##Imputation
-        DPMPM.prep <- mi::missing_data.frame(data, subclass = "allcategorical")
-        DPMPM.out <- mi::mi(DPMPM.prep, n.chains = m)
-        DPMPM.out <- mi::complete(DPMPM.out, m = m)
-        DPMPM.list <- lapply(DPMPM.out,'[',1:p)
+        miceB.prep <- mi::missing_data.frame(data, subclass = "allcategorical")
+        miceB.out <- mi::mi(miceB.prep, n.chains = m)
+        miceB.out <- mi::complete(miceB.out, m = m)
+        miceB.list <- lapply(miceB.out,'[',1:p)
         
         samp.nams <- paste("s",1:n,sep="")
-        DPMPM.list <- rmOneCL(DPMPM.list) #preparation for MCA
+        miceB.list <- rmOneCL(miceB.list) #preparation for MCA
         
         for (imp in 1:m)
         {
-          rownames(DPMPM.list[[imp]]) <- samp.nams #uniform names across imputations
+          rownames(miceB.list[[imp]]) <- samp.nams #uniform names across imputations
         }
         
-        missbp$dataimp <- DPMPM.list
+        missbp$dataimp <- miceB.list
         
       } else
         if (imp.method=="mice")

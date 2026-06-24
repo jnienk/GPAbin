@@ -4,12 +4,12 @@
 \alias{impute}
 \title{Multiple imputation}
 \usage{
-impute(missbp, imp.method = c("MIMCA", "jomo", "DPMPM", "mice"), m = 5)
+impute(missbp, imp.method = c("MIMCA", "jomo", "miceB", "mice"), m = 5)
 }
 \arguments{
 \item{missbp}{An object of class \code{missmi} obtained from preceding function \code{missmi()}.}
 
-\item{imp.method}{Select one of four imputation methods: \code{MIMCA}, \code{jomo}, \code{DPMPM}, \code{mice}}
+\item{imp.method}{Select one of four imputation methods: \code{MIMCA}, \code{jomo}, \code{miceB}, \code{mice}}
 
 \item{m}{Number of multiple imputations}
 }
@@ -25,6 +25,6 @@ Choose between four available multiple imputation strategies in \code{R}.
 \examples{
 \donttest{
 data(missdat)
-missbp <- missmi(missdat) |> impute(imp.method="DPMPM", m=5)}
+missbp <- missmi(missdat) |> impute(imp.method="miceB", m=5)}
 
 }
