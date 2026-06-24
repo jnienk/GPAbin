@@ -5,7 +5,7 @@ Choose between four available multiple imputation strategies in `R`.
 ## Usage
 
 ``` r
-impute(missbp, imp.method = c("MIMCA", "jomo", "DPMPM", "mice"), m = 5)
+impute(missbp, imp.method = c("MIMCA", "jomo", "miceB", "mice"), m = 5)
 ```
 
 ## Arguments
@@ -17,7 +17,7 @@ impute(missbp, imp.method = c("MIMCA", "jomo", "DPMPM", "mice"), m = 5)
 
 - imp.method:
 
-  Select one of four imputation methods: `MIMCA`, `jomo`, `DPMPM`,
+  Select one of four imputation methods: `MIMCA`, `jomo`, `miceB`,
   `mice`
 
 - m:
@@ -42,5 +42,5 @@ See also [`MIMCA`](https://rdrr.io/pkg/missMDA/man/MIMCA.html),
 ``` r
 # \donttest{
 data(missdat)
-missbp <- missmi(missdat) |> impute(imp.method="DPMPM", m=5)# }
+missbp <- missmi(missdat) |> impute(imp.method="miceB", m=5)# }
 ```
