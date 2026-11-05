@@ -1,18 +1,22 @@
-###################################################################################
+################################################################################
 #' Biplot function
-#' 
-#' Creates a multiple correspondence analysis (MCA) biplot
 #'
-#' @param missbp An object of class \code{missbp} obtained from preceding function \code{missmi()}
+#' Creates a multiple correspondence analysis (MCA) biplot
+#' @description
+#' `biplFig()` was renamed to [plot()].
+#'
+#' @param missbp An object of class \code{missbp} obtained from preceding function \code{missmi()}.
+#' @param engine Select whether the plot should be generated with \code{ggplot2} or \code{base}, with default \code{ggplot2}.
 #' @param Z.col Colour of sample coordinates
 #' @param CLP.col Colour of category level point coordinates 
 #' @param Z.pch Plotting character of sample coordinates
 #' @param CLP.pch Plotting character of category level point coordinates
 #' @param Z.cex Size of plotting character for sample points
 #' @param CLP.cex Size of plotting character for category level point points 
-#' @param title Title of the plot
+#' @param title Title of the GPAbin biplot.
 #'
 #' @export
+#' @aliases biplFig
 #' 
 #' @return
 #' \itemize{
@@ -22,18 +26,26 @@
 #'  
 #' @examples
 #' data(implist)
-#' missbp <- missmi(implist)|> DRT() |> GPAbin() |> biplFig()
+#' missbp <- missmi(implist)|> DRT() |> GPAbin() |> plot(title = "GPAbin biplot")
+#' data(compdat)
+#' missmi(implist) |> DRT() |> GPAbin() |> evalMeas(compdat=compdat) |> plot()
 #' 
-biplFig <- function (missbp, Z.col="#61223b", CLP.col="#b79962", Z.pch=19, CLP.pch=15, Z.cex=1.5, CLP.cex=1.7, title="") 
-{
+plot.missmi <- function (missbp, engine = c("ggplot2", "base"), Z.col = "#61223b", 
+                         CLP.col = "#b79962", Z.pch = 19, CLP.pch = 15, 
+                         Z.cex = 1.5, CLP.cex = 1.7, title = NULL, ...) 
+{ 
+  engine <- match.arg(engine)
+  if (engine == "ggplot2") {
+      return(ggbiplFig(missbp, Z.col = "#61223b", CLP.col = "#b79962", 
+                        Z.pch = 19, CLP.pch = 15, title = title))
+  }
+  
   CLPs <- missbp$CLP.GPAbin
   Zs <- missbp$Z.GPAbin
   lvls <- missbp$lvls[[1]] #use the first list element for levels, check for other cases (to do)
   
   oldpar <- graphics::par(no.readonly = TRUE) 
   on.exit(graphics::par(oldpar))
-  
-  grDevices::dev.new()
   
   graphics::par(pty = "s")
   
@@ -56,7 +68,7 @@ biplFig <- function (missbp, Z.col="#61223b", CLP.col="#b79962", Z.pch=19, CLP.p
     compZs <- missbp$compZs
     complvls <- missbp$complvls
     
-    plot(rbind(compCLPs[,1:2],compZs[,1:2]), pch="", xaxt="n", yaxt="n", xlab="", ylab="", main="Complete biplot")
+    plot(rbind(compCLPs[,1:2],compZs[,1:2]), pch = "", xaxt = "n", yaxt="n", xlab="", ylab="", main="Complete biplot")
     graphics::points(compZs, pch=Z.pch, col=Z.col)
     graphics::points(compCLPs, pch=CLP.pch, col=CLP.col)
     
@@ -68,7 +80,7 @@ biplFig <- function (missbp, Z.col="#61223b", CLP.col="#b79962", Z.pch=19, CLP.p
     {
       graphics::text(compCLPs, cex=0.7, label=complvls, pos=3)
     }
-    grDevices::dev.new()
+    #grDevices::windows()
     graphics::par(pty = "s")
     plot(rbind(CLPs[,1:2],Zs[,1:2]), pch="", xaxt="n", yaxt="n", xlab="", ylab="", main=title)
     graphics::points(Zs, pch=Z.pch, col=Z.col)
@@ -86,6 +98,9 @@ biplFig <- function (missbp, Z.col="#61223b", CLP.col="#b79962", Z.pch=19, CLP.p
   missbp
 }
 
+#' @rdname plot.missmi
+#' @export
+biplFig <- plot.missmi
 
 #' ggBiplot function
 #' 
@@ -102,13 +117,13 @@ biplFig <- function (missbp, Z.col="#61223b", CLP.col="#b79962", Z.pch=19, CLP.p
 #' \item {plot}{Returns a GPAbin ggplot biplot.}
 #' \item {plotC}{Returns an MCA ggplot biplot of the complete data set, if provided.}
 #' }
-#' @export
+#' @noRd
 #'
 #' @examples
 #' data(implist)
 #' data(compdat)
 #' missbp <- missmi(implist)|> DRT() |> GPAbin() |> 
-#' evalMeas(compdat = compdat) |> ggbiplFig()
+#' evalMeas(compdat = compdat) |> plot()
 #' 
 #' ### GPAbin biplot
 #' 
@@ -118,7 +133,8 @@ biplFig <- function (missbp, Z.col="#61223b", CLP.col="#b79962", Z.pch=19, CLP.p
 #' 
 #' missbp$plotC
 #' 
-ggbiplFig <- function (missbp, Z.col="#61223b", CLP.col="#b79962", Z.pch=19, CLP.pch=15) 
+ggbiplFig <- function (missbp, Z.col = "#61223b", CLP.col = "#b79962", 
+                       Z.pch = 19, CLP.pch = 15, title = NULL) 
 {
   Zs <- as.data.frame(missbp$Z.GPAbin)[,1:2]
   lvls <- missbp$lvls[[1]] #use the first list element for levels, check for other cases (to do)
@@ -143,8 +159,9 @@ ggbiplFig <- function (missbp, Z.col="#61223b", CLP.col="#b79962", Z.pch=19, CLP
                       point.padding = 0.4,
                       force = 1.5) +
       ggplot2::coord_fixed(ratio = 1) +
-      ggplot2::labs(title = "GPAbin biplot", x = NULL, y = NULL) +
+      ggplot2::labs(title = title, x = NULL, y = NULL) +
       ggplot2::theme_void()
+    plot(missbp$plot)
     
     if(!is.null(missbp$compCLPs)) {
     compZs <- as.data.frame(missbp$compZs)[,1:2]
@@ -166,8 +183,9 @@ ggbiplFig <- function (missbp, Z.col="#61223b", CLP.col="#b79962", Z.pch=19, CLP
                       point.padding = 0.4,
                       force = 1.5) +
       ggplot2::coord_fixed(ratio = 1) +
-      ggplot2::labs(title = "MCA biplot", x = NULL, y = NULL) +
+      ggplot2::labs(title = "Complete biplot", x = NULL, y = NULL) +
       ggplot2::theme_void()
+      plot(missbp$plotC)
   }  
   missbp
 }

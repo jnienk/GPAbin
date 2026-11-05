@@ -10,7 +10,7 @@
 #' The `missbp` object is appended with the following object:
 #' \item{dataimp}{List of imputed data}
 #' 
-#' See also \code{\link[missMDA]{MIMCA}}, \code{\link[jomo]{jomo1cat}}, \code{\link[mi]{mi}} and \code{\link[mice]{mice}}.
+#' @seealso \code{\link[missMDA]{MIMCA}}, \code{\link[jomo]{jomo1cat}}, \code{\link[mi]{mi}} and \code{\link[mice]{mice}}.
 #' 
 #' @export
 #'
@@ -18,8 +18,10 @@
 #' \donttest{
 #' data(missdat)
 #' missbp <- missmi(missdat) |> impute(imp.method="miceB", m=5)}
-#' 
-impute <- function(missbp, imp.method=c("MIMCA","jomo","miceB","mice"), m=5)
+#' @usage impute(missbp, 
+#'        imp.method = c("MIMCA", "jomo", "miceB", "mice"),
+#'        m = 5)
+impute <- function(missbp, imp.method = c("MIMCA", "jomo", "miceB", "mice"), m = 5)
 {
   if(is.null(missbp$miss_pct)) stop("Don't apply an imputation method. Your data is already complete, continue to DRT().")
   

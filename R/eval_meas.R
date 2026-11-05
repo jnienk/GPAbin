@@ -74,25 +74,31 @@ CLPpred <- function (CLPs=CLPs, Zs=Zs, p=p, n=n, lvls=lvls, datIN = datIN)
 #'
 #' @return
 #' The `missbp` object is appended with the following objects:
-#' \item{eval}{Returns a data table with five evaluation measures: Procrustes Statistic (PS), Similarity Proportion (SP), Response Profile Recovery (RPR), Absolute Mean Bias (AMB), Root Mean Squared Bias (RMSB)}
+#' \item{tab}{Returns a table with five evaluation measures: 1-Procrustes Statistic (1-PS), Similarity Proportion (SP), Response Profile Recovery (RPR), Absolute Mean Bias (AMB), Root Mean Squared Bias (RMSB)}
 #' \item{GPApred}{A dataframe representing predicted categorical responses from the GPAbin biplot.}
 #' \item{compPred}{A dataframe representing predicted categorical responses from the complete MCA biplot.}
 #' \item{compZs}{Sample coordinates for the MCA biplot of the complete data.}
 #' \item{compCLPs}{CLPs for the MCA biplot of the complete data.}
 #' \item{complvls}{Names of the CLPs for the MCA biplot of the complete data.}
 #' 
-#' See also \code{\link{missmi}}, \code{\link{impute}}, \code{\link{DRT}} and \code{\link{GPAbin}}.
+#' \strong{Interpretation}
+#' GPAbin preserves the distances of the original biplot when large values (close to 1) are obtained for 1-PS, SP and RPR and small values for AMB and RMSB relative to other bias measures.
 #' 
 #' For more detail, refer to Nienkemper-Swanepoel, J., le Roux, N. J., & Gardner-Lubbe, S. (2021). GPAbin: unifying visualizations of multiple imputations for missing values. Communications in Statistics - Simulation and Computation, 52(6), 2666–2685. https://doi.org/10.1080/03610918.2021.1914089.
+#' @aliases evalMeas
 #' @export
 #'
 #' @examples
 #' \donttest{
 #' data(compdat)
 #' data(implist)
-#' missbp <- missmi(implist) |> DRT() |> GPAbin() |> evalMeas(compdat=compdat)}
+#' missbp <- missmi(implist) |> DRT() |> GPAbin() |> evalMeas(compdat=compdat)
+#' missbp$tab}
+#' 
+#' @seealso \code{\link{missmi}}, \code{\link{impute}}, \code{\link{DRT}},
+#'   \code{\link{GPAbin}}
 #'
-evalMeas <- function (missbp, compdat=NULL)
+evaluation <- function (missbp, compdat=NULL)
 {
   if(is.null(compdat)) stop("No complete data set available for comparison. \nThis function is only applicable for simulated data.")
 
@@ -127,12 +133,14 @@ evalMeas <- function (missbp, compdat=NULL)
   imp_flat <- apply(GPAPred,1,stringr::str_flatten)
   
   RPR <- sum(comp_flat == imp_flat)/nrow(compPred)
-
-  EVALtable <- data.frame(c(PS, SP, RPR, AMB, RMSB))
-  colnames(EVALtable)<- c("Evaluation measures")
-  rownames(EVALtable)<- c("PS","SP","RPR", "AMB", "RMSB")
   
-  missbp$eval <- round(EVALtable,4)
+  EVALtable <- data.frame(c(1-PS, SP, RPR, AMB, RMSB))
+  colnames(EVALtable)<- c("Evaluation measures")
+  rownames(EVALtable)<- c("1-PS","SP","RPR", "AMB", "RMSB")
+  
+  eval.tab <- knitr::kable(round(EVALtable,4))
+  
+  missbp$tab <- eval.tab
   missbp$GPApred <-GPAPred
   missbp$compPred <- compPred
   missbp$compZs <- compZs
@@ -141,3 +149,7 @@ evalMeas <- function (missbp, compdat=NULL)
   
   missbp
 }
+
+#' @rdname evaluation
+#' @export
+evalMeas <- evaluation

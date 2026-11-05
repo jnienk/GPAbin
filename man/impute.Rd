@@ -4,7 +4,9 @@
 \alias{impute}
 \title{Multiple imputation}
 \usage{
-impute(missbp, imp.method = c("MIMCA", "jomo", "miceB", "mice"), m = 5)
+impute(missbp, 
+       imp.method = c("MIMCA", "jomo", "miceB", "mice"),
+       m = 5)
 }
 \arguments{
 \item{missbp}{An object of class \code{missmi} obtained from preceding function \code{missmi()}.}
@@ -16,8 +18,6 @@ impute(missbp, imp.method = c("MIMCA", "jomo", "miceB", "mice"), m = 5)
 \value{
 The \code{missbp} object is appended with the following object:
 \item{dataimp}{List of imputed data}
-
-See also \code{\link[missMDA]{MIMCA}}, \code{\link[jomo]{jomo1cat}}, \code{\link[mi]{mi}} and \code{\link[mice]{mice}}.
 }
 \description{
 Choose between four available multiple imputation strategies in \code{R}.
@@ -26,5 +26,7 @@ Choose between four available multiple imputation strategies in \code{R}.
 \donttest{
 data(missdat)
 missbp <- missmi(missdat) |> impute(imp.method="miceB", m=5)}
-
+}
+\seealso{
+\code{\link[missMDA]{MIMCA}}, \code{\link[jomo]{jomo1cat}}, \code{\link[mi]{mi}} and \code{\link[mice]{mice}}.
 }
