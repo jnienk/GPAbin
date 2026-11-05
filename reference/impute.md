@@ -5,7 +5,9 @@ Choose between four available multiple imputation strategies in `R`.
 ## Usage
 
 ``` r
-impute(missbp, imp.method = c("MIMCA", "jomo", "miceB", "mice"), m = 5)
+impute(missbp, 
+       imp.method = c("MIMCA", "jomo", "miceB", "mice"),
+       m = 5)
 ```
 
 ## Arguments
@@ -32,7 +34,9 @@ The `missbp` object is appended with the following object:
 
   List of imputed data
 
-See also [`MIMCA`](https://rdrr.io/pkg/missMDA/man/MIMCA.html),
+## See also
+
+[`MIMCA`](https://rdrr.io/pkg/missMDA/man/MIMCA.html),
 [`jomo1cat`](https://rdrr.io/pkg/jomo/man/jomo1cat.html),
 [`mi`](https://rdrr.io/pkg/mi/man/04mi.html) and
 [`mice`](https://amices.org/mice/reference/mice.html).
