@@ -68,9 +68,9 @@ missbp
 ###################################################################################
 #' Generalised Orthogonal Procrustes Analysis
 #' 
-#' This function contains the OPA function to compare two configurations and the GPA function for multiple configuration comparisons
+#' This function contains the OPA function to compare two configurations and the GPA function for multiple configuration comparisons.
 #'
-#' @param Xk list containing the testee configurations which is updated on #each iteration
+#' @param Xk list containing the testee configurations which is updated on each iteration
 #' @param G.target Target configuration. If not specified the centroid configuration will be used as the target
 #' @param iter Number of iterations allowed before convergence
 #' @param eps Threshold value for convergence of the alogrithm

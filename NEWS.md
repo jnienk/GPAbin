@@ -1,3 +1,9 @@
+# GPAbin 1.2.0
+New function names:
+- `evaluation` is used in the place of `evalMeas`.
+- `plot` is used in the place of `biplFig`.
+A vignette has been added that walks through the full workflow.
+
 # GPAbin 1.1.1
 * This version includes the construction of a complete MCA biplot when biplFig() is called. In the previous version only the GPAbin biplot was constructed.
 

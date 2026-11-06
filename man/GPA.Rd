@@ -7,7 +7,7 @@
 GPA(Xk, G.target = NULL, iter = 500, eps = 0.001)
 }
 \arguments{
-\item{Xk}{list containing the testee configurations which is updated on #each iteration}
+\item{Xk}{list containing the testee configurations which is updated on each iteration}
 
 \item{G.target}{Target configuration. If not specified the centroid configuration will be used as the target}
 
@@ -23,5 +23,5 @@ GPA(Xk, G.target = NULL, iter = 500, eps = 0.001)
 \item{sum.sq}{Final minimised sum of squared distance}
 }
 \description{
-This function contains the OPA function to compare two configurations and the GPA function for multiple configuration comparisons
+This function contains the OPA function to compare two configurations and the GPA function for multiple configuration comparisons.
 }

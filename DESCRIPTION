@@ -1,6 +1,6 @@
 Package: GPAbin
 Title: Unifying Multiple Biplot Visualisations into a Single Display
-Version: 1.1.1
+Version: 1.2.0
 Authors@R: 
     person("Johané", "Nienkemper-Swanepoel", , "nienkemperj@sun.ac.za", role = c("aut", "cre", "cph"), 
     comment = c(ORCID ="0000-0001-6086-8272"))
@@ -16,11 +16,14 @@ Imports:
     mice,
     missMDA,
     mitools,
-    stringr
+    stringr,
+    ggplot2
 Suggests: 
     testthat,
-    knitr
+    knitr,
+    rmarkdown
 Config/Needs/website: rmarkdown
 BugReports: https://github.com/jnienk/GPAbin/issues
 URL: https://jnienk.github.io/GPAbin/
 Config/roxygen2/version: 8.0.0
+VignetteBuilder: knitr
