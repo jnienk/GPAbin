@@ -27,7 +27,7 @@ evalMeas(missbp, compdat = NULL)
 
 The `missbp` object is appended with the following objects:
 
-- tab:
+- eval.tab:
 
   Returns a table with five evaluation measures: 1-Procrustes Statistic
   (1-PS), Similarity Proportion (SP), Response Profile Recovery (RPR),
@@ -80,13 +80,5 @@ data(compdat)
 data(implist)
 missbp <- missmi(implist) |> DRT() |> GPAbin() |> evalMeas(compdat=compdat)
 missbp$tab# }
-#> 
-#> 
-#> |     | Evaluation measures|
-#> |:----|-------------------:|
-#> |1-PS |              0.9873|
-#> |SP   |              0.9646|
-#> |RPR  |              0.8720|
-#> |AMB  |              0.1268|
-#> |RMSB |              0.1554|
+#> NULL
 ```

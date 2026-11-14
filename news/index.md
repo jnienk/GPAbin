@@ -1,12 +1,25 @@
 # Changelog
 
+## GPAbin 1.2.0
+
+- `ggplot2` and base plotting available, with default `ggplot2`.
+
+- New function names:
+
+  - `evaluation` is used in the place of `evalMeas`.
+
+  - `plot` is used in the place of `biplFig`.
+
+- A vignette has been added that walks through the full workflow.
+
 ## GPAbin 1.1.1
 
 CRAN release: 2025-10-02
 
 - This version includes the construction of a complete MCA biplot when
-  biplFig() is called. In the previous version only the GPAbin biplot
-  was constructed.
+  [`biplFig()`](https://jnienk.github.io/GPAbin/reference/plot.missmi.md)
+  is called. In the previous version only the GPAbin biplot was
+  constructed.
 
 ## GPAbin 1.1.0
 
@@ -22,8 +35,8 @@ CRAN release: 2025-06-14
 
 - Plotting parameters have been restored with on.exit() in the
   plotting() function.
-- A generic print function has been added (print.missmi) to address the
-  problem with the information that was printed to the console.
+- A generic print function has been added (`print.missmi`) to address
+  the problem with the information that was printed to the console.
 
 ## GPAbin 1.0.5
 

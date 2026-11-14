@@ -9,7 +9,7 @@ You can install the development version of GPAbin from
 
 ``` r
 
-devtools::install_github("jnienk/GPAbin")
+pak::pak("jnienk/GPAbin")
 ```
 
 ## About the name

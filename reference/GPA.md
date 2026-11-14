@@ -1,7 +1,7 @@
 # Generalised Orthogonal Procrustes Analysis
 
 This function contains the OPA function to compare two configurations
-and the GPA function for multiple configuration comparisons
+and the GPA function for multiple configuration comparisons.
 
 ## Usage
 
@@ -13,7 +13,7 @@ GPA(Xk, G.target = NULL, iter = 500, eps = 0.001)
 
 - Xk:
 
-  list containing the testee configurations which is updated on \#each
+  list containing the testee configurations which is updated on each
   iteration
 
 - G.target:

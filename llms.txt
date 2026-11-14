@@ -9,7 +9,7 @@ You can install the development version of GPAbin from
 
 ``` r
 
-devtools::install_github("jnienk/GPAbin")
+pak::pak("jnienk/GPAbin")
 ```
 
 ## About the name
@@ -53,3 +53,9 @@ called a GPAbin biplot.
 - [`print(`*`<missmi>`*`)`](https://jnienk.github.io/GPAbin/reference/print.missmi.md)
   : Generic print function for objects of class missmi
 
+# Articles
+
+### All vignettes
+
+- [Getting started with
+  GPAbin](https://jnienk.github.io/GPAbin/articles/GPAbin.md):

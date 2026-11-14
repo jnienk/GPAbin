@@ -5,7 +5,7 @@ This function performs Orthogonal Procrustes Analysis on centred data
 ## Usage
 
 ``` r
-OPA(missbp, compdat, centring = TRUE, dim = "2D")
+OPA(missbp, compdat, dim = "2D")
 ```
 
 ## Arguments
@@ -19,10 +19,6 @@ OPA(missbp, compdat, centring = TRUE, dim = "2D")
 
   Complete data set, only available for simulated data examples.
 
-- centring:
-
-  Logical argument to apply centering, default is `TRUE`.
-
 - dim:
 
   Number of dimensions to use in final solutions (`2D` or `All`
@@ -30,9 +26,17 @@ OPA(missbp, compdat, centring = TRUE, dim = "2D")
 
 ## Value
 
-- ProcStat:
+- PS:
 
   Procrustes Statistic
+
+- RMSB:
+
+  Root Mean Squared Bias
+
+- AMB:
+
+  Absolute Mean Bias
 
 - compZ:
 

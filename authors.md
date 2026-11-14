@@ -11,13 +11,13 @@ Source:
 [`DESCRIPTION`](https://github.com/jnienk/GPAbin/blob/main/DESCRIPTION)
 
 Nienkemper-Swanepoel J (2026). *GPAbin: Unifying Multiple Biplot
-Visualisations into a Single Display*. R package version 1.1.1,
+Visualisations into a Single Display*. R package version 1.2.0,
 <https://jnienk.github.io/GPAbin/>.
 
     @Manual{,
       title = {GPAbin: Unifying Multiple Biplot Visualisations into a Single Display},
       author = {Johané Nienkemper-Swanepoel},
       year = {2026},
-      note = {R package version 1.1.1},
+      note = {R package version 1.2.0},
       url = {https://jnienk.github.io/GPAbin/},
     }
