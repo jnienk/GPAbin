@@ -37,7 +37,7 @@ GPAbin <- function(missbp, G.target=NULL)
   tot_rows <- nrow(coord_set[[1]])
   
   #function requires a list
-  GPA.out <- GPA(coord_set,G.target=NULL)
+  GPA.out <- GPA(coord_set, G.target=G.target)
   G.target <- GPA.out[[4]]
   Q.list <- GPA.out[[3]]
   s.list <- GPA.out[[2]]
@@ -94,47 +94,66 @@ GPA <- function(Xk, G.target=NULL, iter=500, eps=0.001)
   K <- length(Xk)
   n <- nrow(Xk[[1]])
   p <- ncol(Xk[[1]])
-  means <- t(sapply(Xk, function(X)apply(X, 2, mean)))
-  Xk.scale <- sapply (Xk, scale, simplify=F)
-  Xk.F <- sapply (1:K, function(k, Xk) as.matrix (Xk[[k]]), Xk=Xk.scale, simplify=F)
+  
+  #initialisation
+  
+  #centred, dilation will occur in sk
+  Xk.scale <- sapply (Xk, scale, center = TRUE, scale = FALSE, simplify=F) 
+    Xk.F <- sapply (1:K, function(k, Xk) as.matrix (Xk[[k]]), Xk=Xk.scale, simplify=F)
   Qk <- sapply(1:K, function(k, p) return(diag(p)), p=p, simplify = F)
   sk <- rep(1, K)
   sk.F <- sk
   Qk.F <- sapply(1:K, function(k, Qk) Qk[[k]], Qk = Qk, simplify = F)
+  
   tel <- 0
   sum.sq.old <- Inf
-  
   repeat
   {tel <- tel + 1
   if(tel > iter)
     stop(paste("Maximum number of specified iterations reached! Increase iter \n",iter))
-  Xk.F <- sapply(1:K, function(k, Xk, sk, Qk) sk[k] * Xk[[k]] %*% Qk[[k]], Xk = Xk.F, sk = sk, Qk = Qk, simplify = F)
+  Xk.F <- sapply(1:K, function(k, Xk, sk, Qk) sk[k] * Xk[[k]] %*% Qk[[k]], 
+                 Xk = Xk.F, sk = sk, Qk = Qk, simplify = F)
   if (is.null(G.target))
   {Gmat <- Xk.F[[1]]
   for(k in 2:K)  Gmat <- Gmat + Xk.F[[k]]
   Gmat <- Gmat/K
   }
   else Gmat <- G.target
-  Qk <- sapply(1:K, function(k, Xind, Gmat) OPA.steps(Xind[[k]], Gmat), Xind = Xk.F, Gmat = Gmat, simplify = F)
-  Qk.F <- sapply(1:K, function(k, Qk, QF) QF[[k]] %*% Qk[[k]], Qk = Qk, QF = Qk.F, simplify = F)
+  Qk <- sapply(1:K, function(k, Xind, Gmat) OPA.steps(Xind[[k]], Gmat), 
+               Xind = Xk.F, Gmat = Gmat, simplify = F)
+  Qk.F <- sapply(1:K, function(k, Qk, QF) QF[[k]] %*% Qk[[k]], 
+                 Qk = Qk, QF = Qk.F, simplify = F)
   Smat <- matrix(0, ncol = K, nrow = K)
   for(i in 1:K)
     for(j in i:K) {
       Smat[i, j] <- sum(diag(t(Qk[[i]]) %*% t(Xk.F[[i]]) %*% Xk.F[[j]] %*% Qk[[j]]))
       if(i != j) Smat[j, i] <- Smat[i, j]
     }
-  Smat.min.half <- diag(1/sqrt(diag(Smat)))
-  swd <- svd(Smat.min.half %*% Smat %*% Smat.min.half)
-  sk <- Smat.min.half %*% swd[[2]][, 1] * sqrt(K)
+  
+  svd_out <- svd(diag(1/sqrt(diag(Smat))) %*% Smat %*% diag(1/sqrt(diag(Smat))))
+  sk <- diag(1/sqrt(diag(Smat))) %*% svd_out[[2]][, 1] * sqrt(K)
   sk.factor <- sum(sk)/K
   sk <- sk / sk.factor
   if(sk[1] < 0) sk <- -1 * sk
+  sk.F <- sk.F*as.vector(sk) #check
   
-  sum.sq <- sum(sapply(1:K, function(k, Xk, Gmat)sum(diag((Xk[[k]] - Gmat) %*% t(Xk[[k]] - Gmat))), Xk = Xk.F, Gmat = Gmat))
-  #cat("iter", tel, "sum.sq: ", sum.sq, "\n")
+  sum.sq <- sum(sapply(1:K, function(k, Xk, Gmat) sum(diag((Xk[[k]] - Gmat) %*% t(Xk[[k]] - Gmat))), 
+                       Xk = Xk.F, Gmat = Gmat))
+  
   if((sum.sq.old - sum.sq) < eps) break
   sum.sq.old <- sum.sq
   }
+  #final update
+  Xk.F <- sapply(1:K, function(k, Xk, sk, Qk) sk[k] * Xk[[k]] %*% Qk[[k]], 
+                 Xk = Xk.F, sk = sk, Qk = Qk, simplify = F)
+  #final updated SS
+  if (is.null(G.target))
+  {Gmat <- Xk.F[[1]]
+  for(k in 2:K)  Gmat <- Gmat + Xk.F[[k]]
+  Gmat <- Gmat/K
+  }
+  sum.sq <- sum(sapply(1:K, function(k, Xk, Gmat) sum(diag((Xk[[k]] - Gmat) %*% t(Xk[[k]] - Gmat))), 
+                       Xk = Xk.F, Gmat = Gmat))
   list(Xk.F=Xk.F, sk.F=sk.F, Qk.F=Qk.F, Gmat=Gmat, sum.sq=sum.sq)
 }
 ###################################################################################
@@ -145,18 +164,19 @@ GPA <- function(Xk, G.target=NULL, iter=500, eps=0.001)
 #'
 #' @param missbp An object of class \code{missmi} obtained from preceding function \code{missmi()}
 #' @param compdat Complete data set, only available for simulated data examples.
-#' @param centring Logical argument to apply centering, default is `TRUE`.
 #' @param dim Number of dimensions to use in final solutions (`2D` or `All` available dimensions.)
-#'
+#' 
 #' @return
-#' \item{ProcStat}{Procrustes Statistic}
+#' \item{PS}{Procrustes Statistic}
+#' \item{RMSB}{Root Mean Squared Bias}
+#' \item{AMB}{Absolute Mean Bias}
 #' \item{compZ}{Sample coordinates representing the complete data set}
 #' \item{compCLP}{Category level point coordinates representing the complete data set}
 #' \item{complvls}{Category levels}
 #' \item{compdat}{Complete data set, only available for simulated data examples}
 #' @export
 #' 
-OPA <- function(missbp, compdat, centring = TRUE, dim = "2D")
+OPA <- function(missbp, compdat, dim = "2D")
 {
   #creating coordinates of complete set
   #DRT on complete data
@@ -198,31 +218,23 @@ OPA <- function(missbp, compdat, centring = TRUE, dim = "2D")
       testee <- testee[,1:2]
     }
   
-  if(!centring)
-  {
-    testee <- testee
-    target <- target
-  } else
-  {
-    testee <- scale(testee,T,F)
-    #centre=T, scale=F results are similar to Cox and Cox, Gower and #Dijkersthuis, Borg and Groenen
-    target <- scale(target,T,F)
-  }
+
+  target <- scale(target, center = TRUE, scale = FALSE)
+  testee <- scale(testee, center = TRUE, scale = FALSE)
   
   #transformations
   C.mat <- t(target)%*%testee
   svd.C <- svd(C.mat)
   A.mat <- svd.C[[3]]%*%t(svd.C[[2]])
   s.fact <- sum(diag(t(target)%*%testee%*%A.mat))/sum(diag(t(testee)%*%testee))
-  #Gower and Dijksterhuis P32
   b.fact <- as.vector(1/nrow(target) * t(target - s.fact * testee %*% A.mat)%*%rep(1,nrow(target)))
-  
   X.new <- b.fact + s.fact*testee%*%A.mat
   
+  #evaluation measures
   Res.SS <- sum(diag(t(((s.fact*testee%*%A.mat)-target))%*%((s.fact*testee%*%A.mat)-target)))
   PS <- Res.SS/sum(diag(t(target)%*%target))
   RMSB <- ((sum(sum((target-testee)^2)))/length(testee))^(0.5)
   AMB <- (sum(sum(abs(target-testee))))/length(testee)
   
-  return(list(ProcStat = PS, RMSB = RMSB, AMB = AMB, compZ=compZ, compCLP=compCLP, complvls=complvls, compdat=compdat))
+  return(list(PS = PS, RMSB = RMSB, AMB = AMB, compZ=compZ, compCLP=compCLP, complvls=complvls, compdat=compdat))
 }

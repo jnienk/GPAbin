@@ -16,7 +16,7 @@ evalMeas(missbp, compdat = NULL)
 }
 \value{
 The \code{missbp} object is appended with the following objects:
-\item{tab}{Returns a table with five evaluation measures: 1-Procrustes Statistic (1-PS), Similarity Proportion (SP), Response Profile Recovery (RPR), Absolute Mean Bias (AMB), Root Mean Squared Bias (RMSB)}
+\item{eval.tab}{Returns a table with five evaluation measures: 1-Procrustes Statistic (1-PS), Similarity Proportion (SP), Response Profile Recovery (RPR), Absolute Mean Bias (AMB), Root Mean Squared Bias (RMSB)}
 \item{GPApred}{A dataframe representing predicted categorical responses from the GPAbin biplot.}
 \item{compPred}{A dataframe representing predicted categorical responses from the complete MCA biplot.}
 \item{compZs}{Sample coordinates for the MCA biplot of the complete data.}

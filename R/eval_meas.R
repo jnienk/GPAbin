@@ -59,7 +59,6 @@ CLPpred <- function (CLPs=CLPs, Zs=Zs, p=p, n=n, lvls=lvls, datIN = datIN)
   }
   inds.NNA <- which(!is.na(datIN), arr.ind=T)
   X.pred[inds.NNA] <- datIN[inds.NNA]#replaces non missing with original categories
-  #X.pred <- FormatDimNam(X.pred)
   
   return(predCL = X.pred)
   
@@ -74,7 +73,7 @@ CLPpred <- function (CLPs=CLPs, Zs=Zs, p=p, n=n, lvls=lvls, datIN = datIN)
 #'
 #' @return
 #' The `missbp` object is appended with the following objects:
-#' \item{tab}{Returns a table with five evaluation measures: 1-Procrustes Statistic (1-PS), Similarity Proportion (SP), Response Profile Recovery (RPR), Absolute Mean Bias (AMB), Root Mean Squared Bias (RMSB)}
+#' \item{eval.tab}{Returns a table with five evaluation measures: 1-Procrustes Statistic (1-PS), Similarity Proportion (SP), Response Profile Recovery (RPR), Absolute Mean Bias (AMB), Root Mean Squared Bias (RMSB)}
 #' \item{GPApred}{A dataframe representing predicted categorical responses from the GPAbin biplot.}
 #' \item{compPred}{A dataframe representing predicted categorical responses from the complete MCA biplot.}
 #' \item{compZs}{Sample coordinates for the MCA biplot of the complete data.}
@@ -115,7 +114,8 @@ evaluation <- function (missbp, compdat=NULL)
   compCLPs <- tempcomp[[5]]
   complvls <- tempcomp[[6]]
   
-  compPred <- CLPpred(CLPs=tempcomp$compCLP, Zs=tempcomp$compZ, p=ncol(compdat), n=nrow(compdat), lvls=tempcomp$complvls, datIN = compdat)
+  compPred <- CLPpred(CLPs=tempcomp$compCLP, Zs=tempcomp$compZ, p=ncol(compdat),
+                      n=nrow(compdat), lvls=tempcomp$complvls, datIN = compdat)
   if(is.data.frame(missbp$X)) 
     {
     datIN <- df2fact(missbp$X)
@@ -123,7 +123,8 @@ evaluation <- function (missbp, compdat=NULL)
     {
       datIN <- df2fact(missbp$X[[1]])
       }
-  GPAPred <-  CLPpred(CLPs=missbp$CLP.GPAbin,Zs=missbp$Z.GPAbin, p=missbp$p, n=missbp$n, lvls=missbp$lvlv[[1]], datIN=datIN)
+  GPAPred <-  CLPpred(CLPs=missbp$CLP.GPAbin,Zs=missbp$Z.GPAbin, p=missbp$p,
+                      n=missbp$n, lvls=missbp$lvlv[[1]], datIN=datIN)
   
   match.count <- sum(mapply(as.character,compPred)==mapply(as.character,GPAPred))
   
@@ -140,7 +141,7 @@ evaluation <- function (missbp, compdat=NULL)
   
   eval.tab <- knitr::kable(round(EVALtable,4))
   
-  missbp$tab <- eval.tab
+  missbp$eval.tab <- eval.tab
   missbp$GPApred <-GPAPred
   missbp$compPred <- compPred
   missbp$compZs <- compZs

@@ -1,33 +1,40 @@
 # GPAbin 1.2.0
-New function names:
-- `evaluation` is used in the place of `evalMeas`.
-- `plot` is used in the place of `biplFig`.
-A vignette has been added that walks through the full workflow.
+
+- `ggplot2` and base plotting available, with default `ggplot2`.
+
+- New function names:
+
+  -  `evaluation` is used in the place of `evalMeas`.
+
+  - `plot` is used in the place of `biplFig`.
+
+- A vignette has been added that walks through the full workflow.
 
 # GPAbin 1.1.1
-* This version includes the construction of a complete MCA biplot when biplFig() is called. In the previous version only the GPAbin biplot was constructed.
+
+- This version includes the construction of a complete MCA biplot when `biplFig()` is called. In the previous version only the GPAbin biplot was constructed.
 
 # GPAbin 1.1.0
 
-* This version includes the possibility to calculate evaluation measures for complete and completed datasets with different number of response levels.
+- This version includes the possibility to calculate evaluation measures for complete and completed datasets with different number of response levels.
 
 # GPAbin 1.0.6
 
-* Plotting parameters have been restored with on.exit() in the plotting() function.
-* A generic print function has been added (print.missmi) to address the problem with the information that was printed to the console.
+- Plotting parameters have been restored with on.exit() in the plotting() function.
+- A generic print function has been added (`print.missmi`) to address the problem with the information that was printed to the console.
 
 # GPAbin 1.0.5
 
-* Examples were updated to write output to an object, as well as adding \donttest{} to some examples reported with submission 1.0.4.
+- Examples were updated to write output to an object, as well as adding \donttest{} to some examples reported with submission 1.0.4.
 
 # GPAbin 1.0.4
 
-* Fixed the automated check issue reported with submission 1.0.3.
+- Fixed the automated check issue reported with submission 1.0.3.
 
 # GPAbin 1.0.3
 
-* Fixed the automated check issues reported with submission 1.0.0, 1.0.1 and 1.0.2.
+- Fixed the automated check issues reported with submission 1.0.0, 1.0.1 and 1.0.2.
 
 # GPAbin 1.0.0
 
-* Initial CRAN submission.
+- Initial CRAN submission.

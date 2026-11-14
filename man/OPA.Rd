@@ -4,19 +4,19 @@
 \alias{OPA}
 \title{Orthogonal Procrustes Analysis}
 \usage{
-OPA(missbp, compdat, centring = TRUE, dim = "2D")
+OPA(missbp, compdat, dim = "2D")
 }
 \arguments{
 \item{missbp}{An object of class \code{missmi} obtained from preceding function \code{missmi()}}
 
 \item{compdat}{Complete data set, only available for simulated data examples.}
 
-\item{centring}{Logical argument to apply centering, default is \code{TRUE}.}
-
 \item{dim}{Number of dimensions to use in final solutions (\verb{2D} or \code{All} available dimensions.)}
 }
 \value{
-\item{ProcStat}{Procrustes Statistic}
+\item{PS}{Procrustes Statistic}
+\item{RMSB}{Root Mean Squared Bias}
+\item{AMB}{Absolute Mean Bias}
 \item{compZ}{Sample coordinates representing the complete data set}
 \item{compCLP}{Category level point coordinates representing the complete data set}
 \item{complvls}{Category levels}

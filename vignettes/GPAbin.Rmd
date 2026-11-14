@@ -10,6 +10,8 @@ vignette: >
 ---
 
 ```{r setup, include = FALSE}
+library(ggplot2)
+
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
@@ -229,7 +231,7 @@ clps <- rbind(
 )
 clps$stage <- factor(clps$stage, levels = c("Before GPA", "After GPA"))
 
-ggplot2::ggplot(clps, aes(Dim1, Dim2, colour = imputation)) +
+ggplot(clps, aes(Dim1, Dim2, colour = imputation)) +
   geom_point(size = 1.8) +
   facet_wrap(~ stage) +
   coord_fixed() +
