@@ -4,7 +4,7 @@
 
 - New function names:
 
-  -  `evaluation` is used in the place of `evalMeas`.
+  - `evaluation` is used in the place of `evalMeas`.
 
   - `plot` is used in the place of `biplFig`.
 
