@@ -1,6 +1,6 @@
 ## Overview
 
-PATCH release: This version includes the construction of a complete MCA biplot when biplFig() is called. In the previous version only the GPAbin biplot was constructed.
+MINOR version release: This version includes the construction of ggplot2 and base plotting biplots. The package is now accompanied by a vignette.
 
 ── R CMD check results ─────────────────────────────────────────────────────────────────────── GPAbin 1.1.1 ────
 Duration: 2m 30.4s
@@ -10,5 +10,5 @@ Duration: 2m 30.4s
 
 ## Test environment
 
--   local R installation: R version 4.5.0 (2025-04-11 ucrt) -- "How About a Twenty-Six"
+-   local R installation: R version 4.6.1 (2026-06-24 ucrt)
 -   other platforms checked using `check_rhub()`: `linux`, `macos`, `windows`

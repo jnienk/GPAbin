@@ -17,7 +17,9 @@ Imports:
     missMDA,
     mitools,
     stringr,
-    ggplot2
+    ggplot2,
+    ggrepel,
+    dplyr
 Suggests: 
     testthat,
     knitr,

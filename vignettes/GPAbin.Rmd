@@ -10,7 +10,7 @@ vignette: >
 ---
 
 ```{r setup, include = FALSE}
-library(ggplot2); library(GPAbin)
+library(ggplot2); library(GPAbin); library(ggrepel)
 
 knitr::opts_chunk$set(
   collapse = TRUE,

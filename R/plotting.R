@@ -1,11 +1,11 @@
 ################################################################################
-#' Biplot function
+#' Biplot plotting function
 #'
-#' Creates a multiple correspondence analysis (MCA) biplot
 #' @description
-#' `biplFig()` was renamed to [plot()].
+#' Creates a multiple correspondence analysis (MCA) biplot
+#' `biplFig()` was renamed to `plot()`.
 #'
-#' @param missbp An object of class \code{missbp} obtained from preceding function \code{missmi()}.
+#' @param x An object of class \code{missmi}, obtained from preceding function \code{missmi()}.
 #' @param engine Select whether the plot should be generated with \code{ggplot2} or \code{base}, with default \code{ggplot2}.
 #' @param Z.col Colour of sample coordinates
 #' @param CLP.col Colour of category level point coordinates 
@@ -14,26 +14,37 @@
 #' @param Z.cex Size of plotting character for sample points
 #' @param CLP.cex Size of plotting character for category level point points 
 #' @param title Title of the GPAbin biplot.
-#'
+#' @param ... additional arguments.
+#' 
 #' @export
 #' @aliases biplFig
 #' 
 #' @return
 #' \itemize{
-#' \item If `compdat = NULL` in \code{\link{evalMeas}}, only a GPAbin biplot will be constructed.
-#' \item If a complete data set (`compdat`) was specified in \code{\link{evalMeas}}, two biplots will be constructed: (1) Complete MCA biplot and (2) GPAbin biplot.
+#' \item If `compdat = NULL` in \code{\link{evaluation}}, only a GPAbin biplot will be constructed.
+#' \item If a complete data set (`compdat`) was specified in \code{\link{evaluation}}, two biplots will be constructed: (1) Complete MCA biplot and (2) GPAbin biplot.
 #' }
 #'  
 #' @examples
 #' data(implist)
-#' missbp <- missmi(implist)|> DRT() |> GPAbin() |> plot(title = "GPAbin biplot")
 #' data(compdat)
-#' missmi(implist) |> DRT() |> GPAbin() |> evalMeas(compdat=compdat) |> plot()
+#' missbp <- missmi(implist)|> DRT() |> GPAbin() |> 
+#' evaluation(compdat = compdat) |> plot()
 #' 
-plot.missmi <- function (missbp, engine = c("ggplot2", "base"), Z.col = "#61223b", 
+#' ### GPAbin biplot
+#' 
+#' missbp$plot
+#' 
+#' ### MCA biplot
+#' 
+#' missbp$plotC
+#' 
+plot.missmi <- function (x, engine = c("ggplot2", "base"), Z.col = "#61223b", 
                          CLP.col = "#b79962", Z.pch = 19, CLP.pch = 15, 
                          Z.cex = 1.5, CLP.cex = 1.7, title = NULL, ...) 
 { 
+  missbp <- x
+  
   engine <- match.arg(engine)
   if (engine == "ggplot2") {
       return(ggbiplFig(missbp, Z.col = Z.col, CLP.col = CLP.col, 
@@ -123,7 +134,7 @@ biplFig <- plot.missmi
 #' data(implist)
 #' data(compdat)
 #' missbp <- missmi(implist)|> DRT() |> GPAbin() |> 
-#' evalMeas(compdat = compdat) |> plot()
+#' evaluation(compdat = compdat) |> plot()
 #' 
 #' ### GPAbin biplot
 #' 
@@ -154,7 +165,7 @@ ggbiplFig <- function (missbp, Z.col = "#61223b", CLP.col = "#b79962",
       ggplot2::geom_point(data = CLPs, ggplot2::aes(x = V1, y = V2),
                  colour = CLP.col, size = 3, shape = CLP.pch) +
       ggrepel::geom_text_repel(data = CLPs,
-                               ggplot2::aes(V1, V2, label = source),
+                               ggplot2::aes(x = V1, y = V2, label = source),
                       box.padding = 0.6,
                       point.padding = 0.4,
                       force = 1.5) +

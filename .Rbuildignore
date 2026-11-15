@@ -1,10 +1,8 @@
 ^GPAbin\.Rproj$
 ^\.Rproj\.user$
 ^LICENSE\.md$
-^inst$
 ^doc$
 ^Meta$
-^.github$
 ^cran-comments\.md$
 ^README\.Rmd$
 ^CRAN-SUBMISSION$
@@ -16,3 +14,5 @@
 ^\.github$
 ^\.positai$
 ^\.claude$
+^check_out$
+^\.Rhistory$

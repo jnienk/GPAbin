@@ -6,7 +6,7 @@
 \title{Biplot function}
 \usage{
 \method{plot}{missmi}(
-  missbp,
+  x,
   engine = c("ggplot2", "base"),
   Z.col = "#61223b",
   CLP.col = "#b79962",
@@ -19,7 +19,7 @@
 )
 
 biplFig(
-  missbp,
+  x,
   engine = c("ggplot2", "base"),
   Z.col = "#61223b",
   CLP.col = "#b79962",
@@ -32,7 +32,7 @@ biplFig(
 )
 }
 \arguments{
-\item{missbp}{An object of class \code{missbp} obtained from preceding function \code{missmi()}.}
+\item{x}{An object of class \code{missmi}, obtained from preceding function \code{missmi()}.}
 
 \item{engine}{Select whether the plot should be generated with \code{ggplot2} or \code{base}, with default \code{ggplot2}.}
 
@@ -49,23 +49,31 @@ biplFig(
 \item{CLP.cex}{Size of plotting character for category level point points}
 
 \item{title}{Title of the GPAbin biplot.}
+
+\item{...}{additional arguments.}
 }
 \value{
 \itemize{
-\item If \code{compdat = NULL} in \code{\link{evalMeas}}, only a GPAbin biplot will be constructed.
-\item If a complete data set (\code{compdat}) was specified in \code{\link{evalMeas}}, two biplots will be constructed: (1) Complete MCA biplot and (2) GPAbin biplot.
+\item If \code{compdat = NULL} in \code{\link{evaluation}}, only a GPAbin biplot will be constructed.
+\item If a complete data set (\code{compdat}) was specified in \code{\link{evaluation}}, two biplots will be constructed: (1) Complete MCA biplot and (2) GPAbin biplot.
 }
 }
 \description{
-\code{biplFig()} was renamed to \code{\link[=plot]{plot()}}.
-}
-\details{
 Creates a multiple correspondence analysis (MCA) biplot
+\code{biplFig()} was renamed to \code{plot()}.
 }
 \examples{
 data(implist)
-missbp <- missmi(implist)|> DRT() |> GPAbin() |> plot(title = "GPAbin biplot")
 data(compdat)
-missmi(implist) |> DRT() |> GPAbin() |> evalMeas(compdat=compdat) |> plot()
+missbp <- missmi(implist)|> DRT() |> GPAbin() |> 
+evaluation(compdat = compdat) |> plot()
+
+### GPAbin biplot
+
+missbp$plot
+
+### MCA biplot
+
+missbp$plotC
 
 }
