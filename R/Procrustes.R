@@ -73,7 +73,7 @@ missbp
 #' @param Xk list containing the testee configurations which is updated on each iteration
 #' @param G.target Target configuration. If not specified the centroid configuration will be used as the target
 #' @param iter Number of iterations allowed before convergence
-#' @param eps Threshold value for convergence of the alogrithm
+#' @param eps Threshold value for convergence of the algorithm
 #'
 #' @return
 #' \item{Xk.F}{List containing the updated testee configurations}
