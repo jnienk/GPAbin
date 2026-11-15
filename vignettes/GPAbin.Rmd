@@ -259,7 +259,10 @@ reference configuration.
 `engine = "base"` for base graphics.
 
 ```{r plot, fig.height = 6.5}
-missbp <- plot(missbp, title = "GPAbin biplot", CLP.col = "#DCAA5F", Z.col = "#9686AA")
+missbp <- plot(missbp, 
+               title = "GPAbin biplot", 
+               CLP.col = "#DCAA5F", 
+               Z.col = "#9686AA")
 ```
 
 Dark points are respondents; gold squares are the category level points,
@@ -278,7 +281,10 @@ version carries exactly the same information.
 ### Base graphics
 
 ```{r biplfig, fig.show = "hold", out.width = "75%"}
-missbp |> plot(engine = "base", title = "GPAbin biplot", CLP.col = "#DCAA5F", Z.col = "#9686AA")
+missbp |> plot(engine = "base", 
+               title = "GPAbin biplot", 
+               CLP.col = "#DCAA5F", 
+               Z.col = "#9686AA")
 ```
 
 ### ggplot2
@@ -300,8 +306,8 @@ Because we created the missing values ourselves, we know what the biplot of the
 examples like this one.
 
 ```{r eval}
-missbp <- evalMeas(missbp, compdat = compdat)
-missbp$tab
+missbp <- evaluation(missbp, compdat = compdat)
+missbp$eval.tab
 ```
 
 The table contains five measures:
@@ -312,8 +318,7 @@ The table contains five measures:
 * **SP** (similarity proportion): the proportion of all responses for which the
   category predicted from the GPAbin biplot equals the category in the complete
   data. Observed responses are kept as they are, so they count as correct by
-  construction (here `r round(100 * (1 - mean(is.na(missdat))))`% of all
-  cells). Only the missing cells are actually predicted. Again, values close to 1 are good.
+  construction. Only the missing cells are actually predicted. Again, values close to 1 are good.
 * **RPR** (response profile recovery): the proportion of respondents whose
   *entire* response profile is recovered correctly. This is a much stricter
   criterion than SP, with values close to 1 again reflecting successful recovery.
