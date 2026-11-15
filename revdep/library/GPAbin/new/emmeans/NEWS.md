@@ -2,6 +2,74 @@
 title: "NEWS for the emmeans package"
 ---
 
+## emmeans 2.0.4
+  * Updated logo (now hexagonal)
+  * bug-fix for labelling in pairwise contrasts
+  * `head()` and `tail()` for `emmGrid` objects now follow base-R semantics
+    for a negative `n` (previously the two were effectively swapped)
+  * Fixed an error in the `atanh` response transformation: a typo in its
+    `mu.eta` derivative (`tanh^2(eta)`) made `type = "response"` fail
+  * `cross.adjust` is now correctly ignored (as documented) when the `by`
+    groups are not all the same size, rather than silently producing
+    mis-shaped (recycled) adjusted P values
+  * `emmip(..., engine = "lattice")` now uses the axis/trace labels again (a typo referenced the wrong object, so the labels were silently dropped)
+  * Bug fix regarding cls class assignment
+
+
+## emmeans 2.0.3
+  * Repaired `contrast` so that it recognizes multivariate transformations 
+    `alr`, `clr`, and `ilr` as being log-based. Thus contrasts thereof are
+    log odds ratios (#575)
+  * Re-vamped `mvregrid()` with a 'transform` argument for more flexibility,
+    and different defaults. Pre-existing code that uses this function may fail.
+  * `summary()` now tries to invert a multivariate transformation, if present,
+    when called with `type = "response"`
+
+## emmeans 2.0.2
+
+  * Improved dispatching for S4 classes. Previously caused problems with
+    counterfactuals were used.
+  * fixed problem observed near end of "messy data" vignette where lines and points 
+    didn't coincide
+  * Added an `abbr.len` argument to `emmip()` for abbreviating factor levels
+
+## emmeans 2.0.1
+
+  * Fix to `.parse_nest()` to handle nested factors with spaces in their name (#562)
+  * `col` was not handled properly in `emmip()` (#565)
+  * In `emmip()`, changed default for `facetlab` to `"label_both"`. This just
+    seems like a better choice.
+  * Added a `facetlab` argument to `plot.emmGrid()` -- badly needed when we have
+    several `by` groups
+  * Added the `pval.digits` option to specify the desired P-value precision (#567).
+    It defaults to 4, which was the only precision available in past versions.
+  * Note that the above change corrects a slight bug in past versions:
+    a P value smaller than 0.0001 that rounded *up* to 0.0001 was printed as `0.0001` 
+    rather than `<.0001`.
+
+
+## emmeans 2.0.0
+We have a new major version number, with a new graphics look and a new maintainer,
+Julia Piaskowski (however, Russ is still very much involved).
+
+  * Added a new `post.ci.method` option to set the default for `ci.method`
+    in `hpd.summary()` (#538)
+  * Extended `qdrg()` so that it is a generic that can dispatch S3 methods
+    based on the class of `object`. This allows a "budget" option for
+    package developers who want to provide rudimentary **emmeans** support.
+  * Fixed code for `emmip_ggplot()`, so that we no longer call `aes_()` (#547)
+  * **ggplot2**-based graphics have a new look. If you liked the old one
+    better, use `emm_options(gg.theme = 1)` to get an approximation of the old look.
+  * May also use `gg.theme` option to set any theme you want for future plots.
+  * Scaling changes so `emmip()` so that plots better fill the plotting area.
+  * Intervals in `plot.emmGrid()` are now solid colors, rather than transparent ones,
+    to prevent grid lines from partially masking them.
+  * Weights were not present in `ordinal` objects created with `mode = "mean.class"`
+    (#553)
+  * Cautionary note added on bias correction (in documentation of `summary.emmGrid`)
+    when `sigma` is large (#540)
+
+
 ## emmeans 1.11.2-8
   * Correction in `summary.emmGrid` to calculation of adjustment factors when
     'by` variables are nested (#536)

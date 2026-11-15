@@ -120,5 +120,7 @@ tab.disjonctif.prop     Make a disjunctive table when missing values
                         are present
 tea                     tea (data)
 textual                 Text mining
+theme_factominer        Theme for ggplot graphs and colour scales for
+                        FactoMineR
 wine                    Wine
 write.infile            Print in a file

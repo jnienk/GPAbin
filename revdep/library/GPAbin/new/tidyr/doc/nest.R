@@ -29,28 +29,28 @@ df2 <- tribble(
    2,  5,  7,
    3, 10,  NA
 )
-df2 %>% nest(data = c(x, y))
+df2 |> nest(data = c(x, y))
 
 ## -----------------------------------------------------------------------------
-df2 %>% group_by(g) %>% nest()
+df2 |> group_by(g) |> nest()
 
 ## -----------------------------------------------------------------------------
-df1 %>% unnest(data)
+df1 |> unnest(data)
 
 ## -----------------------------------------------------------------------------
-mtcars_nested <- mtcars %>% 
-  group_by(cyl) %>% 
+mtcars_nested <- mtcars |>
+  group_by(cyl) |>
   nest()
 
 mtcars_nested
 
 ## -----------------------------------------------------------------------------
-mtcars_nested <- mtcars_nested %>% 
+mtcars_nested <- mtcars_nested |>
   mutate(model = map(data, function(df) lm(mpg ~ wt, data = df)))
 mtcars_nested
 
 ## -----------------------------------------------------------------------------
-mtcars_nested <- mtcars_nested %>% 
-  mutate(model = map(model, predict))
-mtcars_nested  
+mtcars_nested <- mtcars_nested |>
+  mutate(pred = map(model, predict))
+mtcars_nested
 

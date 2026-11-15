@@ -3,7 +3,7 @@
     This filter contains utility functions that are useful in several filters.
 
   USAGE
-    This script is loaded in other script by an RMARKDOW_LUA_SHARED environment variable
+    This script is loaded in other script by an RMARKDOWN_LUA_SHARED environment variable
     set inside rmarkdown R package by `render()`.
 
     Use this line in other script to use this function
@@ -67,6 +67,22 @@ function print_debug(label,obj,iter)
       end
   end
   return nil
+end
+
+
+--- Creates a directory, including parents, if it does not already exist.
+function make_directory(path)
+  -- pandoc.system.make_directory (with parents support) was added in pandoc 2.19;
+  -- earlier versions have pandoc.system but not make_directory, so we fall back to
+  -- shell commands for those versions.
+  if pandocAvailable({2, 8}) and pandoc.system and pandoc.system.make_directory then
+    pcall(pandoc.system.make_directory, path, true)
+  elseif package.config:sub(1, 1) == '\\' then
+    local winpath = path:gsub("/", "\\")
+    os.execute('if not exist "' .. winpath .. '" mkdir "' .. winpath .. '"')
+  else
+    os.execute('mkdir -p "' .. path .. '"')
+  end
 end
 
 

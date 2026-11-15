@@ -170,6 +170,8 @@ popmis                  Hox pupil popularity data with missing
 pops                    Project on preterm and small for gestational
                         age infants (POPS)
 potthoffroy             Potthoff-Roy data
+predict_mi              Predict method for linear models with multiply
+                        imputed data
 print.mira              Print a 'mira' object
 quickpred               Quick selection of predictors from the data
 selfreport              Self-reported and measured BMI

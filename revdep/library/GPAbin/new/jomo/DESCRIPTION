@@ -15,5 +15,5 @@ NeedsCompilation: yes
 Packaged: 2023-04-14 08:57:20 UTC; rmjlmqu
 Repository: CRAN
 Date/Publication: 2023-04-15 09:30:02 UTC
-Built: R 4.5.1; x86_64-w64-mingw32; 2025-07-14 02:00:46 UTC; windows
+Built: R 4.6.2; x86_64-w64-mingw32; 2026-11-11 04:48:23 UTC; windows
 Archs: x64

@@ -1,8 +1,32 @@
+# Rdpack 2.6.6
+
+- rewrote the function beside Rd macro `\insertFig` defensively and to work harder to locate
+  and/or create the directory for the figures (see issue #39).
+
+
+# Rdpack 2.6.5
+
+- Rdpack's bibstyles are no longer created at load time.
+
+- refactored the bibstyles. Needs `rbibutils > 2.4`, due to a missing
+  export in rbibutils v2.4.
+
+- fixed the name of a subsection in `insert_ref.Rd`. It was wrongly mentioning
+  'insertNoCite`, while actually describing 'insertCiteOnly' (and causing a
+  duplicated html anchor, now caught by recent R checks).
+
+- padded the last table in 'predefined.Rd' so that the last row now has the same
+  number of entries as the rest (pkgdown was omitting it and the R checks started
+  flagged it with a NOTE).
+
+
 # Rdpack 2.6.4
 
-- fixed a couple of tests that was expecting warning to expect error in things
-  like `structure(NULL, xxx = "something")` since R-devel circa start of April 2025
-  turned that construct to an error).
+- no user visible changes.
+
+- fixed a couple of tests that were expecting warnings to expect error in things
+  like `structure(NULL, xxx = "something")`, since R-devel circa start of April
+  2025 turned that construct to an error.
 
 
 # Rdpack 2.6.3

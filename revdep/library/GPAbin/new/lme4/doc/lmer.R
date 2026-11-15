@@ -12,9 +12,197 @@ library("grid")
 zmargin <- theme(panel.spacing=unit(0,"lines"))
 library("lattice")
 library("minqa")
+library("reformulas")
 opts_chunk$set(engine='R',dev='pdf', fig.width=9, fig.height=5.5,
                prompt=TRUE, cache=TRUE, tidy=FALSE, comment=NA, error = FALSE)
 knitr::render_sweave()
+
+## ----sleep----------------------------------------------------------
+str(sleepstudy)
+
+## ----sleepPlot, echo=FALSE, fig.scap="Reaction time versus days by subject", fig.cap="Average reaction time versus days of sleep deprivation by subject.  Subjects ordered (from left to right starting on the top row) by increasing slope of subject-specific linear regressions.", fig.align='center', fig.pos='tb'----
+## BMB: seemed more pleasing to arrange by increasing slope rather than
+## intercept ...
+xyplot(Reaction ~ Days | Subject, sleepstudy, aspect = "xy",
+       layout = c(9, 2), type = c("g", "p", "r"),
+       index.cond = function(x, y) coef(lm(y ~ x))[2],
+       xlab = "Days of sleep deprivation",
+       ylab = "Average reaction time (ms)",
+       as.table = TRUE)
+
+## ----outputExample,results="hide"-----------------------------------
+fm1 <- lmer(Reaction ~ Days + (Days | Subject), sleepstudy)
+
+## ----modularExampleFormula, tidy=FALSE, eval=FALSE------------------
+# parsedFormula <- lFormula(formula = Reaction ~ Days + (Days | Subject),
+#                              data = sleepstudy)
+
+## ----modularExampleObjective, tidy=FALSE, eval=FALSE----------------
+# devianceFunction <- do.call(mkLmerDevfun, parsedFormula)
+
+## ----modularExampleOptimization, tidy=FALSE, eval=FALSE-------------
+# optimizerOutput <- optimizeLmer(devianceFunction)
+
+## ----modularExampleOutput, tidy=FALSE, eval=FALSE-------------------
+# mkMerMod(   rho = environment(devianceFunction),
+#             opt = optimizerOutput,
+#          reTrms = parsedFormula$reTrms,
+#              fr = parsedFormula$fr)
+
+## ----MMformula, eval=FALSE------------------------------------------
+# resp ~ FEexpr + (REexpr1 | factor1) + (REexpr2 | factor2) + ...
+
+## ----uncorrelatedModel,results="hide"-------------------------------
+fm2 <- lmer(Reaction ~ Days + (Days || Subject), sleepstudy)
+
+## ----setSeed, echo=FALSE--------------------------------------------
+set.seed(2)
+
+## ----factorToSparseMatrix-------------------------------------------
+(f <- gl(3, 2))
+(Ji <- t(as(f, Class = "sparseMatrix")))
+
+## ----rawModelMatrix-------------------------------------------------
+(Xi <- cbind(1, rep.int(c(-1, 1), 3L)))
+
+## ----KhatriRao------------------------------------------------------
+(Zi <- t(KhatriRao(t(Ji), t(Xi))))
+
+## ----sanityCheck, include=FALSE-------------------------------------
+## alternative formulation of Zi (eq:Zi)
+rbind(
+  Ji[1,] %x% Xi[1,],
+  Ji[2,] %x% Xi[2,],
+  Ji[3,] %x% Xi[3,],
+  Ji[4,] %x% Xi[4,],
+  Ji[5,] %x% Xi[5,],
+  Ji[6,] %x% Xi[6,])
+
+## ----nc, echo=FALSE-------------------------------------------------
+nc <- 3
+
+## ----template-------------------------------------------------------
+(rowIndices <- rep(1:nc, 1:nc))
+(colIndices <- sequence(1:nc))
+(template <- sparseMatrix(rowIndices, colIndices,
+                          x = 1 * (rowIndices == colIndices)))
+
+## ----thetaFromTemplate----------------------------------------------
+(theta <- template@x)
+
+## ----thetaSanityCheck, include=FALSE--------------------------------
+lFormula(Reaction ~ (Days + I(Days^2) | Subject), sleepstudy)$reTrms$theta
+
+## ----nl, echo=FALSE-------------------------------------------------
+nl <- 2
+
+## ----relativeCovarianceBlock----------------------------------------
+(Lambdati <- .bdiag(rep(list(t(template)), nl)))
+
+## ----relativeCovarianceBlockIndices---------------------------------
+LindTemplate <- rowIndices + nc * (colIndices - 1) - choose(colIndices, 2)
+(Lind <- rep(LindTemplate, nl))
+
+## ----newTheta-------------------------------------------------------
+thetanew <- round(runif(length(theta)), 1)
+
+## ----relativeCovarianceBlockUpdate----------------------------------
+Lambdati@x <- thetanew[Lind]
+
+## ----PLSupdateTheta, eval = FALSE-----------------------------------
+# Lambdat@x[] <- mapping(theta)
+
+## ----PLSupdateThetaWithLind-----------------------------------------
+mapping <- function(theta) theta[Lind]
+
+## ----exampleNewTheta------------------------------------------------
+thetanew <- c(1, -0.1, 2, 0.1, -0.2, 3)
+
+## ----exampleLindUpdate----------------------------------------------
+Lambdati@x[] <- mapping(thetanew)
+Lambdati
+
+## ----updateL, eval=FALSE--------------------------------------------
+# L <- update(L, Lambdat %*% ZtW, mult = 1)
+
+## ----PLSsolve, eval = FALSE-----------------------------------------
+# cu[] <- as.vector(solve(L, solve(L, Lambdat %*% ZtWy,
+#                                  system = "P"), system = "L"))
+# RZX[] <- as.vector(solve(L, solve(L, Lambdat %*% ZtWX,
+#                                   system = "P"), system = "L"))
+# RXtRX <- as(XtWX - crossprod(RZX), "dpoMatrix")
+# beta[] <- as.vector(solve(RXtRX, XtWy - crossprod(RZX, cu)))
+# u[] <- as.vector(solve(L, solve(L, cu - RZX %*% beta,
+#                                 system = "Lt"), system = "Pt"))
+
+## ----PLSupdateResp, eval = FALSE------------------------------------
+# b[] <- as.vector(crossprod(Lambdat, u))
+# mu[] <- as.vector(crossprod(Zt, b) + X %*% beta + offset)
+# wtres <- sqrtW * (y - mu)
+
+## ----PLScalculateObjective, eval = FALSE----------------------------
+# pwrss <- sum(wtres^2) + sum(u^2)
+# logDet <- 2*determinant(L, logarithm = TRUE)$modulus
+# if (REML) logDet <- logDet + determinant(RXtRX,
+#                                          logarithm = TRUE)$modulus
+# attributes(logDet) <- NULL
+# profDev <- logDet + degFree * (1 + log(2 * pi * pwrss) - log(degFree))
+
+## ----vcovByHand-----------------------------------------------------
+RX <- getME(fm1, "RX")
+sigma2 <- sigma(fm1)^2
+sigma2 * chol2inv(RX)
+
+## ----condVarExample, echo=FALSE, eval=FALSE-------------------------
+# s2 <- sigma(fm1)^2
+# Lambdat <- getME(fm1, "Lambdat")
+# Lambda <- getME(fm1, "Lambda")
+# Zt <- getME(fm1, "Zt")
+# Z <- getME(fm1, "Z")
+# y <- getME(fm1, "y")
+# X <- getME(fm1, "X")
+# beta <- getME(fm1, "beta")
+# L <- getME(fm1, "L")
+# (V <- crossprod(solve(L, system = "L")))[1:2, 1:2]
+# (s2 * Lambda %*% V %*% Lambdat)[1:2, 1:2]
+# attr(ranef(fm1, condVar = TRUE)$Subject, "postVar")[ , , 1] # should be same as Lam %*% V %*% Lamt
+# (U <- as.vector((V %*% Lambdat %*% Zt %*%  (y - X %*% beta))))
+# getME(fm1, "u")
+
+## ----updateModel----------------------------------------------------
+fm3 <- update(fm1, . ~ . - (Days | Subject) + (1 | Subject))
+formula(fm3)
+
+## ----summary1,echo=FALSE--------------------------------------------
+ss <- summary(fm1)
+cc <- capture.output(print(ss))
+reRow <- grep("^Random effects", cc)
+cat(cc[1:(reRow - 2)], sep = "\n")
+
+## ----summary1reproduced, eval=FALSE---------------------------------
+# formula(fm1)
+# REMLcrit(fm1)
+# quantile(residuals(fm1, "pearson", scaled = TRUE))
+
+## ----summary2, echo=FALSE-------------------------------------------
+feRow <- grep("^Fixed effects", cc)
+cat(cc[reRow:(feRow - 2)], sep = "\n")
+
+## ----summary2reproduced, eval=FALSE---------------------------------
+# print(vc <- VarCorr(fm1), comp = c("Variance", "Std.Dev."))
+# nobs(fm1)
+# ngrps(fm1)
+# sigma(fm1)
+
+## ----VarCorr--------------------------------------------------------
+as.data.frame(VarCorr(fm1))
+
+## ----summary3, echo=FALSE-------------------------------------------
+corRow <- grep("^Correlation", cc)
+cat(cc[feRow:(corRow - 2)], sep = "\n")
+
+## ----summary4, echo=FALSE-------------------------------------------
+cat(cc[corRow:length(cc)], sep = "\n")
 
 ## ----diagplot1,fig.keep="none"--------------------------------------
 plot(fm1, type = c("p", "smooth"))
@@ -54,10 +242,15 @@ ddiff2 <- deviance(fm2ML) - deviance(fm1ML)
 ## ----pvaluesHelp, eval=FALSE----------------------------------------
 # help("pvalues")
 
-## ----compareCI,echo=FALSE,cache=TRUE,message=FALSE,warning=FALSE----
-ccw <- confint(fm1, method = "Wald")
-ccp <- confint(fm1, method = "profile", oldNames = FALSE)
-ccb <- confint(fm1, method = "boot")
+## ----compareCI,echo=FALSE-------------------------------------------
+## ccw <- confint(fm1, method = "Wald")
+## ## compute the profile once here and re-use it below rather than
+## ## profiling fm1 a second time; profiling is expensive and
+## ## makes us exceed CRAN time limits
+## pf <- profile(fm1)
+## ccp <- confint(pf)
+## ccb <- confint(fm1, method = "boot")
+load(system.file("vignette_data", "lmer_batch.rda", package = "lme4"))
 
 ## ----CIqcomp,echo=FALSE,eval=TRUE-----------------------------------
 rtol <- function(x,y) {
@@ -82,8 +275,8 @@ mdiffpct <- round(100 * max(rtol(bw, pw)))
 #     theme(axis.text.x = element_blank()) +
 #     labs(x = "")
 
-## ----profile_calc,echo=FALSE,cache=TRUE-----------------------------
-pf <- profile(fm1)
+## ----profile_calc,echo=FALSE----------------------------------------
+## used to compute pf here, but was computed above, in the confidence interval chunk (compareCI)
 
 ## ----profile_zeta_plot,fig.cap="Profile zeta plot: \\code{xyplot(prof.obj)}",fig.scap="Profile zeta plot",echo=FALSE,fig.align='center',fig.pos='tb'----
 xyplot(pf)
@@ -124,7 +317,7 @@ dat$respVar <- simulate(form,
 
 ## ----graphSims------------------------------------------------------
 formLm <- form
-formLm[[3]] <- findbars(form)[[1]]
+formLm[[3]] <- reformulas::findbars(form)[[1]]
 print(formLm)
 cor(t(sapply(lmList(formLm, dat), coef)))
 

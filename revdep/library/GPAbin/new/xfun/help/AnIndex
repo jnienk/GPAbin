@@ -3,7 +3,6 @@ alnum_id	alnum_id
 append_unique	read_utf8
 append_utf8	read_utf8
 as_strict_list	strict_list
-attr	attr2
 attr2	attr2
 base64_decode	base64_encode
 base64_encode	base64_encode
@@ -11,6 +10,8 @@ base64_uri	base64_uri
 base_pkgs	base_pkgs
 bg_process	bg_process
 broken_packages	broken_packages
+browser_dom	browser_dom
+browser_print	browser_print
 bump_version	bump_version
 cache_exec	cache_exec
 cache_rds	cache_rds
@@ -73,6 +74,9 @@ is_unix	os
 is_web_path	is_web_path
 is_windows	os
 join_words	join_words
+js	tojson
+json_reviver	tojson
+json_unpack	tojson
 json_vector	tojson
 lazy_load	lazy_save
 lazy_save	lazy_save
@@ -99,6 +103,7 @@ pkg_available	pkg_attach
 pkg_bib	pkg_bib
 pkg_load	pkg_attach
 pkg_load2	pkg_attach
+post_release	post_release
 print.xfun_raw_string	raw_string
 print.xfun_record_results	record
 print.xfun_strict_list	strict_list
@@ -107,6 +112,9 @@ proc_kill	proc_kill
 proj_root	proj_root
 prose_index	prose_index
 protect_math	protect_math
+radix_group	radix_id
+radix_id	radix_id
+random_port	random_port
 rand_unit	rand_unit
 raw_string	raw_string
 Rcmd	Rscript
@@ -129,18 +137,21 @@ Rscript_call	Rscript_call
 rstudio_type	rstudio_type
 same_path	same_path
 sans_ext	file_ext
+serve_dir	serve_dir
 session_info	session_info
 set_envvar	set_envvar
 shrink_images	shrink_images
 sort_file	process_file
 split_lines	split_lines
 split_source	split_source
+stop_app	new_app
 strict_list	strict_list
 strip_html	strip_html
 str_wrap	str_wrap
 submit_cran	submit_cran
 system3	system3
 tabset	tabset
+tab_content	tabset
 taml_file	taml_load
 taml_load	taml_load
 taml_save	taml_load

@@ -117,6 +117,7 @@ print.xtable_emm	xtable.emmGrid
 pwpm	pwpm
 pwpp	pwpp
 qdrg	qdrg
+qdrg.default	qdrg
 rbind.emmGrid	rbind.emmGrid
 rbind.emm_list	rbind.emmGrid
 rbind.summary_emm	rbind.emmGrid

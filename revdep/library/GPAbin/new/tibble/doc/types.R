@@ -1,20 +1,20 @@
-## ----include = FALSE----------------------------------------------------------
+## -----------------------------------------------------------------------------
 knitr::opts_chunk$set(
   collapse = TRUE,
   eval = rlang::is_installed(c("dplyr", "tidyr", "purrr")),
   comment = "#>"
 )
 
-## ----include = FALSE----------------------------------------------------------
+## -----------------------------------------------------------------------------
 library(dplyr)
 library(tidyr)
 library(purrr)
 requireNamespace("hms", quietly = TRUE)
 
-## ----setup--------------------------------------------------------------------
+## -----------------------------------------------------------------------------
 library(tibble)
 
-## ----howto, echo = FALSE, eval = FALSE----------------------------------------
+## -----------------------------------------------------------------------------
 # library(tidyverse)
 # library(tidymodels)
 # library(vctrs)
@@ -31,7 +31,7 @@ library(tibble)
 # set_names(rep_along(all_methods, list("")), all_methods) %>%
 #   dput()
 
-## ----data, echo = FALSE-------------------------------------------------------
+## -----------------------------------------------------------------------------
 data <- compact(list(
   "Atomic" = rlang::quos(
     logical = TRUE,
@@ -71,10 +71,7 @@ data <- compact(list(
     unspecified = vctrs::unspecified(1),
 
     vctrs_list_of = vctrs::list_of(c(1L)),
-    vctrs_vctr = vctrs::new_vctr(1L),
-
-    vctrs_partial_factor = vctrs::partial_factor(letters),
-    vctrs_partial_frame = vctrs::partial_frame(a = 1)
+    vctrs_vctr = vctrs::new_vctr(1L)
   ),
 
   "Language objects" = rlang::quos(
@@ -85,7 +82,7 @@ data <- compact(list(
   )
 ))
 
-## ----table, echo = FALSE------------------------------------------------------
+## -----------------------------------------------------------------------------
 tbl <-
   data %>%
   map(unclass) %>%
@@ -98,13 +95,13 @@ tbl <-
   mutate(Class = if_else(Class == lag(Class, default = ""), "", Class)) %>%
   mutate("Column header" = map_chr(Value, type_sum))
 
-## ----kable, echo = FALSE------------------------------------------------------
+## -----------------------------------------------------------------------------
 tbl %>%
   select(-Value) %>%
   mutate(Example = paste0("`", Example, "`")) %>%
   knitr::kable(escape = FALSE)
 
-## ----glimpse, echo = FALSE----------------------------------------------------
+## -----------------------------------------------------------------------------
 tbl %>%
   select(`Data type`, `Value`) %>%
   filter(map_lgl(Value, vctrs::vec_is)) %>%
@@ -112,6 +109,6 @@ tbl %>%
   as_tibble() %>%
   glimpse()
 
-## ----type_sum_default, results = if (Sys.getenv("IN_GALLEY") != "") "hide" else "markup"----
+## -----------------------------------------------------------------------------
 pillar:::type_sum.default
 

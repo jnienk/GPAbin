@@ -50,8 +50,9 @@ overflow: visible;
 }
 </style>
 <style type="text/css" data-origin="pandoc">
+html { -webkit-text-size-adjust: 100%; }
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -392,18 +393,18 @@ describing films, actors, customers, stores, etc.:</p>
 <span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a></span>
 <span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a>con <span class="ot">&lt;-</span> <span class="fu">dbConnect</span>(</span>
 <span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a>  RMariaDB<span class="sc">::</span><span class="fu">MariaDB</span>(),</span>
-<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a>  <span class="at">host =</span> <span class="st">&quot;db.relational-data.org&quot;</span>,</span>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a>  <span class="at">host =</span> <span class="st">&quot;relational.fel.cvut.cz&quot;</span>,</span>
 <span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a>  <span class="at">port =</span> <span class="dv">3306</span>,</span>
 <span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a>  <span class="at">username =</span> <span class="st">&quot;guest&quot;</span>,</span>
-<span id="cb1-8"><a href="#cb1-8" tabindex="-1"></a>  <span class="at">password =</span> <span class="st">&quot;relational&quot;</span>,</span>
+<span id="cb1-8"><a href="#cb1-8" tabindex="-1"></a>  <span class="at">password =</span> <span class="st">&quot;ctu-relational&quot;</span>,</span>
 <span id="cb1-9"><a href="#cb1-9" tabindex="-1"></a>  <span class="at">dbname =</span> <span class="st">&quot;sakila&quot;</span></span>
 <span id="cb1-10"><a href="#cb1-10" tabindex="-1"></a>)</span>
 <span id="cb1-11"><a href="#cb1-11" tabindex="-1"></a></span>
 <span id="cb1-12"><a href="#cb1-12" tabindex="-1"></a><span class="fu">dbListTables</span>(con)</span></code></pre></div>
-<pre><code>##  [1] &quot;actor&quot;         &quot;address&quot;       &quot;category&quot;      &quot;city&quot;         
-##  [5] &quot;country&quot;       &quot;customer&quot;      &quot;film&quot;          &quot;film_actor&quot;   
-##  [9] &quot;film_category&quot; &quot;film_text&quot;     &quot;inventory&quot;     &quot;language&quot;     
-## [13] &quot;payment&quot;       &quot;rental&quot;        &quot;staff&quot;         &quot;store&quot;</code></pre>
+<pre><code>##  [1] &quot;country&quot;       &quot;city&quot;          &quot;customer&quot;      &quot;address&quot;      
+##  [5] &quot;film_actor&quot;    &quot;store&quot;         &quot;film_category&quot; &quot;inventory&quot;    
+##  [9] &quot;actor&quot;         &quot;film_text&quot;     &quot;payment&quot;       &quot;category&quot;     
+## [13] &quot;film&quot;          &quot;rental&quot;        &quot;language&quot;      &quot;staff&quot;</code></pre>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="fu">dbDisconnect</span>(con)</span></code></pre></div>
 <p>Connections to databases are created using the
 <code>dbConnect()</code> function. The first argument to the function is
@@ -427,10 +428,10 @@ and then query it with the <a href="https://github.com/r-lib/keyring#readme">key
 code to connect to the database could then look like this:</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a>con <span class="ot">&lt;-</span> <span class="fu">dbConnect</span>(</span>
 <span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a>  RMariaDB<span class="sc">::</span><span class="fu">MariaDB</span>(),</span>
-<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a>  <span class="at">host =</span> <span class="st">&quot;db.relational-data.org&quot;</span>,</span>
+<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a>  <span class="at">host =</span> <span class="st">&quot;relational.fel.cvut.cz&quot;</span>,</span>
 <span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a>  <span class="at">port =</span> <span class="dv">3306</span>,</span>
 <span id="cb4-5"><a href="#cb4-5" tabindex="-1"></a>  <span class="at">username =</span> <span class="st">&quot;guest&quot;</span>,</span>
-<span id="cb4-6"><a href="#cb4-6" tabindex="-1"></a>  <span class="at">password =</span> keyring<span class="sc">::</span><span class="fu">key_get</span>(<span class="st">&quot;db.relational-data.org&quot;</span>, <span class="st">&quot;guest&quot;</span>),</span>
+<span id="cb4-6"><a href="#cb4-6" tabindex="-1"></a>  <span class="at">password =</span> keyring<span class="sc">::</span><span class="fu">key_get</span>(<span class="st">&quot;relational.fel.cvut.cz&quot;</span>, <span class="st">&quot;guest&quot;</span>),</span>
 <span id="cb4-7"><a href="#cb4-7" tabindex="-1"></a>  <span class="at">dbname =</span> <span class="st">&quot;sakila&quot;</span></span>
 <span id="cb4-8"><a href="#cb4-8" tabindex="-1"></a>)</span></code></pre></div>
 </div>
@@ -441,8 +442,15 @@ code to connect to the database could then look like this:</p>
 <code>dbListFields()</code>. It takes as arguments a database connection
 and a table name and returns a character vector of the column names in
 order.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a>con <span class="ot">&lt;-</span> <span class="fu">dbConnect</span>(RMariaDB<span class="sc">::</span><span class="fu">MariaDB</span>(), <span class="at">username =</span> <span class="st">&quot;guest&quot;</span>, <span class="at">password =</span> <span class="st">&quot;relational&quot;</span>, <span class="at">host =</span> <span class="st">&quot;db.relational-data.org&quot;</span>, <span class="at">port =</span> <span class="dv">3306</span>, <span class="at">dbname =</span> <span class="st">&quot;sakila&quot;</span>)</span>
-<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a><span class="fu">dbListFields</span>(con, <span class="st">&quot;film&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a>con <span class="ot">&lt;-</span> <span class="fu">dbConnect</span>(</span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a>  RMariaDB<span class="sc">::</span><span class="fu">MariaDB</span>(),</span>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a>  <span class="at">host =</span> <span class="st">&quot;relational.fel.cvut.cz&quot;</span>,</span>
+<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a>  <span class="at">port =</span> <span class="dv">3306</span>,</span>
+<span id="cb5-5"><a href="#cb5-5" tabindex="-1"></a>  <span class="at">username =</span> <span class="st">&quot;guest&quot;</span>,</span>
+<span id="cb5-6"><a href="#cb5-6" tabindex="-1"></a>  <span class="at">password =</span> <span class="st">&quot;ctu-relational&quot;</span>,</span>
+<span id="cb5-7"><a href="#cb5-7" tabindex="-1"></a>  <span class="at">dbname =</span> <span class="st">&quot;sakila&quot;</span></span>
+<span id="cb5-8"><a href="#cb5-8" tabindex="-1"></a>)</span>
+<span id="cb5-9"><a href="#cb5-9" tabindex="-1"></a><span class="fu">dbListFields</span>(con, <span class="st">&quot;film&quot;</span>)</span></code></pre></div>
 <pre><code>##  [1] &quot;film_id&quot;              &quot;title&quot;                &quot;description&quot;         
 ##  [4] &quot;release_year&quot;         &quot;language_id&quot;          &quot;original_language_id&quot;
 ##  [7] &quot;rental_duration&quot;      &quot;rental_rate&quot;          &quot;length&quot;              
@@ -529,8 +537,8 @@ takes care of the quoting.</p>
 <span id="cb13-5"><a href="#cb13-5" tabindex="-1"></a>  <span class="fu">filter</span>(release_year <span class="sc">==</span> <span class="dv">2006</span> <span class="sc">&amp;</span> rating <span class="sc">==</span> <span class="st">&quot;G&quot;</span>) <span class="sc">%&gt;%</span></span>
 <span id="cb13-6"><a href="#cb13-6" tabindex="-1"></a>  <span class="fu">select</span>(film_id, title, description)</span>
 <span id="cb13-7"><a href="#cb13-7" tabindex="-1"></a><span class="fu">head</span>(lazy_df, <span class="dv">3</span>)</span></code></pre></div>
-<pre><code>## # Source:   SQL [3 x 3]
-## # Database: mysql  [guest@db.relational-data.org:NA/sakila]
+<pre><code>## # Source:   SQL [?? x 3]
+## # Database: mysql  [guest@relational.fel.cvut.cz:3306/sakila]
 ##   film_id title            description                                          
 ##     &lt;int&gt; &lt;chr&gt;            &lt;chr&gt;                                                
 ## 1       2 ACE GOLDFINGER   A Astounding Epistle of a Database Administrator And…

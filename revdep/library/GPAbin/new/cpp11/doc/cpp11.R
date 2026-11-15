@@ -10,10 +10,12 @@ library(cpp11)
 library(cpp11)
 
 ## ----add----------------------------------------------------------------------
-cpp_function('int add(int x, int y, int z) {
+cpp_function(
+  'int add(int x, int y, int z) {
   int sum = x + y + z;
   return sum;
-}')
+}'
+)
 # add works like a regular R function
 add
 add(1, 2, 3)
@@ -22,9 +24,11 @@ add(1, 2, 3)
 one <- function() 1L
 
 ## ----one-cpp------------------------------------------------------------------
-cpp_function('int one() {
+cpp_function(
+  'int one() {
   return 1;
-}')
+}'
+)
 
 ## ----sign---------------------------------------------------------------------
 sign_r <- function(x) {
@@ -36,7 +40,8 @@ sign_r <- function(x) {
     -1
   }
 }
-cpp_function('int sign_cpp(int x) {
+cpp_function(
+  'int sign_cpp(int x) {
   if (x > 0) {
     return 1;
   } else if (x == 0) {
@@ -44,7 +49,8 @@ cpp_function('int sign_cpp(int x) {
   } else {
     return -1;
   }
-}')
+}'
+)
 
 ## ----sum-r--------------------------------------------------------------------
 sum_r <- function(x) {
@@ -56,14 +62,16 @@ sum_r <- function(x) {
 }
 
 ## ----sum-cpp------------------------------------------------------------------
-cpp_function('double sum_cpp(doubles x) {
+cpp_function(
+  'double sum_cpp(doubles x) {
   int n = x.size();
   double total = 0;
   for(int i = 0; i < n; ++i) {
     total += x[i];
   }
   return total;
-}')
+}'
+)
 
 ## ----sum-bench----------------------------------------------------------------
 x <- runif(1e3)
@@ -75,18 +83,20 @@ bench::mark(
 
 ## ----pdist-r------------------------------------------------------------------
 pdist_r <- function(x, ys) {
-  sqrt((x - ys) ^ 2)
+  sqrt((x - ys)^2)
 }
 
 ## ----pdist-cpp----------------------------------------------------------------
-cpp_function('doubles pdist_cpp(double x, doubles ys) {
+cpp_function(
+  'doubles pdist_cpp(double x, doubles ys) {
   int n = ys.size();
   writable::doubles out(n);
   for(int i = 0; i < n; ++i) {
     out[i] = sqrt(pow(ys[i] - x, 2.0));
   }
   return out;
-}')
+}'
+)
 
 ## -----------------------------------------------------------------------------
 y <- runif(1e6)

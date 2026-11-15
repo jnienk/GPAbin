@@ -1,3 +1,25 @@
+# withr 3.0.3
+
+* Fixes for CRAN checks.
+
+* Fixed issue that prevented `local_seed()` from preserving the seed (#286, @BjarkeHautop).
+
+  Note: If you had before:
+
+  ```r
+  test_that("A", {
+    withr::local_seed(1)   # Seeds locally
+    runif(...)
+  })
+
+  test_that("B", {
+    runif(...)             # NO seed of its own
+  })
+  ```
+
+  Before the fix, the test "B" was accidentally seeded by "A". Now it needs to be seeded on its own.
+
+
 # withr 3.0.2
 
 * `local_language()` now never warns when set to `"C"` (#254).

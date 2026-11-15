@@ -173,6 +173,7 @@ popmis	popmis
 pops	pops
 pops.pred	pops
 potthoffroy	potthoffroy
+predict_mi	predict_mi
 print.mads	mads
 print.mice.anova	print
 print.mice.anova.summary	print

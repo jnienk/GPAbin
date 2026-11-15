@@ -3,6 +3,7 @@ $<-.bibentryExtra	bibentryExtra
 as.bibentryExtra	bibentryExtra
 bibConvert	bibConvert
 bibentryExtra	bibentryExtra
+bibstyle_JSSextra	bibstyle_JSSextra
 charToBib	readBib
 names	bibentryExtra
 names.bibentryExtra	bibentryExtra
@@ -10,7 +11,6 @@ rbibutils	rbibutils-package
 rbibutils_formats	rbibutils_formats
 readBib	readBib
 readBibentry	readBibentry
-register_JSSextra	register_JSSextra
 writeBib	readBib
 writeBibentry	readBibentry
 [.bibentryExtra	bibentryExtra

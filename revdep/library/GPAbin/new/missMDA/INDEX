@@ -33,6 +33,8 @@ orange                  Sensory description of 12 orange juices by 8
                         attributes.
 ozone                   Daily measurements of meteorological variables
                         and ozone concentration
+plot.MIFAMD             Plot the graphs for the Multiple Imputation in
+                        FAMD
 plot.MIMCA              Plot the graphs for the Multiple Imputation in
                         MCA
 plot.MIPCA              Plot the graphs for the Multiple Imputation in

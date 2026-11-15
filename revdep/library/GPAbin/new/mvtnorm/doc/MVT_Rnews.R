@@ -44,3 +44,15 @@ delta <- rep(0, 5)
              abseps = 0.0001, maxpts = 100000, tail = "both"))
 
 
+###################################################
+### code chunk number 4: bib
+###################################################
+thisdir <- getwd()
+bibfile <- system.file("REFERENCES.bib", package = "mvtnorm")
+### bibfile may contain spaces LaTeX is unable to deal with on MacOS it seems
+if (file.copy(bibfile, to = thisdir, overwrite = TRUE)) {
+    bibfile <- "REFERENCES.bib"
+} else {
+    ### hope for the best
+    bibfile <- file.path("..", "inst", "REFERENCES.bib")
+}

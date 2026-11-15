@@ -1,3 +1,84 @@
+# bslib 0.12.0
+
+## New features
+
+* Added `offcanvas()` to create [Bootstrap offcanvas](https://getbootstrap.com/docs/5.3/components/offcanvas/) panels that slide in from an edge of the viewport. Panels can be revealed by a `trigger` element in the UI or controlled from the server with `show_offcanvas()`, `hide_offcanvas()`, and `toggle_offcanvas()`. (#1328)
+
+## Documentation
+
+* `layout_columns()` and `layout_column_wrap()` now describe their CSS length inputs with concrete examples. (@LeonidasZhak #1300)
+
+## Bug fixes
+
+* Fixed dynamically-rendered outputs (e.g. `uiOutput()`) failing to render inside a title-less `popover()` or `tooltip()`, caused by an upstream Shiny change. A temporary CSS workaround restores rendering. (#1326)
+
+* Fixed label-to-options spacing on `shiny::radioButtons()` and `shiny::checkboxGroupInput()` in Bootstrap 5, where a Shiny rule was overriding the bslib fix. (#1308)
+
+* Fixed the resize handle indicator position for `position = "right"` sidebars, which now correctly appears at the inner boundary of the sidebar handle. (#1322)
+
+* Allow users to directly grab the sidebar handle to resize the sidebar. (#1331)
+
+# bslib 0.11.0
+
+## New features
+
+* Added a new `toolbar()` component for creating Bootstrap toolbars that can contain buttons, text, and other elements. (#1247)
+  * Added `toolbar_input_button()` for easily creating buttons to include in a `toolbar()`. (#1248)
+  * Added `toolbar_input_select()`, a select input designed for use within a `toolbar()`. (#1249)
+  * Added `update_toolbar_input_select()` for updating the choices, icon, label, and selected value of a `toolbar_input_select()` from the server. (#1266)
+  * Added `update_toolbar_input_button()` for updating the label, icon, and disabled state of a `toolbar_input_button()` from the server. (#1266)
+  * Added `toolbar_divider()` for adding visual dividers with customizable width and spacing between toolbar elements. (#1259)
+
+* `sidebar()` gains a `resizable` argument (default `TRUE`) to control whether the sidebar can be resized by dragging its edge on desktop (wide screen sizes). (#1299)
+
+* `input_code_editor()` now supports `language = "ggsql"` for syntax highlighting of ggsql queries. (#1291)
+
+## Improvements and bug fixes
+
+* bslib's version of Bootstrap and Bootswatch have been updated to 5.3.8. (#1287)
+
+* Fixed a caret drift issue in `input_code_editor()` where the cursor would appear to the right of the actual text insertion point when certain themes or on some operating systems. (#1304)
+
+* Fixed the chevron icon on `selectInput(selectize = FALSE)` when using Bootstrap 5. (#1307)
+
+* Improved the sidebar resize handle to avoid conflicts with the sidebar's native scrollbar and to better support touch devices. (#1299)
+
+* The brand.yml example app (`shiny::runExample("brand.yml", package = "bslib")`) now uses `brand_pluck()` and `brand_has()` from `{brand.yml}`. (#1288)
+
+# bslib 0.10.0
+
+## Breaking changes
+
+* bslib now uses the `{brand.yml}` package for reading [brand.yml](https://posit-dev.github.io/brand-yml/) files. This change improves compatibility with other tools that use brand.yml files, such as Quarto. The `{brand.yml}` package must be installed for `_brand.yml` files to be automatically discovered. (#1227)
+
+## New features
+
+* Added a new `input_submit_textarea()` input element, which is similar to `shiny::textAreaInput()`, but includes a submit button to only submit the text changes to the server on click. This is especially useful when the input text change triggers a long-running operation and/or the user wants to type longer-form input and review it before submitting it. (#1204)
+
+* Added toast notifications based on [Bootstrap's Toast component](https://getbootstrap.com/docs/5.3/components/toasts/): Use `toast()` to create customizable toast objects, `show_toast()` to display a toast message, `hide_toast()` for manual dismissal, and `toast_header()` for structured headers with icons and status indicators. Try it with `shiny::runExample("toast", package = "bslib")`. (#1246)
+
+* Added a new `input_code_editor()` element that allows for light-weight code editing with syntax highlighting, using the [prism-code-editor](https://prism-code-editor.netlify.app/) library. The editor supports 20+ languages, more than a dozen themes, and automatic light/dark mode switching. Try it with `shiny::runExample("code-editor", package = "bslib")`. (#1274)
+
+## Improvements and bug fixes
+
+* `card_header()` is now flex by default and gains a `gap` argument to better support complex header layouts. (#1253)
+
+* `bs_theme_dependencies()` now avoids unnecessarily copying internal package files to R's temporary directory more than once when preparing precompiled theme dependencies (e.g. for a standard `bs_theme()` theme). (#1184)
+
+* Fixed an issue where the `<main>` areas of `page_sidebar()` and `page_navbar()` (with a `sidebar`) were made to be a fillable containers even when `fillable = FALSE`. (#1188)
+
+* Fixed some typos in the documentation.
+
+* When `bs_theme(brand = FALSE)` we now correctly do not apply brand theming when a `_brand.yml` file is present in the project. (#1196)
+
+* Sidebars from `page_sidebar()` and `layout_sidebar()` are now resizable on desktop-sized screen widths, allowing users to resize the sidebar width as desired. (#1217)
+
+* `sidebar()` gains a `fillable` argument to support vertical fill behavior in sidebars. (#1226)
+
+* `sidebar_toggle()` is now officially deprecated in favor of `toggle_sidebar()`. (#1235)
+
+* Fixed an issue where `nav_panel_hidden()` could create navs that were still keyboard-discoverable. (#1264)
+
 # bslib 0.9.0
 
 ## Breaking changes
@@ -14,7 +95,7 @@
 
 ## Improvements and bug fixes
 
-* `navset_card_pills()`, `navset_card_underline()`, `navset_card_tabs()` fixed to now respect header/footer arguments (@tanho63, #1024) 
+* `navset_card_pills()`, `navset_card_underline()`, `navset_card_tabs()` fixed to now respect header/footer arguments (@tanho63, #1024)
 
 * Fixed a bug in `bs_themer()` (and `bs_theme_preview()`) that caused it to stop applying changes if a Sass variable was `NULL`. (@meztez, #1112)
 
@@ -48,7 +129,7 @@
 * The `open` argument of `sidebar()` now includes the option to place a sidebar that's always open on mobile screens _above the main content_ with `open = list(mobile = "always-above")`. (#1088)
 
 ## Improvements
-    
+
 * Adjusted the border color of checkbox and radio buttons to match the border color of the input group in `bs_theme(preset="shiny")`. (#1038)
 
 * On mobile, the main and sidebar content areas of a `layout_sidebar()` no longer overlap with the sidebar toggle button. (#1084)

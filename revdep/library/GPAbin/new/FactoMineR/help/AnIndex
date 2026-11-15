@@ -15,9 +15,13 @@ DMFA	DMFA
 ellipseCA	ellipseCA
 estim_ncp	estim_ncp
 FactoMineR	FactoMineR-package
+factominer_breaks_contrib	theme_factominer
+factominer_breaks_cos2	theme_factominer
+factominer_labels_pct	theme_factominer
 FAMD	FAMD
 footsize	footsize
 geomorphology	geomorphology
+geom_contrib_reference	theme_factominer
 GPA	gpa
 graph.var	graph.var
 HCPC	HCPC
@@ -72,6 +76,16 @@ print.MFA	print.MFA
 print.PCA	print.PCA
 reconst	reconst
 RegBest	RegBest
+scale_colour_factominer	theme_factominer
+scale_colour_factominer_contrib	theme_factominer
+scale_colour_factominer_coord	theme_factominer
+scale_colour_factominer_cos2	theme_factominer
+scale_colour_factominer_pvalue	theme_factominer
+scale_fill_factominer	theme_factominer
+scale_fill_factominer_contrib	theme_factominer
+scale_fill_factominer_coord	theme_factominer
+scale_fill_factominer_cos2	theme_factominer
+scale_fill_factominer_pvalue	theme_factominer
 senso	senso
 simule	simule
 summary.CA	summary.CA
@@ -85,5 +99,6 @@ tab.disjonctif	tab.disjonctif
 tab.disjonctif.prop	tab.disjonctif.prop
 tea	tea
 textual	textual
+theme_factominer	theme_factominer
 wine	wine
 write.infile	write.infile

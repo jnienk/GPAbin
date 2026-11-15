@@ -39,17 +39,6 @@ guess_parser	parse_guess
 ListCallback	callback
 locale	locale
 local_edition	with_edition
-melt_csv	melt_delim
-melt_csv2	melt_delim
-melt_csv2_chunked	melt_delim_chunked
-melt_csv_chunked	melt_delim_chunked
-melt_delim	melt_delim
-melt_delim_chunked	melt_delim_chunked
-melt_fwf	melt_fwf
-melt_table	melt_table
-melt_table2	melt_table
-melt_tsv	melt_delim
-melt_tsv_chunked	melt_delim_chunked
 output_column	output_column
 parse_character	parse_atomic
 parse_date	parse_datetime
@@ -83,7 +72,6 @@ read_lines_raw_chunked	read_lines_chunked
 read_log	read_log
 read_rds	read_rds
 read_table	read_table
-read_table2	read_table2
 read_tsv	read_delim
 read_tsv_chunked	read_delim_chunked
 should_read_lazy	should_read_lazy

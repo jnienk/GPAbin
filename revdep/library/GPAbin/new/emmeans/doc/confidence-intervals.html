@@ -10,7 +10,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-<meta name="author" content="emmeans package, Version 1.11.2.8" />
+<meta name="author" content="emmeans package, Version 2.0.4" />
 
 
 <title>Confidence intervals and tests in emmeans</title>
@@ -58,7 +58,7 @@ ul.task-list{list-style: none;}
 
 <h1 class="title toc-ignore">Confidence intervals and tests in
 emmeans</h1>
-<h4 class="author">emmeans package, Version 1.11.2.8</h4>
+<h4 class="author">emmeans package, Version 2.0.4</h4>
 
 
 
@@ -122,9 +122,9 @@ statistics and <em>P</em> values, but not intervals (i.e.,
 for example,</p>
 <pre class="r"><code>test(EMM.source)</code></pre>
 <pre class="ro"><code>##  source emmean       SE df t.ratio p.value
-##  fish   0.0337 0.000926 23  36.380  &lt;.0001
-##  soy    0.0257 0.000945 23  27.141  &lt;.0001
-##  skim   0.0229 0.000994 23  22.989  &lt;.0001
+##  fish   0.0337 0.000926 23  36.380 &lt;0.0001
+##  soy    0.0257 0.000945 23  27.141 &lt;0.0001
+##  skim   0.0229 0.000994 23  22.989 &lt;0.0001
 ## 
 ## Results are averaged over the levels of: percent 
 ## Results are given on the inverse (not the response) scale.</code></pre>
@@ -398,19 +398,19 @@ RG5 &lt;- ref_grid(mod5)
 contrast(RG5, &quot;consec&quot;, simple = &quot;percent&quot;)</code></pre>
 <pre class="ro"><code>## source = fish:
 ##  contrast               estimate      SE df t.ratio p.value
-##  percent12 - percent9  -6.64e-03 0.00285 17  -2.328  0.0832
+##  percent12 - percent9  -6.64e-03 0.00285 17  -2.328  0.0831
 ##  percent15 - percent12 -6.68e-05 0.00285 17  -0.023  1.0000
-##  percent18 - percent15 -1.40e-03 0.00285 17  -0.489  0.9284
+##  percent18 - percent15 -1.40e-03 0.00285 17  -0.489  0.9283
 ## 
 ## source = soy:
 ##  contrast               estimate      SE df t.ratio p.value
-##  percent12 - percent9  -4.01e-03 0.00255 17  -1.572  0.3168
+##  percent12 - percent9  -4.01e-03 0.00255 17  -1.572  0.3171
 ##  percent15 - percent12  2.61e-04 0.00255 17   0.102  0.9993
 ##  percent18 - percent15 -2.18e-03 0.00361 17  -0.605  0.8872
 ## 
 ## source = skim:
 ##  contrast               estimate      SE df t.ratio p.value
-##  percent12 - percent9  -5.26e-03 0.00255 17  -2.061  0.1393
+##  percent12 - percent9  -5.26e-03 0.00255 17  -2.061  0.1400
 ##  percent15 - percent12 -2.86e-03 0.00285 17  -1.001  0.6526
 ##  percent18 - percent15 -3.76e-03 0.00383 17  -0.982  0.6650
 ## 
@@ -432,8 +432,8 @@ pairwise comparisons (details in <a href="comparisons.html">the
 <pre class="r"><code>PRS.source &lt;- pairs(EMM.source)
 PRS.source</code></pre>
 <pre class="ro"><code>##  contrast    estimate      SE df t.ratio p.value
-##  fish - soy   0.00803 0.00134 23   6.009  &lt;.0001
-##  fish - skim  0.01083 0.00137 23   7.922  &lt;.0001
+##  fish - soy   0.00803 0.00134 23   6.009 &lt;0.0001
+##  fish - skim  0.01083 0.00137 23   7.922 &lt;0.0001
 ##  soy - skim   0.00280 0.00134 23   2.092  0.1136
 ## 
 ## Results are averaged over the levels of: percent 
@@ -447,7 +447,7 @@ in <code>test</code> (note: the <code>joint</code> argument is
 <code>test()</code>):</p>
 <pre class="r"><code>test(PRS.source, joint = TRUE)</code></pre>
 <pre class="ro"><code>##  df1 df2 F.ratio p.value note
-##    2  23  34.009  &lt;.0001  d  
+##    2  23  34.009 &lt;0.0001  d  
 ## 
 ## d: df1 reduced due to linear dependence</code></pre>
 <p>Notice that there are three comparisons, but only 2 d.f. for the
@@ -464,7 +464,7 @@ that performs joint tests of contrasts among each term in a model or
 <code>emmGrid</code> object.</p>
 <pre class="r"><code>joint_tests(RG5)</code></pre>
 <pre class="ro"><code>##  model term     df1 df2 F.ratio p.value
-##  source           2  17  30.309  &lt;.0001
+##  source           2  17  30.309 &lt;0.0001
 ##  percent          3  17   8.441  0.0012
 ##  source:percent   6  17   0.481  0.8135</code></pre>
 <p>The tests of main effects are of families of contrasts; those for

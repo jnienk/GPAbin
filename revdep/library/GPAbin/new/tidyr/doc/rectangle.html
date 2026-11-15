@@ -48,8 +48,9 @@ overflow: visible;
 }
 </style>
 <style type="text/css" data-origin="pandoc">
+html { -webkit-text-size-adjust: 100%; }
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -355,8 +356,6 @@ makes a new column.</li>
 only plucks out selected components, and can reach down multiple
 levels.</li>
 </ul>
-<p>(Alternative, for complex inputs where you need to rectangle a nested
-list according to a specification, see the <a href="https://github.com/mgirlich/tibblify">tibblify</a> package.)</p>
 <p>A very large number of data rectangling problems can be solved by
 combining <code>jsonlite::read_json()</code> with these functions and a
 splash of dplyr (largely eliminating prior approaches that combined
@@ -401,7 +400,7 @@ a column.</p>
 <p>There are two ways to turn the list components into columns.
 <code>unnest_wider()</code> takes every component and makes a new
 column:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a>users <span class="sc">%&gt;%</span> <span class="fu">unnest_wider</span>(user)</span>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a>users <span class="sc">|&gt;</span> <span class="fu">unnest_wider</span>(user)</span>
 <span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a><span class="co">#&gt; # A tibble: 6 × 30</span></span>
 <span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a><span class="co">#&gt;   login     id avatar_url gravatar_id url   html_url followers_url following_url</span></span>
 <span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a><span class="co">#&gt;   &lt;chr&gt;  &lt;int&gt; &lt;chr&gt;      &lt;chr&gt;       &lt;chr&gt; &lt;chr&gt;    &lt;chr&gt;         &lt;chr&gt;        </span></span>
@@ -421,9 +420,9 @@ column:</p>
 them so we can instead use <code>hoist()</code>. <code>hoist()</code>
 allows us to pull out selected components using the same syntax as
 <code>purrr::pluck()</code>:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a>users <span class="sc">%&gt;%</span> <span class="fu">hoist</span>(user, </span>
-<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a>  <span class="at">followers =</span> <span class="st">&quot;followers&quot;</span>, </span>
-<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a>  <span class="at">login =</span> <span class="st">&quot;login&quot;</span>, </span>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a>users <span class="sc">|&gt;</span> <span class="fu">hoist</span>(user,</span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a>  <span class="at">followers =</span> <span class="st">&quot;followers&quot;</span>,</span>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a>  <span class="at">login =</span> <span class="st">&quot;login&quot;</span>,</span>
 <span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a>  <span class="at">url =</span> <span class="st">&quot;html_url&quot;</span></span>
 <span id="cb5-5"><a href="#cb5-5" tabindex="-1"></a>)</span>
 <span id="cb5-6"><a href="#cb5-6" tabindex="-1"></a><span class="co">#&gt; # A tibble: 6 × 4</span></span>
@@ -458,7 +457,7 @@ tibble:</p>
 repositories that belong to that user. These are observations, so should
 become new rows, so we use <code>unnest_longer()</code> rather than
 <code>unnest_wider()</code>:</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a>repos <span class="ot">&lt;-</span> repos <span class="sc">%&gt;%</span> <span class="fu">unnest_longer</span>(repo)</span>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a>repos <span class="ot">&lt;-</span> repos <span class="sc">|&gt;</span> <span class="fu">unnest_longer</span>(repo)</span>
 <span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a>repos</span>
 <span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a><span class="co">#&gt; # A tibble: 176 × 1</span></span>
 <span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a><span class="co">#&gt;   repo             </span></span>
@@ -472,8 +471,8 @@ become new rows, so we use <code>unnest_longer()</code> rather than
 <span id="cb7-12"><a href="#cb7-12" tabindex="-1"></a><span class="co">#&gt; # ℹ 170 more rows</span></span></code></pre></div>
 <p>Then we can use <code>unnest_wider()</code> or
 <code>hoist()</code>:</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a>repos <span class="sc">%&gt;%</span> <span class="fu">hoist</span>(repo, </span>
-<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a>  <span class="at">login =</span> <span class="fu">c</span>(<span class="st">&quot;owner&quot;</span>, <span class="st">&quot;login&quot;</span>), </span>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a>repos <span class="sc">|&gt;</span> <span class="fu">hoist</span>(repo,</span>
+<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a>  <span class="at">login =</span> <span class="fu">c</span>(<span class="st">&quot;owner&quot;</span>, <span class="st">&quot;login&quot;</span>),</span>
 <span id="cb8-3"><a href="#cb8-3" tabindex="-1"></a>  <span class="at">name =</span> <span class="st">&quot;name&quot;</span>,</span>
 <span id="cb8-4"><a href="#cb8-4" tabindex="-1"></a>  <span class="at">homepage =</span> <span class="st">&quot;homepage&quot;</span>,</span>
 <span id="cb8-5"><a href="#cb8-5" tabindex="-1"></a>  <span class="at">watchers =</span> <span class="st">&quot;watchers_count&quot;</span></span>
@@ -492,8 +491,8 @@ become new rows, so we use <code>unnest_longer()</code> rather than
 reach two levels deep inside of a list. An alternative approach would be
 to pull out just <code>owner</code> and then put each element of it in a
 column:</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a>repos <span class="sc">%&gt;%</span> </span>
-<span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a>  <span class="fu">hoist</span>(repo, <span class="at">owner =</span> <span class="st">&quot;owner&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a>repos <span class="sc">|&gt;</span></span>
+<span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a>  <span class="fu">hoist</span>(repo, <span class="at">owner =</span> <span class="st">&quot;owner&quot;</span>) <span class="sc">|&gt;</span></span>
 <span id="cb9-3"><a href="#cb9-3" tabindex="-1"></a>  <span class="fu">unnest_wider</span>(owner)</span>
 <span id="cb9-4"><a href="#cb9-4" tabindex="-1"></a><span class="co">#&gt; # A tibble: 176 × 18</span></span>
 <span id="cb9-5"><a href="#cb9-5" tabindex="-1"></a><span class="co">#&gt;   login     id avatar_url gravatar_id url   html_url followers_url following_url</span></span>
@@ -530,7 +529,7 @@ component into a column:</p>
 <span id="cb10-11"><a href="#cb10-11" tabindex="-1"></a><span class="co">#&gt; 6 &lt;named list [18]&gt;</span></span>
 <span id="cb10-12"><a href="#cb10-12" tabindex="-1"></a><span class="co">#&gt; # ℹ 24 more rows</span></span>
 <span id="cb10-13"><a href="#cb10-13" tabindex="-1"></a></span>
-<span id="cb10-14"><a href="#cb10-14" tabindex="-1"></a>chars2 <span class="ot">&lt;-</span> chars <span class="sc">%&gt;%</span> <span class="fu">unnest_wider</span>(char)</span>
+<span id="cb10-14"><a href="#cb10-14" tabindex="-1"></a>chars2 <span class="ot">&lt;-</span> chars <span class="sc">|&gt;</span> <span class="fu">unnest_wider</span>(char)</span>
 <span id="cb10-15"><a href="#cb10-15" tabindex="-1"></a>chars2</span>
 <span id="cb10-16"><a href="#cb10-16" tabindex="-1"></a><span class="co">#&gt; # A tibble: 30 × 18</span></span>
 <span id="cb10-17"><a href="#cb10-17" tabindex="-1"></a><span class="co">#&gt;   url            id name  gender culture born  died  alive titles aliases father</span></span>
@@ -547,7 +546,7 @@ component into a column:</p>
 <p>This is more complex than <code>gh_users</code> because some
 component of <code>char</code> are themselves a list, giving us a
 collection of list-columns:</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a>chars2 <span class="sc">%&gt;%</span> <span class="fu">select_if</span>(is.list)</span>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a>chars2 <span class="sc">|&gt;</span> <span class="fu">select_if</span>(is.list)</span>
 <span id="cb11-2"><a href="#cb11-2" tabindex="-1"></a><span class="co">#&gt; # A tibble: 30 × 7</span></span>
 <span id="cb11-3"><a href="#cb11-3" tabindex="-1"></a><span class="co">#&gt;   titles    aliases    allegiances books     povBooks  tvSeries  playedBy </span></span>
 <span id="cb11-4"><a href="#cb11-4" tabindex="-1"></a><span class="co">#&gt;   &lt;list&gt;    &lt;list&gt;     &lt;list&gt;      &lt;list&gt;    &lt;list&gt;    &lt;list&gt;    &lt;list&gt;   </span></span>
@@ -561,9 +560,9 @@ collection of list-columns:</p>
 <p>What you do next will depend on the purposes of the analysis. Maybe
 you want a row for every book and TV series that the character appears
 in:</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a>chars2 <span class="sc">%&gt;%</span> </span>
-<span id="cb12-2"><a href="#cb12-2" tabindex="-1"></a>  <span class="fu">select</span>(name, books, tvSeries) <span class="sc">%&gt;%</span> </span>
-<span id="cb12-3"><a href="#cb12-3" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="fu">c</span>(books, tvSeries), <span class="at">names_to =</span> <span class="st">&quot;media&quot;</span>, <span class="at">values_to =</span> <span class="st">&quot;value&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a>chars2 <span class="sc">|&gt;</span></span>
+<span id="cb12-2"><a href="#cb12-2" tabindex="-1"></a>  <span class="fu">select</span>(name, books, tvSeries) <span class="sc">|&gt;</span></span>
+<span id="cb12-3"><a href="#cb12-3" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="fu">c</span>(books, tvSeries), <span class="at">names_to =</span> <span class="st">&quot;media&quot;</span>, <span class="at">values_to =</span> <span class="st">&quot;value&quot;</span>) <span class="sc">|&gt;</span></span>
 <span id="cb12-4"><a href="#cb12-4" tabindex="-1"></a>  <span class="fu">unnest_longer</span>(value)</span>
 <span id="cb12-5"><a href="#cb12-5" tabindex="-1"></a><span class="co">#&gt; # A tibble: 179 × 3</span></span>
 <span id="cb12-6"><a href="#cb12-6" tabindex="-1"></a><span class="co">#&gt;   name          media    value            </span></span>
@@ -577,8 +576,8 @@ in:</p>
 <span id="cb12-14"><a href="#cb12-14" tabindex="-1"></a><span class="co">#&gt; # ℹ 173 more rows</span></span></code></pre></div>
 <p>Or maybe you want to build a table that lets you match title to
 name:</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a>chars2 <span class="sc">%&gt;%</span> </span>
-<span id="cb13-2"><a href="#cb13-2" tabindex="-1"></a>  <span class="fu">select</span>(name, <span class="at">title =</span> titles) <span class="sc">%&gt;%</span> </span>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a>chars2 <span class="sc">|&gt;</span></span>
+<span id="cb13-2"><a href="#cb13-2" tabindex="-1"></a>  <span class="fu">select</span>(name, <span class="at">title =</span> titles) <span class="sc">|&gt;</span></span>
 <span id="cb13-3"><a href="#cb13-3" tabindex="-1"></a>  <span class="fu">unnest_longer</span>(title)</span>
 <span id="cb13-4"><a href="#cb13-4" tabindex="-1"></a><span class="co">#&gt; # A tibble: 59 × 2</span></span>
 <span id="cb13-5"><a href="#cb13-5" tabindex="-1"></a><span class="co">#&gt;   name              title                                               </span></span>
@@ -598,7 +597,7 @@ length 1 containing an empty string.)</p>
 <div id="geocoding-with-google" class="section level2">
 <h2>Geocoding with google</h2>
 <p>Next we’ll tackle a more complex form of data that comes from
-Google’s geocoding service, stored in the repurssive package</p>
+Google’s geocoding service, stored in the repurrrsive package</p>
 <div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" tabindex="-1"></a>repurrrsive<span class="sc">::</span>gmaps_cities</span>
 <span id="cb14-2"><a href="#cb14-2" tabindex="-1"></a><span class="co">#&gt; # A tibble: 5 × 2</span></span>
 <span id="cb14-3"><a href="#cb14-3" tabindex="-1"></a><span class="co">#&gt;   city       json            </span></span>
@@ -610,7 +609,7 @@ Google’s geocoding service, stored in the repurssive package</p>
 <span id="cb14-9"><a href="#cb14-9" tabindex="-1"></a><span class="co">#&gt; 5 Arlington  &lt;named list [2]&gt;</span></span></code></pre></div>
 <p><code>json</code> is a list-column of named lists, so it makes sense
 to start with <code>unnest_wider()</code>:</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" tabindex="-1"></a>repurrrsive<span class="sc">::</span>gmaps_cities <span class="sc">%&gt;%</span></span>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" tabindex="-1"></a>repurrrsive<span class="sc">::</span>gmaps_cities <span class="sc">|&gt;</span></span>
 <span id="cb15-2"><a href="#cb15-2" tabindex="-1"></a>  <span class="fu">unnest_wider</span>(json)</span>
 <span id="cb15-3"><a href="#cb15-3" tabindex="-1"></a><span class="co">#&gt; # A tibble: 5 × 3</span></span>
 <span id="cb15-4"><a href="#cb15-4" tabindex="-1"></a><span class="co">#&gt;   city       results    status</span></span>
@@ -624,8 +623,8 @@ to start with <code>unnest_wider()</code>:</p>
 cities have 1 element (representing a unique match from the geocoding
 API), but Washington and Arlington have two. We can pull these out into
 separate rows with <code>unnest_longer()</code>:</p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" tabindex="-1"></a>repurrrsive<span class="sc">::</span>gmaps_cities <span class="sc">%&gt;%</span></span>
-<span id="cb16-2"><a href="#cb16-2" tabindex="-1"></a>  <span class="fu">unnest_wider</span>(json) <span class="sc">%&gt;%</span> </span>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" tabindex="-1"></a>repurrrsive<span class="sc">::</span>gmaps_cities <span class="sc">|&gt;</span></span>
+<span id="cb16-2"><a href="#cb16-2" tabindex="-1"></a>  <span class="fu">unnest_wider</span>(json) <span class="sc">|&gt;</span></span>
 <span id="cb16-3"><a href="#cb16-3" tabindex="-1"></a>  <span class="fu">unnest_longer</span>(results)</span>
 <span id="cb16-4"><a href="#cb16-4" tabindex="-1"></a><span class="co">#&gt; # A tibble: 7 × 3</span></span>
 <span id="cb16-5"><a href="#cb16-5" tabindex="-1"></a><span class="co">#&gt;   city       results          status</span></span>
@@ -639,9 +638,9 @@ separate rows with <code>unnest_longer()</code>:</p>
 <span id="cb16-13"><a href="#cb16-13" tabindex="-1"></a><span class="co">#&gt; # ℹ 1 more row</span></span></code></pre></div>
 <p>Now these all have the same components, as revealed by
 <code>unnest_wider()</code>:</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" tabindex="-1"></a>repurrrsive<span class="sc">::</span>gmaps_cities <span class="sc">%&gt;%</span></span>
-<span id="cb17-2"><a href="#cb17-2" tabindex="-1"></a>  <span class="fu">unnest_wider</span>(json) <span class="sc">%&gt;%</span> </span>
-<span id="cb17-3"><a href="#cb17-3" tabindex="-1"></a>  <span class="fu">unnest_longer</span>(results) <span class="sc">%&gt;%</span> </span>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" tabindex="-1"></a>repurrrsive<span class="sc">::</span>gmaps_cities <span class="sc">|&gt;</span></span>
+<span id="cb17-2"><a href="#cb17-2" tabindex="-1"></a>  <span class="fu">unnest_wider</span>(json) <span class="sc">|&gt;</span></span>
+<span id="cb17-3"><a href="#cb17-3" tabindex="-1"></a>  <span class="fu">unnest_longer</span>(results) <span class="sc">|&gt;</span></span>
 <span id="cb17-4"><a href="#cb17-4" tabindex="-1"></a>  <span class="fu">unnest_wider</span>(results)</span>
 <span id="cb17-5"><a href="#cb17-5" tabindex="-1"></a><span class="co">#&gt; # A tibble: 7 × 7</span></span>
 <span id="cb17-6"><a href="#cb17-6" tabindex="-1"></a><span class="co">#&gt;   city  address_components formatted_address geometry     place_id types  status</span></span>
@@ -655,10 +654,10 @@ separate rows with <code>unnest_longer()</code>:</p>
 <span id="cb17-14"><a href="#cb17-14" tabindex="-1"></a><span class="co">#&gt; # ℹ 1 more row</span></span></code></pre></div>
 <p>We can find the latitude and longitude by unnesting
 <code>geometry</code>:</p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" tabindex="-1"></a>repurrrsive<span class="sc">::</span>gmaps_cities <span class="sc">%&gt;%</span></span>
-<span id="cb18-2"><a href="#cb18-2" tabindex="-1"></a>  <span class="fu">unnest_wider</span>(json) <span class="sc">%&gt;%</span> </span>
-<span id="cb18-3"><a href="#cb18-3" tabindex="-1"></a>  <span class="fu">unnest_longer</span>(results) <span class="sc">%&gt;%</span> </span>
-<span id="cb18-4"><a href="#cb18-4" tabindex="-1"></a>  <span class="fu">unnest_wider</span>(results) <span class="sc">%&gt;%</span> </span>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" tabindex="-1"></a>repurrrsive<span class="sc">::</span>gmaps_cities <span class="sc">|&gt;</span></span>
+<span id="cb18-2"><a href="#cb18-2" tabindex="-1"></a>  <span class="fu">unnest_wider</span>(json) <span class="sc">|&gt;</span></span>
+<span id="cb18-3"><a href="#cb18-3" tabindex="-1"></a>  <span class="fu">unnest_longer</span>(results) <span class="sc">|&gt;</span></span>
+<span id="cb18-4"><a href="#cb18-4" tabindex="-1"></a>  <span class="fu">unnest_wider</span>(results) <span class="sc">|&gt;</span></span>
 <span id="cb18-5"><a href="#cb18-5" tabindex="-1"></a>  <span class="fu">unnest_wider</span>(geometry)</span>
 <span id="cb18-6"><a href="#cb18-6" tabindex="-1"></a><span class="co">#&gt; # A tibble: 7 × 10</span></span>
 <span id="cb18-7"><a href="#cb18-7" tabindex="-1"></a><span class="co">#&gt;   city       address_components formatted_address   bounds       location    </span></span>
@@ -673,11 +672,11 @@ separate rows with <code>unnest_longer()</code>:</p>
 <span id="cb18-16"><a href="#cb18-16" tabindex="-1"></a><span class="co">#&gt; # ℹ 5 more variables: location_type &lt;chr&gt;, viewport &lt;list&gt;, place_id &lt;chr&gt;,</span></span>
 <span id="cb18-17"><a href="#cb18-17" tabindex="-1"></a><span class="co">#&gt; #   types &lt;list&gt;, status &lt;chr&gt;</span></span></code></pre></div>
 <p>And then location:</p>
-<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" tabindex="-1"></a>repurrrsive<span class="sc">::</span>gmaps_cities <span class="sc">%&gt;%</span></span>
-<span id="cb19-2"><a href="#cb19-2" tabindex="-1"></a>  <span class="fu">unnest_wider</span>(json) <span class="sc">%&gt;%</span></span>
-<span id="cb19-3"><a href="#cb19-3" tabindex="-1"></a>  <span class="fu">unnest_longer</span>(results) <span class="sc">%&gt;%</span></span>
-<span id="cb19-4"><a href="#cb19-4" tabindex="-1"></a>  <span class="fu">unnest_wider</span>(results) <span class="sc">%&gt;%</span></span>
-<span id="cb19-5"><a href="#cb19-5" tabindex="-1"></a>  <span class="fu">unnest_wider</span>(geometry) <span class="sc">%&gt;%</span></span>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" tabindex="-1"></a>repurrrsive<span class="sc">::</span>gmaps_cities <span class="sc">|&gt;</span></span>
+<span id="cb19-2"><a href="#cb19-2" tabindex="-1"></a>  <span class="fu">unnest_wider</span>(json) <span class="sc">|&gt;</span></span>
+<span id="cb19-3"><a href="#cb19-3" tabindex="-1"></a>  <span class="fu">unnest_longer</span>(results) <span class="sc">|&gt;</span></span>
+<span id="cb19-4"><a href="#cb19-4" tabindex="-1"></a>  <span class="fu">unnest_wider</span>(results) <span class="sc">|&gt;</span></span>
+<span id="cb19-5"><a href="#cb19-5" tabindex="-1"></a>  <span class="fu">unnest_wider</span>(geometry) <span class="sc">|&gt;</span></span>
 <span id="cb19-6"><a href="#cb19-6" tabindex="-1"></a>  <span class="fu">unnest_wider</span>(location)</span>
 <span id="cb19-7"><a href="#cb19-7" tabindex="-1"></a><span class="co">#&gt; # A tibble: 7 × 11</span></span>
 <span id="cb19-8"><a href="#cb19-8" tabindex="-1"></a><span class="co">#&gt;   city       address_components formatted_address   bounds         lat    lng</span></span>
@@ -692,11 +691,11 @@ separate rows with <code>unnest_longer()</code>:</p>
 <span id="cb19-17"><a href="#cb19-17" tabindex="-1"></a><span class="co">#&gt; # ℹ 5 more variables: location_type &lt;chr&gt;, viewport &lt;list&gt;, place_id &lt;chr&gt;,</span></span>
 <span id="cb19-18"><a href="#cb19-18" tabindex="-1"></a><span class="co">#&gt; #   types &lt;list&gt;, status &lt;chr&gt;</span></span></code></pre></div>
 <p>We could also just look at the first address for each city:</p>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" tabindex="-1"></a>repurrrsive<span class="sc">::</span>gmaps_cities <span class="sc">%&gt;%</span></span>
-<span id="cb20-2"><a href="#cb20-2" tabindex="-1"></a>  <span class="fu">unnest_wider</span>(json) <span class="sc">%&gt;%</span></span>
-<span id="cb20-3"><a href="#cb20-3" tabindex="-1"></a>  <span class="fu">hoist</span>(results, <span class="at">first_result =</span> <span class="dv">1</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb20-4"><a href="#cb20-4" tabindex="-1"></a>  <span class="fu">unnest_wider</span>(first_result) <span class="sc">%&gt;%</span></span>
-<span id="cb20-5"><a href="#cb20-5" tabindex="-1"></a>  <span class="fu">unnest_wider</span>(geometry) <span class="sc">%&gt;%</span></span>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" tabindex="-1"></a>repurrrsive<span class="sc">::</span>gmaps_cities <span class="sc">|&gt;</span></span>
+<span id="cb20-2"><a href="#cb20-2" tabindex="-1"></a>  <span class="fu">unnest_wider</span>(json) <span class="sc">|&gt;</span></span>
+<span id="cb20-3"><a href="#cb20-3" tabindex="-1"></a>  <span class="fu">hoist</span>(results, <span class="at">first_result =</span> <span class="dv">1</span>) <span class="sc">|&gt;</span></span>
+<span id="cb20-4"><a href="#cb20-4" tabindex="-1"></a>  <span class="fu">unnest_wider</span>(first_result) <span class="sc">|&gt;</span></span>
+<span id="cb20-5"><a href="#cb20-5" tabindex="-1"></a>  <span class="fu">unnest_wider</span>(geometry) <span class="sc">|&gt;</span></span>
 <span id="cb20-6"><a href="#cb20-6" tabindex="-1"></a>  <span class="fu">unnest_wider</span>(location)</span>
 <span id="cb20-7"><a href="#cb20-7" tabindex="-1"></a><span class="co">#&gt; # A tibble: 5 × 12</span></span>
 <span id="cb20-8"><a href="#cb20-8" tabindex="-1"></a><span class="co">#&gt;   city       address_components formatted_address  bounds             lat    lng</span></span>
@@ -710,7 +709,7 @@ separate rows with <code>unnest_longer()</code>:</p>
 <span id="cb20-16"><a href="#cb20-16" tabindex="-1"></a><span class="co">#&gt; #   types &lt;list&gt;, results &lt;list&gt;, status &lt;chr&gt;</span></span></code></pre></div>
 <p>Or use <code>hoist()</code> to dive deeply to get directly to
 <code>lat</code> and <code>lng</code>:</p>
-<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" tabindex="-1"></a>repurrrsive<span class="sc">::</span>gmaps_cities <span class="sc">%&gt;%</span></span>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" tabindex="-1"></a>repurrrsive<span class="sc">::</span>gmaps_cities <span class="sc">|&gt;</span></span>
 <span id="cb21-2"><a href="#cb21-2" tabindex="-1"></a>  <span class="fu">hoist</span>(json,</span>
 <span id="cb21-3"><a href="#cb21-3" tabindex="-1"></a>    <span class="at">lat =</span> <span class="fu">list</span>(<span class="st">&quot;results&quot;</span>, <span class="dv">1</span>, <span class="st">&quot;geometry&quot;</span>, <span class="st">&quot;location&quot;</span>, <span class="st">&quot;lat&quot;</span>),</span>
 <span id="cb21-4"><a href="#cb21-4" tabindex="-1"></a>    <span class="at">lng =</span> <span class="fu">list</span>(<span class="st">&quot;results&quot;</span>, <span class="dv">1</span>, <span class="st">&quot;geometry&quot;</span>, <span class="st">&quot;location&quot;</span>, <span class="st">&quot;lng&quot;</span>)</span>
@@ -726,13 +725,13 @@ separate rows with <code>unnest_longer()</code>:</p>
 </div>
 <div id="sharla-gelfands-discography" class="section level2">
 <h2>Sharla Gelfand’s discography</h2>
-<p>We’ll finish off with the most complex list, from <a href="https://sharla.party/post/discog-purrr/">Sharla Gelfand’s</a>
+<p>We’ll finish off with the most complex list, from <a href="https://github.com/sharlagelfand">Sharla Gelfand’s</a>
 discography. We’ll start the usual way: putting the list into a single
 column data frame, and then widening so each component is a column. I
 also parse the <code>date_added</code> column into a real date-time<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>.</p>
-<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" tabindex="-1"></a>discs <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">disc =</span> discog) <span class="sc">%&gt;%</span> </span>
-<span id="cb22-2"><a href="#cb22-2" tabindex="-1"></a>  <span class="fu">unnest_wider</span>(disc) <span class="sc">%&gt;%</span> </span>
-<span id="cb22-3"><a href="#cb22-3" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">date_added =</span> <span class="fu">as.POSIXct</span>(<span class="fu">strptime</span>(date_added, <span class="st">&quot;%Y-%m-%dT%H:%M:%S&quot;</span>))) </span>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" tabindex="-1"></a>discs <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">disc =</span> discog) <span class="sc">|&gt;</span></span>
+<span id="cb22-2"><a href="#cb22-2" tabindex="-1"></a>  <span class="fu">unnest_wider</span>(disc) <span class="sc">|&gt;</span></span>
+<span id="cb22-3"><a href="#cb22-3" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">date_added =</span> <span class="fu">as.POSIXct</span>(<span class="fu">strptime</span>(date_added, <span class="st">&quot;%Y-%m-%dT%H:%M:%S&quot;</span>)))</span>
 <span id="cb22-4"><a href="#cb22-4" tabindex="-1"></a>discs</span>
 <span id="cb22-5"><a href="#cb22-5" tabindex="-1"></a><span class="co">#&gt; # A tibble: 155 × 5</span></span>
 <span id="cb22-6"><a href="#cb22-6" tabindex="-1"></a><span class="co">#&gt;   instance_id date_added          basic_information       id rating</span></span>
@@ -747,7 +746,7 @@ also parse the <code>date_added</code> column into a real date-time<a href="#fn1
 <p>At this level, we see information about when each disc was added to
 Sharla’s discography, not any information about the disc itself. To do
 that we need to widen the <code>basic_information</code> column:</p>
-<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" tabindex="-1"></a>discs <span class="sc">%&gt;%</span> <span class="fu">unnest_wider</span>(basic_information)</span>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" tabindex="-1"></a>discs <span class="sc">|&gt;</span> <span class="fu">unnest_wider</span>(basic_information)</span>
 <span id="cb23-2"><a href="#cb23-2" tabindex="-1"></a><span class="co">#&gt; Error in `unnest_wider()`:</span></span>
 <span id="cb23-3"><a href="#cb23-3" tabindex="-1"></a><span class="co">#&gt; ! Can&#39;t duplicate names between the affected columns and the original</span></span>
 <span id="cb23-4"><a href="#cb23-4" tabindex="-1"></a><span class="co">#&gt;   data.</span></span>
@@ -758,7 +757,7 @@ that we need to widen the <code>basic_information</code> column:</p>
 <p>Unfortunately that fails because there’s an <code>id</code> column
 inside <code>basic_information</code>. We can quickly see what’s going
 on by setting <code>names_repair = &quot;unique&quot;</code>:</p>
-<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" tabindex="-1"></a>discs <span class="sc">%&gt;%</span> <span class="fu">unnest_wider</span>(basic_information, <span class="at">names_repair =</span> <span class="st">&quot;unique&quot;</span>)</span>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" tabindex="-1"></a>discs <span class="sc">|&gt;</span> <span class="fu">unnest_wider</span>(basic_information, <span class="at">names_repair =</span> <span class="st">&quot;unique&quot;</span>)</span>
 <span id="cb24-2"><a href="#cb24-2" tabindex="-1"></a><span class="co">#&gt; New names:</span></span>
 <span id="cb24-3"><a href="#cb24-3" tabindex="-1"></a><span class="co">#&gt; • `id` -&gt; `id...7`</span></span>
 <span id="cb24-4"><a href="#cb24-4" tabindex="-1"></a><span class="co">#&gt; • `id` -&gt; `id...14`</span></span>
@@ -777,8 +776,8 @@ on by setting <code>names_repair = &quot;unique&quot;</code>:</p>
 <p>The problem is that <code>basic_information</code> repeats the
 <code>id</code> column that’s also stored at the top-level, so we can
 just drop that:</p>
-<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" tabindex="-1"></a>discs <span class="sc">%&gt;%</span> </span>
-<span id="cb25-2"><a href="#cb25-2" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">!</span>id) <span class="sc">%&gt;%</span> </span>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" tabindex="-1"></a>discs <span class="sc">|&gt;</span></span>
+<span id="cb25-2"><a href="#cb25-2" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">!</span>id) <span class="sc">|&gt;</span></span>
 <span id="cb25-3"><a href="#cb25-3" tabindex="-1"></a>  <span class="fu">unnest_wider</span>(basic_information)</span>
 <span id="cb25-4"><a href="#cb25-4" tabindex="-1"></a><span class="co">#&gt; # A tibble: 155 × 14</span></span>
 <span id="cb25-5"><a href="#cb25-5" tabindex="-1"></a><span class="co">#&gt;   instance_id date_added          labels  year master_url   artists     id thumb</span></span>
@@ -793,7 +792,7 @@ just drop that:</p>
 <span id="cb25-14"><a href="#cb25-14" tabindex="-1"></a><span class="co">#&gt; # ℹ 6 more variables: title &lt;chr&gt;, formats &lt;list&gt;, cover_image &lt;chr&gt;,</span></span>
 <span id="cb25-15"><a href="#cb25-15" tabindex="-1"></a><span class="co">#&gt; #   resource_url &lt;chr&gt;, master_id &lt;int&gt;, rating &lt;int&gt;</span></span></code></pre></div>
 <p>Alternatively, we could use <code>hoist()</code>:</p>
-<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" tabindex="-1"></a>discs <span class="sc">%&gt;%</span> </span>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" tabindex="-1"></a>discs <span class="sc">|&gt;</span></span>
 <span id="cb26-2"><a href="#cb26-2" tabindex="-1"></a>  <span class="fu">hoist</span>(basic_information,</span>
 <span id="cb26-3"><a href="#cb26-3" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">&quot;title&quot;</span>,</span>
 <span id="cb26-4"><a href="#cb26-4" tabindex="-1"></a>    <span class="at">year =</span> <span class="st">&quot;year&quot;</span>,</span>
@@ -815,10 +814,10 @@ just drop that:</p>
 indexing deeply into the nested list.</p>
 <p>A more systematic approach would be to create separate tables for
 artist and label:</p>
-<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" tabindex="-1"></a>discs <span class="sc">%&gt;%</span> </span>
-<span id="cb27-2"><a href="#cb27-2" tabindex="-1"></a>  <span class="fu">hoist</span>(basic_information, <span class="at">artist =</span> <span class="st">&quot;artists&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb27-3"><a href="#cb27-3" tabindex="-1"></a>  <span class="fu">select</span>(<span class="at">disc_id =</span> id, artist) <span class="sc">%&gt;%</span> </span>
-<span id="cb27-4"><a href="#cb27-4" tabindex="-1"></a>  <span class="fu">unnest_longer</span>(artist) <span class="sc">%&gt;%</span> </span>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" tabindex="-1"></a>discs <span class="sc">|&gt;</span></span>
+<span id="cb27-2"><a href="#cb27-2" tabindex="-1"></a>  <span class="fu">hoist</span>(basic_information, <span class="at">artist =</span> <span class="st">&quot;artists&quot;</span>) <span class="sc">|&gt;</span></span>
+<span id="cb27-3"><a href="#cb27-3" tabindex="-1"></a>  <span class="fu">select</span>(<span class="at">disc_id =</span> id, artist) <span class="sc">|&gt;</span></span>
+<span id="cb27-4"><a href="#cb27-4" tabindex="-1"></a>  <span class="fu">unnest_longer</span>(artist) <span class="sc">|&gt;</span></span>
 <span id="cb27-5"><a href="#cb27-5" tabindex="-1"></a>  <span class="fu">unnest_wider</span>(artist)</span>
 <span id="cb27-6"><a href="#cb27-6" tabindex="-1"></a><span class="co">#&gt; # A tibble: 167 × 8</span></span>
 <span id="cb27-7"><a href="#cb27-7" tabindex="-1"></a><span class="co">#&gt;    disc_id join  name                     anv   tracks role  resource_url     id</span></span>
@@ -831,11 +830,11 @@ artist and label:</p>
 <span id="cb27-14"><a href="#cb27-14" tabindex="-1"></a><span class="co">#&gt; 6 13117042 &quot;&quot;    Tashme                   &quot;&quot;    &quot;&quot;     &quot;&quot;    https://api… 5.21e6</span></span>
 <span id="cb27-15"><a href="#cb27-15" tabindex="-1"></a><span class="co">#&gt; # ℹ 161 more rows</span></span>
 <span id="cb27-16"><a href="#cb27-16" tabindex="-1"></a></span>
-<span id="cb27-17"><a href="#cb27-17" tabindex="-1"></a>discs <span class="sc">%&gt;%</span> </span>
-<span id="cb27-18"><a href="#cb27-18" tabindex="-1"></a>  <span class="fu">hoist</span>(basic_information, <span class="at">format =</span> <span class="st">&quot;formats&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb27-19"><a href="#cb27-19" tabindex="-1"></a>  <span class="fu">select</span>(<span class="at">disc_id =</span> id, format) <span class="sc">%&gt;%</span> </span>
-<span id="cb27-20"><a href="#cb27-20" tabindex="-1"></a>  <span class="fu">unnest_longer</span>(format) <span class="sc">%&gt;%</span> </span>
-<span id="cb27-21"><a href="#cb27-21" tabindex="-1"></a>  <span class="fu">unnest_wider</span>(format) <span class="sc">%&gt;%</span> </span>
+<span id="cb27-17"><a href="#cb27-17" tabindex="-1"></a>discs <span class="sc">|&gt;</span></span>
+<span id="cb27-18"><a href="#cb27-18" tabindex="-1"></a>  <span class="fu">hoist</span>(basic_information, <span class="at">format =</span> <span class="st">&quot;formats&quot;</span>) <span class="sc">|&gt;</span></span>
+<span id="cb27-19"><a href="#cb27-19" tabindex="-1"></a>  <span class="fu">select</span>(<span class="at">disc_id =</span> id, format) <span class="sc">|&gt;</span></span>
+<span id="cb27-20"><a href="#cb27-20" tabindex="-1"></a>  <span class="fu">unnest_longer</span>(format) <span class="sc">|&gt;</span></span>
+<span id="cb27-21"><a href="#cb27-21" tabindex="-1"></a>  <span class="fu">unnest_wider</span>(format) <span class="sc">|&gt;</span></span>
 <span id="cb27-22"><a href="#cb27-22" tabindex="-1"></a>  <span class="fu">unnest_longer</span>(descriptions)</span>
 <span id="cb27-23"><a href="#cb27-23" tabindex="-1"></a><span class="co">#&gt; # A tibble: 258 × 5</span></span>
 <span id="cb27-24"><a href="#cb27-24" tabindex="-1"></a><span class="co">#&gt;   disc_id descriptions text  name     qty  </span></span>

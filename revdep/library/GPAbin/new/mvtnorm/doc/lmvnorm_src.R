@@ -234,7 +234,7 @@ chk(a, b)
 ## subset
 j <- nm[sample(1:J)]
 ltM <- ltMatrices(xn, byrow = FALSE, names = nm)
-try(ltM[i, j])
+print(try(ltM[i, j], silent = TRUE))
 ltM <- as.syMatrices(ltM)
 a <- as.array(ltM[i, j])
 b <- as.array(ltM)[j, j, i]
@@ -280,6 +280,7 @@ I5
 ###################################################
 ### code chunk number 17: ex-mult
 ###################################################
+### matrix-vector
 lxn <- ltMatrices(xn, byrow = TRUE)
 lxd <- ltMatrices(xd, byrow = TRUE, diag = TRUE)
 y <- matrix(runif(N * J), nrow = J)
@@ -289,10 +290,24 @@ b <- do.call("rbind", lapply(1:ncol(y),
     function(i) t(A[,,i] %*% y[,i,drop = FALSE])))
 chk(a, t(b), check.attributes = FALSE)
 
+### matrix-matrix
+Y <- matrix(runif(N * J^2), nrow = J^2)
+a <- Mult(lxn, Y)
+b <- do.call("rbind", lapply(1:ncol(y), 
+    function(i) t(A[,,i] %*% matrix(Y[,i,drop = FALSE], nrow = J))))
+chk(a, t(b), check.attributes = FALSE)
+
+### matrix-vector
 a <- Mult(lxd, y)
 A <- as.array(lxd)
 b <- do.call("rbind", lapply(1:ncol(y), 
     function(i) t(A[,,i] %*% y[,i,drop = FALSE])))
+chk(a, t(b), check.attributes = FALSE)
+
+### matrix-matrix
+a <- Mult(lxd, Y)
+b <- do.call("rbind", lapply(1:ncol(y), 
+    function(i) t(A[,,i] %*% matrix(Y[,i,drop = FALSE], nrow = J))))
 chk(a, t(b), check.attributes = FALSE)
 
 ### recycle C
@@ -348,7 +363,7 @@ ex <- expression({
   p1 <- do.call("cbind", lapply(1:N1, function(i) 
       Ca[,,c(1,i)[(N2 > 1) + 1]] %*% x[,i]))
   p2 <- Mult(C, x)
-  chk(p1, p2)
+  chk(p1, p2, check.attributes = FALSE)
 })
 
 N2 <- N1
@@ -401,7 +416,43 @@ chk(solve(lxn[1,], y, transpose = TRUE),
 
 
 ###################################################
-### code chunk number 22: ex-logdet
+### code chunk number 22: ex-solve-byrow
+###################################################
+tn <- lxn
+td <- lxd
+lxn <- ltMatrices(lxn, byrow = !attr(lxn, "byrow"))
+lxd <- ltMatrices(lxd, byrow = !attr(lxd, "byrow"))
+## solve
+A <- as.array(lxn)
+a <- solve(lxn)
+a <- as.array(a)
+b <- array(apply(A, 3L, function(x) solve(x), simplify = TRUE), 
+           dim = rev(dim(lxn)))
+chk(a, b, check.attributes = FALSE)
+
+A <- as.array(lxd)
+a <- as.array(solve(lxd))
+b <- array(apply(A, 3L, function(x) solve(x), simplify = TRUE), 
+           dim = rev(dim(lxd)))
+chk(a, b, check.attributes = FALSE)
+
+chk(solve(lxn, y), Mult(solve(lxn), y))
+chk(solve(lxd, y), Mult(solve(lxd), y))
+
+### recycle C
+chk(solve(lxn[1,], y), as.array(solve(lxn[1,]))[,,1] %*% y)
+chk(solve(lxn[rep(1, N),], y), solve(lxn[1,], y), check.attributes = FALSE)
+
+### recycle y
+chk(solve(lxn, y[,1]), solve(lxn, y[,rep(1, N)]))
+chk(solve(lxn[1,], y, transpose = TRUE), 
+    t(as.array(solve(lxn[1,]))[,,1]) %*% y)
+lxn <- tn
+lxd <- td
+
+
+###################################################
+### code chunk number 23: ex-logdet
 ###################################################
 chk(logdet(lxn), colSums(log(diagonals(lxn))))
 chk(logdet(lxd[1,]), colSums(log(diagonals(lxd[1,]))))
@@ -411,7 +462,7 @@ chk(logdet(lxd2), colSums(log(diagonals(lxd2))))
 
 
 ###################################################
-### code chunk number 23: ex-tcrossprod
+### code chunk number 24: ex-tcrossprod
 ###################################################
 ## Tcrossprod
 a <- as.array(Tcrossprod(lxn))
@@ -436,7 +487,7 @@ chk(d, diagonals(Tcrossprod(lxd)))
 
 
 ###################################################
-### code chunk number 24: ex-crossprod
+### code chunk number 25: ex-crossprod
 ###################################################
 ## Crossprod
 a <- as.array(Crossprod(lxn))
@@ -461,17 +512,143 @@ chk(d, diagonals(Crossprod(lxd)))
 
 
 ###################################################
-### code chunk number 25: chol
+### code chunk number 26: ex-tcrossprod-2
 ###################################################
-Sigma <- Tcrossprod(lxd)
+### tcrossprod
+a <- as.array(tcrossprod(lxn))
+b <- array(apply(as.array(lxn), 3L, function(x) tcrossprod(x), simplify = TRUE), 
+           dim = rev(dim(lxn)))
+chk(a, b, check.attributes = FALSE)
+
+a <- as.array(tcrossprod(lxd))
+b <- array(apply(as.array(lxd), 3L, function(x) tcrossprod(x), simplify = TRUE), 
+           dim = rev(dim(lxd)))
+chk(a, b, check.attributes = FALSE)
+
+## crossprod
+a <- as.array(crossprod(lxn))
+b <- array(apply(as.array(lxn), 3L, function(x) crossprod(x), simplify = TRUE), 
+           dim = rev(dim(lxn)))
+chk(a, b, check.attributes = FALSE)
+
+a <- as.array(crossprod(lxd))
+b <- array(apply(as.array(lxd), 3L, function(x) crossprod(x), simplify = TRUE), 
+           dim = rev(dim(lxd)))
+chk(a, b, check.attributes = FALSE)
+
+
+###################################################
+### code chunk number 27: ex-Mult-2
+###################################################
+a <- lxn %*% y
+A <- as.array(lxn)
+b <- do.call("rbind", lapply(1:ncol(y), 
+    function(i) t(A[,,i] %*% y[,i,drop = FALSE])))
+chk(a, t(b), check.attributes = FALSE)
+
+a <- lxd %*% y
+A <- as.array(lxd)
+b <- do.call("rbind", lapply(1:ncol(y), 
+    function(i) t(A[,,i] %*% y[,i,drop = FALSE])))
+chk(a, t(b), check.attributes = FALSE)
+
+### recycle C
+chk(lxn[rep(1, N),] %*% y, lxn[1,] %*% y, check.attributes = FALSE)
+
+### recycle y
+chk(lxn %*% y[,1], lxn %*% y[,rep(1, N)])
+
+### tcrossprod as multiplication
+i <- sample(1:N)[1]
+M <- t(as.array(lxn)[,,i])
+a <- sapply(1:J, function(j) lxn[i,] %*% M[,j,drop = FALSE])
+rownames(a) <- colnames(a) <- dimnames(lxn)[[2L]]
+b <- as.array(tcrossprod(lxn[i,]))[,,1]
+chk(a, b, check.attributes = FALSE)
+
+a <- crossprod(lxn, y)
+A <- as.array(lxn)
+b <- do.call("rbind", lapply(1:ncol(y), 
+    function(i) t(t(A[,,i]) %*% y[,i,drop = FALSE])))
+chk(a, t(b), check.attributes = FALSE)
+
+a <- crossprod(lxd, y)
+A <- as.array(lxd)
+b <- do.call("rbind", lapply(1:ncol(y), 
+    function(i) t(t(A[,,i]) %*% y[,i,drop = FALSE])))
+chk(a, t(b), check.attributes = FALSE)
+
+### recycle C
+chk(crossprod(lxn[rep(1, N),], y), 
+    crossprod(lxn[1,], y), check.attributes = FALSE)
+
+### recycle y
+chk(crossprod(lxn, y[,1]), 
+    crossprod(lxn, y[,rep(1, N)]))
+
+
+###################################################
+### code chunk number 28: chol
+###################################################
+Sigma <- tcrossprod(lxd)
 chk(chol(Sigma), lxd)
-Sigma <- Tcrossprod(lxn)
+chk(as.array(chol(Sigma)), 
+    as.array(chol(syMatrices(Sigma, byrow = !attr(Sigma, "byrow")))))
+Sigma <- tcrossprod(lxn)
 ## Sigma and chol(Sigma) always have diagonal, lxn doesn't
 chk(as.array(chol(Sigma)), as.array(lxn))
+### check singular matrices
+x <- matrix(runif(21), ncol = 7)
+S <- crossprod(x)
 
 
 ###################################################
-### code chunk number 26: kronecker
+### code chunk number 29: lmvnorm_src.Rnw:2479-2480
+###################################################
+cat("> ## IGNORE_RDIFF_BEGIN\n")
+
+
+###################################################
+### code chunk number 30: lmvnorm_src.Rnw:2486-2487
+###################################################
+cat("> ## IGNORE_RDIFF_END\n")
+
+
+###################################################
+### code chunk number 31: invchol
+###################################################
+Sigma <- tcrossprod(lxd)
+chk(invchol(Sigma), solve(lxd))
+Sigma <- tcrossprod(lxn)
+## Sigma and chol(Sigma) always have diagonal, lxn doesn't
+chk(as.array(invchol(Sigma)), as.array(solve(lxn)))
+### check singular matrices
+x <- matrix(runif(21), ncol = 7)
+S <- crossprod(x)
+
+
+###################################################
+### code chunk number 32: lmvnorm_src.Rnw:2729-2731
+###################################################
+# condition number is different for different systems
+cat("> ## IGNORE_RDIFF_BEGIN\n")
+
+
+###################################################
+### code chunk number 33: invcholerr
+###################################################
+print(try(solve(S), silent = TRUE))
+print(try(invchol(S), silent = TRUE))
+
+
+###################################################
+### code chunk number 34: lmvnorm_src.Rnw:2737-2738
+###################################################
+cat("> ## IGNORE_RDIFF_END\n")
+
+
+###################################################
+### code chunk number 35: kronecker
 ###################################################
 J <- 10
 
@@ -527,7 +704,7 @@ chk(A, B)
 
 
 ###################################################
-### code chunk number 27: conv-ex-1
+### code chunk number 36: conv-ex-1
 ###################################################
 prec2pc <- function(x) {
     ret <- -cov2cor(x)
@@ -547,14 +724,14 @@ chk(unlist(Prec), c(as.array(invchol2pre(L))),
     check.attributes = FALSE)
 chk(unlist(Corr), c(as.array(invchol2cor(L))), 
     check.attributes = FALSE)
-chk(unlist(CP), c(as.array(Crossprod(invcholD(L)))), 
+chk(unlist(CP), c(as.array(crossprod(invcholD(L)))), 
     check.attributes = FALSE)
 chk(unlist(PC), c(as.array(invchol2pc(L))), 
     check.attributes = FALSE)
 
 
 ###################################################
-### code chunk number 28: conv-ex-2
+### code chunk number 37: conv-ex-2
 ###################################################
 C <- lxn
 Sigma <- apply(as.array(C), 3, 
@@ -569,14 +746,14 @@ chk(unlist(Prec), c(as.array(chol2pre(C))),
     check.attributes = FALSE)
 chk(unlist(Corr), c(as.array(chol2cor(C))), 
     check.attributes = FALSE)
-chk(unlist(CP), c(as.array(Crossprod(solve(Dchol(C))))), 
+chk(unlist(CP), c(as.array(crossprod(solve(Dchol(C))))), 
     check.attributes = FALSE)
 chk(unlist(PC), c(as.array(chol2pc(C))), 
     check.attributes = FALSE)
 
 
 ###################################################
-### code chunk number 29: conv-ex-3
+### code chunk number 38: conv-ex-3
 ###################################################
 L <- lxd
 Sigma <- apply(as.array(L), 3, 
@@ -591,14 +768,14 @@ chk(unlist(Prec), c(as.array(invchol2pre(L))),
     check.attributes = FALSE)
 chk(unlist(Corr), c(as.array(invchol2cor(L))), 
     check.attributes = FALSE)
-chk(unlist(CP), c(as.array(Crossprod(invcholD(L)))), 
+chk(unlist(CP), c(as.array(crossprod(invcholD(L)))), 
     check.attributes = FALSE)
 chk(unlist(PC), c(as.array(invchol2pc(L))), 
     check.attributes = FALSE)
 
 
 ###################################################
-### code chunk number 30: conv-ex-4
+### code chunk number 39: conv-ex-4
 ###################################################
 C <- lxd
 Sigma <- apply(as.array(C), 3, 
@@ -613,14 +790,14 @@ chk(unlist(Prec), c(as.array(chol2pre(C))),
     check.attributes = FALSE)
 chk(unlist(Corr), c(as.array(chol2cor(C))), 
     check.attributes = FALSE)
-chk(unlist(CP), c(as.array(Crossprod(solve(Dchol(C))))), 
+chk(unlist(CP), c(as.array(crossprod(solve(Dchol(C))))), 
     check.attributes = FALSE)
 chk(unlist(PC), c(as.array(chol2pc(C))), 
     check.attributes = FALSE)
 
 
 ###################################################
-### code chunk number 31: aperm-tests
+### code chunk number 40: aperm-tests
 ###################################################
 L <- as.invchol(lxn)
 J <- dim(L)[2L]
@@ -634,83 +811,87 @@ chk(chol2cov(C)[,p], chol2cov(Cp))
 
 
 ###################################################
-### code chunk number 32: marg
+### code chunk number 41: marg
 ###################################################
-Sigma <- Tcrossprod(lxd)
+Sigma <- tcrossprod(lxd)
 j <- 1:3
-chk(Sigma[,j], Tcrossprod(marg_mvnorm(chol = lxd, which = j)$chol))
+chk(Sigma[,j], tcrossprod(marg_mvnorm(chol = lxd, which = j)$chol))
 j <- 2:4
-chk(Sigma[,j], Tcrossprod(marg_mvnorm(chol = lxd, which = j)$chol))
+chk(Sigma[,j], tcrossprod(marg_mvnorm(chol = lxd, which = j)$chol))
 
-Sigma <- Tcrossprod(solve(lxd))
+Sigma <- tcrossprod(solve(lxd))
 j <- 1:3
-chk(Sigma[,j], Tcrossprod(solve(marg_mvnorm(invchol = lxd, which = j)$invchol)))
+chk(Sigma[,j], tcrossprod(solve(marg_mvnorm(invchol = lxd, which = j)$invchol)))
 j <- 2:4
-chk(Sigma[,j], Tcrossprod(solve(marg_mvnorm(invchol = lxd, which = j)$invchol)))
+chk(Sigma[,j], tcrossprod(solve(marg_mvnorm(invchol = lxd, which = j)$invchol)))
 
 
 ###################################################
-### code chunk number 33: cond-general
+### code chunk number 42: cond-general
 ###################################################
-Sigma <- as.array(Tcrossprod(lxd))[,,1]
+Sigma <- as.array(tcrossprod(lxd))[,,1]
 j <- 2:4
 y <- matrix(c(-1, 2, 1), nrow = 3)
 
 cm <- Sigma[-j, j,drop = FALSE] %*% solve(Sigma[j,j]) %*%  y
+colnames(cm) <- dimnames(lxd)[[1L]][1L]
 cS <- Sigma[-j, -j] - Sigma[-j,j,drop = FALSE] %*% 
       solve(Sigma[j,j]) %*% Sigma[j,-j,drop = FALSE]
 
 cmv <- cond_mvnorm(chol = lxd[1,], which_given = j, given = y)
 
 chk(cm, cmv$mean)
-chk(cS, as.array(Tcrossprod(cmv$chol))[,,1])
+chk(cS, as.array(tcrossprod(cmv$chol))[,,1])
 
-Sigma <- as.array(Tcrossprod(solve(lxd)))[,,1]
+Sigma <- as.array(tcrossprod(solve(lxd)))[,,1]
 j <- 2:4
 y <- matrix(c(-1, 2, 1), nrow = 3)
 
 cm <- Sigma[-j, j,drop = FALSE] %*% solve(Sigma[j,j]) %*%  y
+colnames(cm) <- dimnames(lxd)[[1L]][1L]
 cS <- Sigma[-j, -j] - Sigma[-j,j,drop = FALSE] %*% 
       solve(Sigma[j,j]) %*% Sigma[j,-j,drop = FALSE]
 
 cmv <- cond_mvnorm(invchol = lxd[1,], which_given = j, given = y)
 
 chk(cm, cmv$mean)
-chk(cS, as.array(Tcrossprod(solve(cmv$invchol)))[,,1])
+chk(cS, as.array(tcrossprod(solve(cmv$invchol)))[,,1])
 
 
 ###################################################
-### code chunk number 34: cond-simple
+### code chunk number 43: cond-simple
 ###################################################
-Sigma <- as.array(Tcrossprod(lxd))[,,1]
+Sigma <- as.array(tcrossprod(lxd))[,,1]
 j <- 1:3
 y <- matrix(c(-1, 2, 1), nrow = 3)
 
 cm <- Sigma[-j, j,drop = FALSE] %*% solve(Sigma[j,j]) %*%  y
+colnames(cm) <- dimnames(lxd)[[1L]][1L]
 cS <- Sigma[-j, -j] - Sigma[-j,j,drop = FALSE] %*% 
       solve(Sigma[j,j]) %*% Sigma[j,-j,drop = FALSE]
 
 cmv <- cond_mvnorm(chol = lxd[1,], which_given = j, given = y)
 
 chk(c(cm), c(cmv$mean))
-chk(cS, as.array(Tcrossprod(cmv$chol))[,,1])
+chk(cS, as.array(tcrossprod(cmv$chol))[,,1])
 
-Sigma <- as.array(Tcrossprod(solve(lxd)))[,,1]
+Sigma <- as.array(tcrossprod(solve(lxd)))[,,1]
 j <- 1:3
 y <- matrix(c(-1, 2, 1), nrow = 3)
 
 cm <- Sigma[-j, j,drop = FALSE] %*% solve(Sigma[j,j]) %*%  y
+colnames(cm) <- dimnames(lxd)[[1L]][1L]
 cS <- Sigma[-j, -j] - Sigma[-j,j,drop = FALSE] %*% 
       solve(Sigma[j,j]) %*% Sigma[j,-j,drop = FALSE]
 
 cmv <- cond_mvnorm(invchol = lxd[1,], which_given = j, given = y)
 
 chk(c(cm), c(cmv$mean))
-chk(cS, as.array(Tcrossprod(solve(cmv$invchol)))[,,1])
+chk(cS, as.array(tcrossprod(solve(cmv$invchol)))[,,1])
 
 
 ###################################################
-### code chunk number 35: ex-MV
+### code chunk number 44: ex-MV
 ###################################################
 N <- 1000L
 J <- 50L
@@ -718,47 +899,53 @@ lt <- ltMatrices(matrix(runif(N * J * (J + 1) / 2) + 1, ncol = N),
                  diag = TRUE, byrow = FALSE)
 Z <- matrix(rnorm(N * J), ncol = N)
 Y <- solve(lt, Z)
-ll1 <- sum(dnorm(Mult(lt, Y), log = TRUE)) + sum(log(diagonals(lt)))
+ll1 <- sum(dnorm(lt %*% Y, log = TRUE)) + sum(log(diagonals(lt)))
 
-S <- as.array(Tcrossprod(solve(lt)))
+S <- as.array(tcrossprod(solve(lt)))
 ll2 <- sum(sapply(1:N, function(i) 
                            dmvnorm(x = Y[,i], sigma = S[,,i], log = TRUE)))
 chk(ll1, ll2)
 
 
 ###################################################
-### code chunk number 36: ex-MV-d
+### code chunk number 45: ex-MV-d
 ###################################################
 ll3 <- ldmvnorm(obs = Y, invchol = lt)
 chk(ll1, ll3)
 
 
 ###################################################
-### code chunk number 37: ex-MV-mc
+### code chunk number 46: ex-MV-mc
 ###################################################
 ## marginal of and conditional on these
 (j <- 1:5 * 10)
 md <- marg_mvnorm(invchol = lt, which = j)
 cd <- cond_mvnorm(invchol = lt, which_given = j, given = Y[j,])
 
-ll3 <- sum(dnorm(Mult(md$invchol, Y[j,]), log = TRUE)) + 
+ll3 <- sum(dnorm(md$invchol %*% Y[j,], log = TRUE)) + 
        sum(log(diagonals(md$invchol))) +
-       sum(dnorm(Mult(cd$invchol, Y[-j,] - cd$mean), log = TRUE)) + 
+       sum(dnorm(cd$invchol %*% (Y[-j,] - cd$mean), log = TRUE)) + 
        sum(log(diagonals(cd$invchol)))
 chk(ll1, ll3)
 
 
 ###################################################
-### code chunk number 38: chapterseed
+### code chunk number 47: chapterseed
 ###################################################
 set.seed(270312)
 
 
 ###################################################
-### code chunk number 39: fct-lpmvnormR
+### code chunk number 48: fct-lpmvnormR
 ###################################################
 
-lpmvnormR <- function(lower, upper, mean = 0, center = NULL, chol, logLik = TRUE, ...) {
+lpmvnormR <- function(lower, upper, mean = 0, invcholmean, center = NULL, chol, logLik = TRUE, ...) {
+
+    ### only needed for input checks
+    stopifnot(missing(invcholmean))
+
+    ### get access to internal mvtnorm functions
+    .check_obs_mean <- mvtnorm:::.check_obs_mean
 
     
     if (!is.matrix(lower)) lower <- matrix(lower, ncol = 1)
@@ -775,18 +962,20 @@ lpmvnormR <- function(lower, upper, mean = 0, center = NULL, chol, logLik = TRUE
 
     stopifnot(nrow(lower) == J && ncol(lower) == N)
     stopifnot(nrow(upper) == J && ncol(upper) == N)
-    if (is.matrix(mean)) {
-        if (ncol(mean) == 1L) 
-            mean <- mean[,rep(1, N),drop = FALSE]
-        stopifnot(nrow(mean) == J && ncol(mean) == N)
+
+    if (!missing(mean)) {
+        lower <- .check_obs_mean(lower, mean, J = J, N = N)
+        upper <- .check_obs_mean(upper, mean, J = J, N = N)
     }
 
-    lower <- lower - mean
-    upper <- upper - mean
+    if (!missing(invcholmean)) {
+        invcholmean <- .check_obs_invcholmean(lower, invcholmean, J = J, N = N)
+        center <- - invcholmean
+    }
 
     if (!is.null(center)) {
-        if (!is.matrix(center)) center <- matrix(center, ncol = 1)
-        stopifnot(nrow(center) == J && ncol(center == N))
+        if (!is.matrix(center)) center <- matrix(center, nrow = J, ncol = N)
+        stopifnot(nrow(center) == J && ncol(center) == N)
     }
     
 
@@ -812,7 +1001,7 @@ lpmvnormR <- function(lower, upper, mean = 0, center = NULL, chol, logLik = TRUE
 
 
 ###################################################
-### code chunk number 40: ex-lpmvnorm_R
+### code chunk number 49: ex-lpmvnorm_R
 ###################################################
 J <- 5L
 N <- 10L
@@ -829,7 +1018,7 @@ b[sample(J * N)[1:2]] <- Inf
 
 
 ###################################################
-### code chunk number 41: ex-again
+### code chunk number 50: ex-again
 ###################################################
 phat
 exp(lpmvnorm(a, b, chol = lx, M = 25000, logLik = FALSE, fast = TRUE))
@@ -837,7 +1026,7 @@ exp(lpmvnorm(a, b, chol = lx, M = 25000, logLik = FALSE, fast = FALSE))
 
 
 ###################################################
-### code chunk number 42: ex-lpmvnorm
+### code chunk number 51: ex-lpmvnorm
 ###################################################
 M <- 10000L
 if (require("qrng", quietly = TRUE)) {
@@ -845,7 +1034,9 @@ if (require("qrng", quietly = TRUE)) {
     W <- t(ghalton(M, d = J - 1))
 } else {
     ### Monte-Carlo
-    W <- matrix(runif(M * (J - 1)), nrow = J - 1)
+    ### byrow = TRUE because adding / removing dimensions
+    ### keeps the MC points for the remaining dimensions constant
+    W <- matrix(runif(M * (J - 1)), nrow = J - 1, byrow = TRUE)
 }
 
 ### Genz & Bretz, 2002, without early stopping (really?)
@@ -868,7 +1059,7 @@ cbind(pGB, pGqf, pGf, pGqs, pGs)
 
 
 ###################################################
-### code chunk number 43: ex-uni
+### code chunk number 52: ex-uni
 ###################################################
 ### test univariate problem
 ### call pmvnorm
@@ -885,7 +1076,7 @@ cbind(c(ptr), pGB, pGq)
 
 
 ###################################################
-### code chunk number 44: ex-score
+### code chunk number 53: ex-score
 ###################################################
 J <- 5L
 N <- 4L
@@ -921,7 +1112,7 @@ if (require("numDeriv", quietly = TRUE))
 
 
 ###################################################
-### code chunk number 45: ex-Lscore
+### code chunk number 54: ex-Lscore
 ###################################################
 mL <- solve(mC)
 
@@ -944,7 +1135,7 @@ if (require("numDeriv", quietly = TRUE))
 
 
 ###################################################
-### code chunk number 46: ex-uni-score
+### code chunk number 55: ex-uni-score
 ###################################################
 ptr <- pnorm(b[1,] / c(unclass(mC[,1]))) - pnorm(a[1,] / c(unclass(mC[,1])))
 log(ptr)
@@ -956,13 +1147,13 @@ sd1 <- c(unclass(mC[,1]))
 
 
 ###################################################
-### code chunk number 47: chapterseed
+### code chunk number 56: chapterseed
 ###################################################
 set.seed(110515)
 
 
 ###################################################
-### code chunk number 48: ex-ML-dgp
+### code chunk number 57: ex-ML-dgp
 ###################################################
 J <- 4
 R <- diag(J)
@@ -974,7 +1165,7 @@ C <- t(chol(Sigma))
 
 
 ###################################################
-### code chunk number 49: ex-ML-C
+### code chunk number 58: ex-ML-C
 ###################################################
 prm <- C[lower.tri(C, diag = TRUE)]
 lt <- ltMatrices(matrix(prm, ncol = 1L), 
@@ -984,26 +1175,26 @@ BYROW <- FALSE   ### later checks
 lt <- ltMatrices(lt, 
                  byrow = BYROW)   ### convert to row-major
 chk(C, as.array(lt)[,,1], check.attributes = FALSE)
-chk(Sigma, as.array(Tcrossprod(lt))[,,1], check.attributes = FALSE)
+chk(Sigma, as.array(tcrossprod(lt))[,,1], check.attributes = FALSE)
 
 
 ###################################################
-### code chunk number 50: ex-ML-data
+### code chunk number 59: ex-ML-data
 ###################################################
 N <- 100L
 Z <- matrix(rnorm(N * J), nrow = J)
-Y <- Mult(lt, Z) + (mn <- 1:J)
+Y <- lt %*% Z + (mn <- 1:J)
 
 
 ###################################################
-### code chunk number 51: ex-ML-mu-vcov
+### code chunk number 60: ex-ML-mu-vcov
 ###################################################
 rowMeans(Y)
 (Shat <- var(t(Y)) * (N - 1) / N)
 
 
 ###################################################
-### code chunk number 52: ex-ML-clogLik
+### code chunk number 61: ex-ML-clogLik
 ###################################################
 Yc <- Y - rowMeans(Y)
 
@@ -1019,14 +1210,14 @@ sc <- function(parm) {
 
 
 ###################################################
-### code chunk number 53: ex-ML-const
+### code chunk number 62: ex-ML-const
 ###################################################
 llim <- rep(-Inf, J * (J + 1) / 2)
 llim[which(rownames(unclass(lt)) %in% paste(1:J, 1:J, sep = "."))] <- 1e-4
 
 
 ###################################################
-### code chunk number 54: ex-ML-c
+### code chunk number 63: ex-ML-c
 ###################################################
 if (BYROW) {
   cML <- chol(Shat)[upper.tri(Shat, diag = TRUE)]
@@ -1040,7 +1231,7 @@ if (require("numDeriv", quietly = TRUE))
 
 
 ###################################################
-### code chunk number 55: ex-ML-coptim
+### code chunk number 64: ex-ML-coptim
 ###################################################
 op <- optim(start, fn = ll, gr = sc, method = "L-BFGS-B", 
             lower = llim, control = list(trace = FALSE))
@@ -1055,7 +1246,7 @@ lt
 
 
 ###################################################
-### code chunk number 56: ex-ML-cens
+### code chunk number 65: ex-ML-cens
 ###################################################
 prb <- 1:9 / 10
 sds <- sqrt(diag(Sigma))
@@ -1069,7 +1260,7 @@ for (j in 1:J) {
 
 
 ###################################################
-### code chunk number 57: ex-ML-chk (eval = FALSE)
+### code chunk number 66: ex-ML-chk (eval = FALSE)
 ###################################################
 ## M <- floor(exp(0:25/10) * 1000)
 ## lGB <- sapply(M, function(m) {
@@ -1097,7 +1288,7 @@ for (j in 1:J) {
 
 
 ###################################################
-### code chunk number 58: ex-ML-fig-data
+### code chunk number 67: ex-ML-fig-data
 ###################################################
 ### use pre-computed data, otherwise CRAN complains.
 M <-
@@ -1134,7 +1325,7 @@ rownames(lHf) <- c("user.self", "ll")
 
 
 ###################################################
-### code chunk number 59: ex-ML-fig
+### code chunk number 68: ex-ML-fig
 ###################################################
 layout(matrix(1:2, nrow = 1))
 plot(M, lGB["ll",], ylim = range(c(lGB["ll",], lH["ll",], lHf["ll",])), ylab = "Log-likelihood")
@@ -1147,7 +1338,7 @@ legend("bottomright", legend = c("pmvnorm", "lpmvnorm", "lpmvnorm(fast)"), pch =
 
 
 ###################################################
-### code chunk number 60: ex-ML-ll
+### code chunk number 69: ex-ML-ll
 ###################################################
 M <- 500 
 if (require("qrng", quietly = TRUE)) {
@@ -1155,7 +1346,7 @@ if (require("qrng", quietly = TRUE)) {
     W <- t(ghalton(M, d = J - 1))
 } else {
     ### Monte-Carlo
-    W <- matrix(runif(M * (J - 1)), nrow = J - 1)
+    W <- matrix(runif(M * (J - 1)), nrow = J - 1, byrow = TRUE)
 }
 ll <- function(parm, J) {
      m <- parm[1:J]             ### mean parameters
@@ -1168,7 +1359,7 @@ ll <- function(parm, J) {
 
 
 ###################################################
-### code chunk number 61: ex-ML-check
+### code chunk number 70: ex-ML-check
 ###################################################
 prm <- c(mn, unclass(lt))
 ll(prm, J = J)
@@ -1181,7 +1372,7 @@ chk(llprm, sum(lpmvnorm(lwr, upr, mean = mn, chol = lt, w = W,
 
 
 ###################################################
-### code chunk number 62: ex-ML-sc
+### code chunk number 71: ex-ML-sc
 ###################################################
 sc <- function(parm, J) {
     m <- parm[1:J]             ### mean parameters
@@ -1195,14 +1386,14 @@ sc <- function(parm, J) {
 
 
 ###################################################
-### code chunk number 63: ex-ML-sc-chk
+### code chunk number 72: ex-ML-sc-chk
 ###################################################
 if (require("numDeriv", quietly = TRUE))
     chk(grad(ll, prm, J = J), sc(prm, J = J), check.attributes = FALSE)
 
 
 ###################################################
-### code chunk number 64: ex-ML
+### code chunk number 73: ex-ML
 ###################################################
 llim <- rep(-Inf, J + J * (J + 1) / 2)
 llim[J + which(rownames(unclass(lt)) %in% paste(1:J, 1:J, sep = "."))] <- 1e-4
@@ -1223,7 +1414,7 @@ ll(prm, J = J)
 
 
 ###################################################
-### code chunk number 65: ex-ML-C
+### code chunk number 74: ex-ML-C
 ###################################################
 (C <- ltMatrices(matrix(op$par[-(1:J)], ncol = 1), 
                  diag = TRUE, byrow = BYROW))
@@ -1231,43 +1422,43 @@ lt
 
 
 ###################################################
-### code chunk number 66: ex-ML-mu
+### code chunk number 75: ex-ML-mu
 ###################################################
 op$par[1:J]
 mn
 
 
 ###################################################
-### code chunk number 67: ex-ML-Shat
+### code chunk number 76: ex-ML-Shat
 ###################################################
 ### ATLAS print issues
-round(Tcrossprod(lt), 4)  ### true Sigma
-Tcrossprod(C)             ### interval-censored obs
+round(tcrossprod(lt), 4)  ### true Sigma
+tcrossprod(C)             ### interval-censored obs
 Shat                      ### "exact" obs
 
 
 ###################################################
-### code chunk number 68: regressions
+### code chunk number 77: regressions
 ###################################################
 c(cond_mvnorm(chol = C, which_given = 2:J, given = diag(J - 1))$mean)
 
 
 ###################################################
-### code chunk number 69: regressionsC
+### code chunk number 78: regressionsC
 ###################################################
 c(cond_mvnorm(chol = aperm(as.chol(C), perm = c(2:J, 1)),
               which_given = 1:(J - 1), given = diag(J - 1))$mean)
 
 
 ###################################################
-### code chunk number 70: regressionsP
+### code chunk number 79: regressionsP
 ###################################################
 x <- as.array(chol2pre(aperm(as.chol(C), perm = c(2:J, 1))))[J,,1]
 c(-x[-J] / x[J])
 
 
 ###################################################
-### code chunk number 71: lm-ex
+### code chunk number 80: lm-ex
 ###################################################
 dY <- as.data.frame(t(Y))
 colnames(dY) <- paste0("Y", 1:J)
@@ -1275,7 +1466,7 @@ coef(m1 <- lm(Y1 ~ ., data = dY))[-1L]
 
 
 ###################################################
-### code chunk number 72: hessian
+### code chunk number 81: hessian
 ###################################################
 H <- optim(op$par, fn = ll, gr = sc, J = J, method = "L-BFGS-B", 
            lower = llim, hessian = TRUE, 
@@ -1283,7 +1474,7 @@ H <- optim(op$par, fn = ll, gr = sc, J = J, method = "L-BFGS-B",
 
 
 ###################################################
-### code chunk number 73: ML-sample
+### code chunk number 82: ML-sample
 ###################################################
 L <- try(t(chol(H)))
 ### some check on r-oldrel-macos-arm64
@@ -1296,33 +1487,33 @@ rC <- solve(L, Z)[-(1:J),] + op$par[-(1:J)] ### remove mean parameters
 
 
 ###################################################
-### code chunk number 74: ML-check
+### code chunk number 83: ML-check
 ###################################################
 c(sqrt(rowMeans((rC - rowMeans(rC))^2)))
-c(sqrt(diagonals(Crossprod(solve(L)))))
+c(sqrt(diagonals(crossprod(solve(L)))))
 
 
 ###################################################
-### code chunk number 75: rC
+### code chunk number 84: rC
 ###################################################
 rC <- ltMatrices(rC, diag = TRUE)
 
 
 ###################################################
-### code chunk number 76: ML-beta
+### code chunk number 85: ML-beta
 ###################################################
 rbeta <- cond_mvnorm(chol = rC, which_given = 2:J, given = diag(J - 1))$mean
 sqrt(rowMeans((rbeta - rowMeans(rbeta))^2))
 
 
 ###################################################
-### code chunk number 77: se-ex
+### code chunk number 86: se-ex
 ###################################################
 sqrt(diag(vcov(m1)))[-1L]
 
 
 ###################################################
-### code chunk number 78: ex-ML-cd
+### code chunk number 87: ex-ML-cd
 ###################################################
 ic <- 1:2 	### position of continuous variables
 ll_cd <- function(parm, J) {
@@ -1348,7 +1539,7 @@ sc_cd <- function(parm, J) {
 
 
 ###################################################
-### code chunk number 79: ex-ML-cd-score
+### code chunk number 88: ex-ML-cd-score
 ###################################################
 if (require("numDeriv", quietly = TRUE))
     chk(grad(ll_cd, start, J = J), sc_cd(start, J = J), 
@@ -1356,7 +1547,7 @@ if (require("numDeriv", quietly = TRUE))
 
 
 ###################################################
-### code chunk number 80: ex-ML-cd-optim
+### code chunk number 89: ex-ML-cd-optim
 ###################################################
 op <- optim(start, fn = ll_cd, gr = sc_cd, J = J, 
             method = "L-BFGS-B", lower = llim, 
@@ -1373,7 +1564,7 @@ mn
 
 
 ###################################################
-### code chunk number 81: ex-ML-ap
+### code chunk number 90: ex-ML-ap
 ###################################################
 ### discrete variables first
 perm <- c((1:J)[-ic], ic)
@@ -1390,7 +1581,7 @@ ll_ap <- function(parm, J) {
 
 
 ###################################################
-### code chunk number 82: ex-ML-ap-score
+### code chunk number 91: ex-ML-ap-score
 ###################################################
 sc_ap <- function(parm, J) {
     m <- parm[1:J]               ### mean parameters; NOT permuted
@@ -1411,7 +1602,7 @@ sc_ap <- function(parm, J) {
 
 
 ###################################################
-### code chunk number 83: ex-ML-ap-grad
+### code chunk number 92: ex-ML-ap-grad
 ###################################################
 if (require("numDeriv", quietly = TRUE))
     chk(grad(ll_ap, start, J = J), sc_ap(start, J = J), 
@@ -1419,7 +1610,7 @@ if (require("numDeriv", quietly = TRUE))
 
 
 ###################################################
-### code chunk number 84: ex-ML-ap-optim-
+### code chunk number 93: ex-ML-ap-optim-
 ###################################################
 op <- optim(start, fn = ll_ap, gr = sc_ap, J = J, 
             method = "L-BFGS-B", lower = llim, 
@@ -1432,31 +1623,40 @@ round(as.array(aperm(as.chol(lt), perm = perm)), 4)
 
 
 ###################################################
-### code chunk number 85: ex-stand
+### code chunk number 94: ex-stand
 ###################################################
+### unit triangular
 C <- ltMatrices(runif(10))
-all.equal(as.array(chol2cov(standardize(chol = C))),
-          as.array(chol2cor(standardize(chol = C))))
+chk(as.array(chol2cov(standardize(chol = C))),
+    as.array(chol2cor(standardize(chol = C))))
 L <- solve(C)
-all.equal(as.array(invchol2cov(standardize(invchol = L))),
-          as.array(invchol2cor(standardize(invchol = L))))
+chk(as.array(invchol2cov(standardize(invchol = L))),
+    as.array(invchol2cor(standardize(invchol = L))))
+### non-unit 
+diagonals(C) <- 2
+chk(as.array(chol2cov(standardize(chol = C))),
+    as.array(chol2cor(standardize(chol = C))))
+L <- solve(C)
+chk(as.array(invchol2cov(standardize(invchol = L))),
+    as.array(invchol2cor(standardize(invchol = L))))
 
 
 ###################################################
-### code chunk number 86: gc-classical
+### code chunk number 95: gc-classical
 ###################################################
 data("iris", package = "datasets")
 J <- 4
-Z <- t(qnorm(do.call("cbind", lapply(iris[1:J], rank)) / (nrow(iris) + 1)))
+Z <- t(qnorm(do.call("cbind", lapply(iris[1:J], rank, ties.method = "max")) / 
+       (nrow(iris) + 1)))
 (CR <- cor(t(Z)))
 ll <- function(parm) {
     C <- ltMatrices(parm)
-    Cs <- standardize(C)
+    Cs <- standardize(chol = C)
     -ldmvnorm(obs = Z, chol = Cs)
 }
 sc <- function(parm) {
     C <- ltMatrices(parm)
-    Cs <- standardize(C)
+    Cs <- standardize(chol = C)
     -rowSums(Lower_tri(destandardize(chol = C, 
         score_schol = sldmvnorm(obs = Z, chol = Cs)$chol)))
 }
@@ -1467,11 +1667,11 @@ if (require("numDeriv", quietly = TRUE))
 op <- optim(start, fn = ll, gr = sc, method = "BFGS", 
             control = list(trace = FALSE), hessian = TRUE)
 op$value
-S_ML <- chol2cov(standardize(ltMatrices(op$par)))
+S_ML <- chol2cov(standardize(chol = ltMatrices(op$par)))
 
 
 ###################################################
-### code chunk number 87: gc-NPML
+### code chunk number 96: gc-NPML
 ###################################################
 lwr <- do.call("cbind", lapply(iris[1:J], rank, ties.method = "min")) - 1L
 upr <- do.call("cbind", lapply(iris[1:J], rank, ties.method = "max"))
@@ -1484,17 +1684,17 @@ if (require("qrng", quietly = TRUE)) {
     W <- t(ghalton(M, d = J - 1))
 } else {
     ### Monte-Carlo
-    W <- matrix(runif(M * (J - 1)), nrow = J - 1)
+    W <- matrix(runif(M * (J - 1)), nrow = J - 1, byrow = TRUE)
 }
 
 ll <- function(parm) {
     C <- ltMatrices(parm)
-    Cs <- standardize(C)
+    Cs <- standardize(chol = C)
     -lpmvnorm(lower = lwr, upper = upr, chol = Cs, M = M, w = W)
 }
 sc <- function(parm) {
     C <- ltMatrices(parm)
-    Cs <- standardize(C)
+    Cs <- standardize(chol = C)
     -rowSums(Lower_tri(destandardize(chol = C, 
         score_schol = slpmvnorm(lower = lwr, upper = upr, chol = Cs, 
                                M = M, w = W)$chol)))
@@ -1503,18 +1703,18 @@ if (require("numDeriv", quietly = TRUE))
     chk(grad(ll, start), sc(start), check.attributes = FALSE)
 op2 <- optim(start, fn = ll, gr = sc, method = "BFGS", 
              control = list(trace = FALSE), hessian = TRUE)
-S_NPML <- chol2cov(standardize(ltMatrices(op2$par)))
+S_NPML <- chol2cov(standardize(chol = ltMatrices(op2$par)))
 
 
 ###################################################
-### code chunk number 88: gc
+### code chunk number 97: gc
 ###################################################
 S_ML
 S_NPML
 
 
 ###################################################
-### code chunk number 89: gc-se
+### code chunk number 98: gc-se
 ###################################################
 sd_ML <- ltMatrices(sqrt(diag(solve(op$hessian))))
 diagonals(sd_ML) <- 0
@@ -1527,7 +1727,107 @@ if (!inherits(sd_NPML, "try-error")) {
 
 
 ###################################################
-### code chunk number 90: iris-model
+### code chunk number 99: concave-L
+###################################################
+J <- 5
+N <- 100
+### mean
+m <- rnorm(J)
+L <- ltMatrices(prm <- runif(J * (J + 1) / 2), diag = TRUE)
+Z <- matrix(rnorm(N * J), nrow = J)
+Y <- solve(L, Z) + m
+### scaled mean; FIXME: update example using invcholmean args
+d <- L %*% m
+
+nll <- function(parm) {
+    d <- parm[seq_len(J)]
+    L <- ltMatrices(parm[-seq_len(J)], diag = TRUE)
+    -ldmvnorm(obs = Y, mean = solve(L, d), invchol = L)
+}
+
+start <- c(d, prm)
+
+nll(start)
+### identical
+-ldmvnorm(obs = Y, mean = m, invchol = L)
+
+
+###################################################
+### code chunk number 100: scores-L
+###################################################
+nsc <- function(parm) {
+    d <- parm[seq_len(J)]
+    L <- ltMatrices(parm[-seq_len(J)], diag = TRUE)
+    ret <- sldmvnorm(obs = Y, mean = solve(L, d), invchol = L)
+    C <- solve(L)
+
+    J <- dim(L)[2L]
+    M <- matrix(seq_len(J^2), nrow = J, byrow = FALSE)
+    idx <- M[lower.tri(M, diag = TRUE)]
+   
+    X <- -ret$obs
+    Y <- matrix(d, nrow = nrow(X), ncol = ncol(X))
+    A <- X[rep(1:nrow(X), times = nrow(X)),,drop = FALSE] * 
+         Y[rep(1:nrow(Y), each = nrow(X)),,drop = FALSE]
+
+    scL <- - vectrick(C, A)
+    scL <- scL[idx,,drop = FALSE]
+    scL <- rowSums(unclass(scL) + unclass(ret$invchol))
+    - c(rowSums(solve(L, -ret$obs, transpose = TRUE)), 
+        scL)
+}
+chk(unname(nsc(start)), grad(nll, start))
+
+
+###################################################
+### code chunk number 101: concave-C
+###################################################
+C <- ltMatrices(prm <- runif(J * (J + 1) / 2), diag = TRUE)
+Z <- matrix(rnorm(N * J), nrow = J)
+Y <- C %*% Z + m
+### scaled mean
+d <- solve(C, m)
+
+nll <- function(parm) {
+    d <- parm[seq_len(J)]
+    C <- ltMatrices(parm[-seq_len(J)], diag = TRUE)
+    -ldmvnorm(obs = Y, mean = C %*% d, chol = C)
+}
+
+start <- c(d, prm)
+
+nll(start)
+### identical
+-ldmvnorm(obs = Y, mean = m, chol = C)
+
+
+###################################################
+### code chunk number 102: scores-C
+###################################################
+nsc <- function(parm) {
+    d <- parm[seq_len(J)]
+    C <- ltMatrices(parm[-seq_len(J)], diag = TRUE)
+    ret <- sldmvnorm(obs = Y, mean = C %*% d, chol = C)
+
+    J <- dim(C)[2L]
+    M <- matrix(seq_len(J^2), nrow = J, byrow = FALSE)
+    idx <- M[lower.tri(M, diag = TRUE)]
+
+    X <- -ret$obs
+    Y <- matrix(d, nrow = nrow(X), ncol = ncol(X))
+    A <- X[rep(1:nrow(X), times = nrow(X)),,drop = FALSE] * 
+         Y[rep(1:nrow(Y), each = nrow(X)),,drop = FALSE]
+
+    scC <- A[idx,,drop = FALSE]
+    scC <- rowSums(unclass(scC) + unclass(ret$chol))
+    - c(rowSums(crossprod(C, -ret$obs)), 
+        scC)
+}
+chk(unname(nsc(start)), grad(nll, start))
+
+
+###################################################
+### code chunk number 103: iris-model
 ###################################################
 data("iris", package = "datasets")
 vars <- names(iris)[-5L]
@@ -1539,7 +1839,7 @@ iris_var <- simulate(iris_mvn, nsim = nrow(iris))
 
 
 ###################################################
-### code chunk number 91: iris-mc
+### code chunk number 104: iris-mc
 ###################################################
 j <- 3:4
 margDist(iris_mvn, which = vars[j])
@@ -1548,96 +1848,189 @@ iris_cmvn <- condDist(iris_mvn, which_given = vars[j], given = gm)
 
 
 ###################################################
-### code chunk number 92: iris-ll
+### code chunk number 105: iris-ll
 ###################################################
 logLik(object = iris_cmvn, obs = t(iris[,vars[-j]]))
 
 
 ###################################################
-### code chunk number 93: iris-ll-perm
+### code chunk number 106: iris-ll-perm
 ###################################################
 logLik(object = iris_cmvn, obs = t(iris[,rev(vars[-j])]))
 
 
 ###################################################
-### code chunk number 94: iris-lLgrad
+### code chunk number 107: iris-lLgrad
 ###################################################
 J <- length(vars)
 obs <- t(iris[, vars])
-lower <- upper <- NULL
 ll <- function(parm) {
     C <- ltMatrices(parm[-(1:J)], diag = TRUE, names = vars)
     x <- mvnorm(mean = parm[1:J], chol = C)
-    -logLik(object = x, obs = obs, lower = lower, upper = upper)
+    -logLik(object = x, obs = obs)
 }
 sc <- function(parm) {
     C <- ltMatrices(parm[-(1:J)], diag = TRUE, names = vars)
     x <- mvnorm(mean = parm[1:J], chol = C)
-    ret <- lLgrad(object = x, obs = obs, lower = lower, upper = upper)
+    ret <- lLgrad(object = x, obs = obs)
     -c(rowSums(ret$mean), rowSums(Lower_tri(ret$scale, diag = TRUE)))
 }
 
 
 ###################################################
-### code chunk number 95: iris-ML
+### code chunk number 108: iris-ML
 ###################################################
-start <- c(c(iris_mvn$mean), Lower_tri(iris_mvn$scale, diag = TRUE))
-max(abs(sc(start))) < sqrt(.Machine$double.eps)
+### don't start at the solution
+start <- round(c(c(iris_mvn$mean), 
+                 Lower_tri(iris_mvn$scale, diag = TRUE)), 2)
+llim <- rep(-Inf, J + J * (J + 1) / 2)
+llim[J + c(diagonals(ltMatrices(seq_len(J * (J + 1) / 2), diag = TRUE)))] <- 1e-4
 op <- optim(start, fn = ll, gr = sc, method = "L-BFGS-B", 
-            lower = llim, control = list(trace = FALSE))
+            lower = llim, 
+            control = list(trace = FALSE, 
+                           factr = 1e-6)) ### noLD machines
 Chat <- ltMatrices(op$par[-(1:J)], diag = TRUE, names = vars)
 ML <- mvnorm(mean = op$par[1:J], chol = Chat)
 
 
 ###################################################
-### code chunk number 96: iris-ML-hat
+### code chunk number 109: iris-ML-hat
 ###################################################
-### covariance
-chol2cov(ML$scale)
+### covariance (noLD brings up small differences)
+round(vcov(ML), 3)
 V
 ### mean
-ML$mean[,,drop = TRUE]
+mean(ML)[,,drop = TRUE]
 m
 
 
 ###################################################
-### code chunk number 97: iris-interval
+### code chunk number 110: iris-lLgrad-nu
+###################################################
+ll <- function(parm, logLik = TRUE) {
+    L <- ltMatrices(parm[-(1:J)], diag = TRUE, names = vars)
+    x <- mvnorm(invcholmean = parm[1:J], invchol = L)
+    if (!logLik) return(x)
+    -logLik(object = x, obs = obs)
+}
+sc <- function(parm) {
+    x <- ll(parm, logLik = FALSE)
+    ret <- lLgrad(object = x, obs = obs)
+    -c(rowSums(ret$invcholmean), rowSums(Lower_tri(ret$scale, diag = TRUE)))
+}
+### note: This is a convex problem now, so (here incorrect) 
+### starting values shouldn't matter
+opL <- optim(start, fn = ll, gr = sc, method = "L-BFGS-B", 
+            lower = llim, control = list(trace = FALSE, factr = 1e-6))
+MLL <- ll(opL$par, logLik = FALSE)
+
+
+###################################################
+### code chunk number 111: iris-ML-hat-nu
+###################################################
+### log-likelihood
+op$value
+opL$value
+### covariance
+round(vcov(MLL), 3)
+V
+### mean
+mean(MLL)[,,drop = TRUE]
+m
+
+
+###################################################
+### code chunk number 112: iris-interval
 ###################################################
 v1 <- vars[1]
 q1 <- quantile(iris[[v1]], probs = 1:4 / 5)
 head(f1 <- cut(iris[[v1]], breaks = c(-Inf, q1, Inf)))
-
-
-###################################################
-### code chunk number 98: iris-MLi
-###################################################
 lower <- matrix(c(-Inf, q1)[f1], nrow = 1)
 upper <- matrix(c(q1, Inf)[f1], nrow = 1)
 rownames(lower) <- rownames(upper) <- v1
 obs <- obs[!rownames(obs) %in% v1,,drop = FALSE]
+
+
+###################################################
+### code chunk number 113: iris-MLi
+###################################################
+ll <- function(parm, logLik = TRUE) {
+    L <- ltMatrices(parm[-(1:J)], diag = TRUE, names = vars)
+    x <- mvnorm(invcholmean = parm[1:J], invchol = L)
+    if (!logLik) return(x)
+    -logLik(object = x, obs = obs, lower = lower, upper = upper, 
+            tol = 1e-6) ### probs < tol are considered 0
+}
+sc <- function(parm) {
+    x <- ll(parm, logLik = FALSE)
+    ret <- lLgrad(object = x, obs = obs, lower = lower, upper = upper, 
+                  tol = 1e-6) ### probs < tol are considered 0
+    -c(rowSums(ret$invcholmean, na.rm = TRUE), 
+       rowSums(Lower_tri(ret$scale, diag = TRUE), na.rm = TRUE))
+}
+
+
+###################################################
+### code chunk number 114: iris-MLi-opt
+###################################################
+start <- round(opL$par, 2)
 if (require("numDeriv", quietly = TRUE))
     chk(grad(ll, start), sc(start), check.attributes = FALSE)
 opi <- optim(start, fn = ll, gr = sc, method = "L-BFGS-B", 
-             lower = llim, control = list(trace = FALSE))
-Chati <- ltMatrices(opi$par[-(1:J)], diag = TRUE, names = vars)
-MLi <- mvnorm(mean = opi$par[1:J], chol = Chati)
+             lower = llim, control = list(trace = FALSE, factr = 1e-6))
+MLi <- ll(opi$par, logLik = FALSE)
 
 
 ###################################################
-### code chunk number 99: iris-MLi-hat
+### code chunk number 115: iris-MLi-hat
 ###################################################
-op$value
-opi$value
 ### covariance
-chol2cov(MLi$scale)
-chol2cov(ML$scale)
+round(vcov(MLi), 3)
+round(vcov(MLL), 3)
+round(vcov(ML), 3)
 ### mean
-MLi$mean[,,drop = TRUE]
-ML$mean[,,drop = TRUE]
+mean(MLi)[,,drop = TRUE]
+mean(MLL)[,,drop = TRUE]
+mean(ML)[,,drop = TRUE]
 
 
 ###################################################
-### code chunk number 100: marginB
+### code chunk number 116: iris-lm
+###################################################
+### least-squares coefficients
+coef(irislm <- lm(Petal.Width ~ Sepal.Length + Sepal.Width + Petal.Length, 
+                  data = iris))
+### residual standard deviation
+summary(irislm)$sigma
+### compare with 
+round(coef(ML, which = "Petal.Width"), 3)
+
+
+###################################################
+### code chunk number 117: lmvnorm_src.Rnw:9183-9185
+###################################################
+# slightly different results on noLD machines
+cat("> ## IGNORE_RDIFF_BEGIN\n")
+
+
+###################################################
+### code chunk number 118: iris-lm-iL
+###################################################
+### nu, L for exact observations
+round(coef(MLL, which = "Petal.Width"), 3)
+### nu, L for censored observations
+round(coef(MLi, which = "Petal.Width"), 3)
+
+
+###################################################
+### code chunk number 119: lmvnorm_src.Rnw:9193-9195
+###################################################
+## slightly different results on noLD machines
+cat("> ## IGNORE_RDIFF_END\n")
+
+
+###################################################
+### code chunk number 120: marginB
 ###################################################
 N <- 3
 J <- 4
@@ -1659,22 +2052,22 @@ obs <- Y[rev(LETTERS[3:J]),]    ### change order of dimensions
 
 
 ###################################################
-### code chunk number 101: marginBllsc
+### code chunk number 121: marginBllsc
 ###################################################
-w <- matrix(runif(1000), nrow = 1)
+w <- matrix(runif(1000), nrow = 1, byrow = TRUE)
 lABCD <- logLik(mvnorm(invchol = L), obs = obs, lower = lwr, upper = upr, w = w)
 sABCD <- lLgrad(mvnorm(invchol = L), obs = obs, lower = lwr, upper = upr, w = w)
 
 
 ###################################################
-### code chunk number 102: marginllsc
+### code chunk number 122: marginllsc
 ###################################################
 lACD <- logLik(mvnorm(invchol = L), obs = obs, lower = lwrA, upper = uprA)
 sACD <- lLgrad(mvnorm(invchol = L), obs = obs, lower = lwrA, upper = uprA)
 
 
 ###################################################
-### code chunk number 103: marginchk
+### code chunk number 123: marginchk
 ###################################################
 chk(lABCD, lACD)
 nm <- names(sABCD)
@@ -1683,7 +2076,7 @@ chk(sABCD[nm], sACD[nm])
 
 
 ###################################################
-### code chunk number 104: marginsc
+### code chunk number 124: marginsc
 ###################################################
 chk(sABCD$lower["A",,drop = FALSE], sACD$lower)
 chk(sABCD$upper["A",,drop = FALSE], sACD$upper)
@@ -1692,7 +2085,7 @@ sABCD$upper["B",]	### zero
 
 
 ###################################################
-### code chunk number 105: RR-ll
+### code chunk number 125: RR-ll
 ###################################################
 J <- 6
 K <- 3
@@ -1704,24 +2097,24 @@ Linv <- ltMatrices(Linv[lower.tri(Linv, diag = TRUE)], diag = TRUE)
 a <- -(2 + runif(J))
 b <- 2 + runif(J)
 M <- 1e6
-dim(w <- matrix(runif((J - 1) * M), nrow = J - 1))
+dim(w <- matrix(runif((J - 1) * M), nrow = J - 1, byrow = TRUE))
 lpmvnorm(lower = a, upper = b, chol = Linv, w = w)
 dim(Z <- matrix(rnorm(K * M), nrow = K))
 lpRR(lower = a, upper = b, B = B, D = D, Z = Z)
 
 
 ###################################################
-### code chunk number 106: RR-sc
+### code chunk number 126: RR-sc
 ###################################################
 smv <- slpmvnorm(lower = a, upper = b, chol = Linv, w = w)
 sRR <- slpRR(lower = a, upper = b, B = B, D = D, Z = Z)
 chk(c(smv$lower), sRR$lower, tolerance = 1e-2)
 chk(c(smv$upper), sRR$upper, tolerance = 1e-2)
-chk(c(smv$mean), sRR$mean, tolerance = 1e-2)
+chk(c(smv$mean), sRR$mean, tolerance = 1e-2 * 2)
 
 
 ###################################################
-### code chunk number 107: RR-sc-BD
+### code chunk number 127: RR-sc-BD
 ###################################################
 Z <- matrix(rnorm(K * 1000), nrow = K)
 lB <- function(B) lpRR(lower = a, upper = b, B = B, D = D, Z = Z)
@@ -1740,3 +2133,15 @@ gupr <- grad(lupr, b)
 chk(gupr, c(sRR$upper))
 
 
+###################################################
+### code chunk number 128: bib
+###################################################
+thisdir <- getwd()
+bibfile <- system.file("REFERENCES.bib", package = "mvtnorm")
+### bibfile may contain spaces LaTeX is unable to deal with on MacOS it seems
+if (file.copy(bibfile, to = thisdir, overwrite = TRUE)) {
+    bibfile <- "REFERENCES.bib"
+} else {
+    ### hope for the best
+    bibfile <- file.path("..", "inst", "REFERENCES.bib")
+}

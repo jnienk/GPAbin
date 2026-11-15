@@ -9,10 +9,10 @@ library(DBI)
 
 con <- dbConnect(
   RMariaDB::MariaDB(),
-  host = "db.relational-data.org",
+  host = "relational.fel.cvut.cz",
   port = 3306,
   username = "guest",
-  password = "relational",
+  password = "ctu-relational",
   dbname = "sakila"
 )
 
@@ -20,17 +20,24 @@ dbListTables(con)
 dbDisconnect(con)
 
 ## ----eval = FALSE-------------------------------------------------------------
-#  con <- dbConnect(
-#    RMariaDB::MariaDB(),
-#    host = "db.relational-data.org",
-#    port = 3306,
-#    username = "guest",
-#    password = keyring::key_get("db.relational-data.org", "guest"),
-#    dbname = "sakila"
-#  )
+# con <- dbConnect(
+#   RMariaDB::MariaDB(),
+#   host = "relational.fel.cvut.cz",
+#   port = 3306,
+#   username = "guest",
+#   password = keyring::key_get("relational.fel.cvut.cz", "guest"),
+#   dbname = "sakila"
+# )
 
 ## -----------------------------------------------------------------------------
-con <- dbConnect(RMariaDB::MariaDB(), username = "guest", password = "relational", host = "db.relational-data.org", port = 3306, dbname = "sakila")
+con <- dbConnect(
+  RMariaDB::MariaDB(),
+  host = "relational.fel.cvut.cz",
+  port = 3306,
+  username = "guest",
+  password = "ctu-relational",
+  dbname = "sakila"
+)
 dbListFields(con, "film")
 
 ## -----------------------------------------------------------------------------

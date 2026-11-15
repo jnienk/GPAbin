@@ -1,3 +1,42 @@
+# fs 2.1.0
+
+* Also prefer system libuv on Ubuntu Linux
+
+* fs now works with libuv from r-wasm for webr
+
+* On CRAN MacOS we can use the new local static libuv from the 'recipe': 
+  https://github.com/R-macos/recipes/pull/87
+
+# fs 2.0.1
+
+* Fix bug in finding system version of libuv, now actually works :)
+
+* Workaround for MacOS if no cmake is available
+
+# fs 2.0.0
+
+* On Linux we now build against the system version of libuv if available.
+  Set envvar USE_BUNDLED_LIBUV to force building a static version instead.
+
+* Vendored version of libuv was updated to 1.52.0. This version now uses
+  cmake instead of autotools to build.
+
+# fs 1.6.7
+
+* Windows: use libuv from Rtools (sync with httpuv)
+
+* `path_has_parent()` now expands `~` (#412).
+
+* New `path_select_components()` function to select components of one or
+  more paths (#326, @Tazinho).
+
+* `dir_exists()` follows relative symlinks in non-current directories
+  (@heavywatal, #395).
+
+* Fix some autotools warning for CRAN
+
+* New maintainer
+
 # fs 1.6.6
 
 * No changes.

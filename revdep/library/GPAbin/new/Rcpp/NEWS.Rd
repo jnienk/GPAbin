@@ -3,6 +3,135 @@
 \newcommand{\ghpr}{\href{https://github.com/RcppCore/Rcpp/pull/#1}{##1}}
 \newcommand{\ghit}{\href{https://github.com/RcppCore/Rcpp/issues/#1}{##1}}
 
+\section{Changes in Rcpp release version 1.1.2 (2026-07-01)}{
+  \itemize{
+    \item Changes in Rcpp API:
+    \itemize{
+      \item Use of \code{execinfo.h} is again conditional to avoid build
+      complexity (Dirk in \ghpr{1445} addressing \ghit{1442})
+      \item An internal state component for \code{Datetime} is now \code{int}
+      (Dirk in \ghpr{1448} and \ghpr{1449} fixing \ghpr{1447})
+      \item Three new (in R 4.6.0) attribute accessors are used conditionally
+      (Dirk in \ghpr{1450} closing \ghit{1432})
+      \item An UBSAN error in the Sugar-based NA comparison has been
+      corrected (Iñaki in \ghpr{1453} fixing \ghit{1452})
+      \item Treatment of Inf outside of integer range in Sugar function has
+      been corrected (Iñaki in \ghpr{1458} fixing \ghit{1455})
+      \item Integer overflow protection has been added for sugar functions
+      (Iñaki in \ghpr{1457} fixing \ghpr{1454})
+      \item The parent environment is now accessed via \code{R_ParentEnv}
+      (Dirk in \ghpr{1460} fixing \ghit{1459})
+      \item Change to returning \code{dataptr} again for better handling of
+      empty vectors (Iñaki in \ghpr{1462} fixing \ghit{1461})
+      \item Undefined behavior errors in use of \code{ListOf} proxies have
+      been addressed (Iñaki in \ghpr{1464} fixing \ghit{1463})
+      \item Under newer R version, \code{R_UnboundValue} is no longer used
+      (Iñaki in \ghpr{1466} fixing \ghit{1465})
+      \item New R API access point \code{R_getRegisteredNamespace()} is used
+      with current R versions (Dirk in \ghpr{1469} fixing \ghit{1468})
+      \item The \code{Nullable::as()} exporter now uses an explicit cast to
+      the templated type (Dirk in \ghpr{1471} fixing \ghit{1470})
+      \item A memory leak in the variadic \code{Rcpp::warning()} template
+      has been fixed (Kevin in \ghpr{1475} fixing \ghit{1474})
+      \item The \code{Nullable::operatorT()} has been added as a 'opt-out'
+      (Dirk in \ghpr{1477} with coordination in \ghit{1472})
+      \item Add templated integer-index overload for \code{operator[]} on
+      small systems such as WASM (Jeroen Ooms in \ghpr{1482})
+      \item The attribute accessors in \code{AttributeProxyPolicy} no longer
+      rely on \code{get__()} (Kevin in \ghpr{1484} fixing \ghit{1483})
+    }
+    \item Changes in Rcpp Documentation:
+    \itemize{
+      \item Reference in the bibliography used by the package vignettes have
+      been updated.
+    }
+    \item Changes in Rcpp Deployment:
+    \itemize{
+      \item Excute permissions are set consistently on scripts with shebangs
+      (Mattias Ellert in \ghpr{1467})
+      \item R 4.5.* has been added to the CI matrix (Dirk in \ghpr{1476})
+      \item Three nag messages issued when obsolete build flag accessors are
+      used now show \code{Rcpp:::} (Dirk in \ghpr{1480} fixing \ghit{1456})
+      \item Reference GitHub Actions have been updated to their current
+      versions (Dirk in \ghpr{1481})
+    }
+    \item Non-release Changes:
+    \itemize{
+      \item A non-release hotfix 1.1.1-1 used by CRAN accommodates breaking
+      changes to the API in R 4.6.0. It would be nice to have the same level
+      of release management in R itself that CRAN expects from us.
+    }
+  }
+}
+
+\section{Changes in Rcpp release version 1.1.1 (2026-01-08)}{
+  \itemize{
+    \item Changes in Rcpp API:
+    \itemize{
+      \item An unused old R function for a compiler version check has been
+      removed after checking no known package uses it (Dirk in \ghpr{1395})
+      \item A narrowing warning is avoided via a cast (Dirk in \ghpr{1398})
+      \item Demangling checks have been simplified (Iñaki in \ghpr{1401}
+      addressing \ghit{1400})
+      \item The treatment of signed zeros is now improved in the Sugar code
+      (Iñaki in \ghpr{1404})
+      \item Preparations for phasing out use of \code{Rf_error} have been
+      made (Iñaki in \ghpr{1407})
+      \item The long-deprecated function \code{loadRcppModules()} has been
+      removed (Dirk in \ghpr{1416} closing \ghit{1415})
+      \item Some non-API includes from R were refactored to accommodate
+      R-devel changes (Iñaki in \ghpr{1418} addressing \ghit{1417})
+      \item An accessor to \code{Rf_rnbeta} has been removed (Dirk in
+      \ghpr{1419} also addressing \ghit{1420})
+      \item Code accessing non-API \code{Rf_findVarInFrame} now uses
+      \code{R_getVarEx} (Dirk in \ghpr{1423} fixing \ghit{1421})
+      \item Code conditional on the R version now expects at least R 3.5.0;
+      older code has been removed (Dirk in \ghpr{1426} fixing \ghit{1425})
+      \item The non-API \code{ATTRIB} entry point to the R API is no longer
+      used (Dirk in \ghpr{1430} addressing \ghit{1429})
+      \item The unwind-protect mechanism is now used unconditionally (Dirk
+      in \ghpr{1437} closing \ghit{1436})
+    }
+    \item Changes in Rcpp Attributes:
+    \itemize{
+      \item The OpenMP plugin has been generalized for different macOS
+      compiler installations (Kevin in \ghpr{1414})
+    }
+    \item Changes in Rcpp Documentation:
+    \itemize{
+      \item Vignettes are now processed via a new "asis" processor adopted
+      from \pkg{R.rsp} (Dirk in \ghpr{1394} fixing \ghit{1393})
+      \item R is now cited via its DOI (Dirk)
+      \item A (very) stale help page has been removed (Dirk in \ghpr{1428}
+      fixing \ghit{1427})
+      \item The main README.md was updated emphasizing r-universe in favor of
+      the local drat repos (Dirk in \ghpr{1431})
+    }
+    \item Changes in Rcpp Deployment:
+    \itemize{
+      \item A temporary change in R-devel concerning NA part in complex variables
+      was accommodated, and then reverted (Dirk in \ghpr{1399} fixing \ghit{1397})
+      \item The macOS CI runners now use macos-14 (Dirk in \ghpr{1405})
+      \item A message is shown if \code{R.h} is included before Rcpp headers
+      as this can lead to errors (Dirk in \ghpr{1411} closing \ghit{1410})
+      \item Old helper functions use \code{message()} to signal they are not used,
+      deprecation and removal to follow (Dirk in \ghpr{1413} closing
+      \ghit{1412})
+      \item Three tests were being silenced following \ghpr{1413} (Dirk in
+      \ghpr{1422})
+      \item The heuristic whether to run all available tests was refined
+      (Dirk in \ghpr{1434} addressing \ghit{1433})
+      \item Coverage has been tweaked via additional \code{#nocov} tags (Dirk
+      in \ghpr{1435})
+    }
+    \item Non-release Changes:
+    \itemize{
+      \item Two interim non-releases 1.1.0.8.1 and .2 were made in order to
+      unblock CRAN due to changes in R-devel rather than Rcpp
+    }
+  }
+}
+
 \section{Changes in Rcpp release version 1.1.0 (2025-07-01)}{
   \itemize{
     \item Changes in Rcpp API:

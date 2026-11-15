@@ -33,7 +33,7 @@ kable                   Create tables in LaTeX, HTML, Markdown and
                         reStructuredText
 knit                    Knit a document
 knit2html               Convert markdown to HTML using knit() and
-                        mark_html()
+                        litedown::mark()
 knit2pandoc             Convert various input files to various output
                         files using 'knit()' and Pandoc
 knit2pdf                Convert Rnw or Rrst files to PDF

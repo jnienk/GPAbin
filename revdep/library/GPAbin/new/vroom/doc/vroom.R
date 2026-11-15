@@ -1,4 +1,4 @@
-## ----setup, include = FALSE---------------------------------------------------
+## -----------------------------------------------------------------------------
 knitr::opts_knit$set(root.dir = tempdir())
 knitr::opts_chunk$set(
   collapse = TRUE,
@@ -43,13 +43,13 @@ filenames <- unzip(zip_file, list = TRUE)$Name
 filenames
 
 # imagine we only want to read 2 of the 3 files
-vroom(purrr::map(filenames[c(1, 3)], ~ unz(zip_file, .x)))
+vroom(purrr::map(filenames[c(1, 3)], \(x) unz(zip_file, x)))
 
-## ----eval = as.logical(Sys.getenv("NOT_CRAN", "false"))-----------------------
+## -----------------------------------------------------------------------------
 # file <- "https://raw.githubusercontent.com/tidyverse/vroom/main/inst/extdata/mtcars.csv"
 # vroom(file)
 
-## ----eval = as.logical(Sys.getenv("NOT_CRAN", "false"))-----------------------
+## -----------------------------------------------------------------------------
 # file <- "https://raw.githubusercontent.com/tidyverse/vroom/main/inst/extdata/mtcars.csv.gz"
 # vroom(file)
 
@@ -111,22 +111,22 @@ vroom(
   col_types = list(gear = col_factor(levels = c(gear = c("3", "4", "5"))))
 )
 
-## ----eval = FALSE-------------------------------------------------------------
+## -----------------------------------------------------------------------------
 # vroom(
 #   vroom_example("mtcars.csv"),
-#   .name_repair = ~ janitor::make_clean_names(., case = "all_caps")
+#   .name_repair = \(x) janitor::make_clean_names(x, case = "all_caps")
 # )
 
 ## -----------------------------------------------------------------------------
 vroom_write(mtcars, "mtcars.tsv")
 
-## ----include = FALSE----------------------------------------------------------
+## -----------------------------------------------------------------------------
 unlink("mtcars.tsv")
 
 ## -----------------------------------------------------------------------------
 vroom_write(mtcars, "mtcars.csv", delim = ",")
 
-## ----include = FALSE----------------------------------------------------------
+## -----------------------------------------------------------------------------
 unlink("mtcars.csv")
 
 ## -----------------------------------------------------------------------------
@@ -136,12 +136,12 @@ vroom_write(mtcars, "mtcars.tsv.bz2")
 
 vroom_write(mtcars, "mtcars.tsv.xz")
 
-## ----include = FALSE----------------------------------------------------------
+## -----------------------------------------------------------------------------
 unlink(c("mtcars.tsv.gz", "mtcars.tsv.bz2", "mtcars.tsv.xz"))
 
-## ----eval = nzchar(Sys.which("pigz"))-----------------------------------------
+## -----------------------------------------------------------------------------
 # vroom_write(mtcars, pipe("pigz > mtcars.tsv.gz"))
 
-## ----include = FALSE----------------------------------------------------------
+## -----------------------------------------------------------------------------
 unlink("mtcars.tsv.gz")
 

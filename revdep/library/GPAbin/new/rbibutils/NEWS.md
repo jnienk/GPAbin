@@ -1,3 +1,66 @@
+# rbibutils 2.4.1
+
+## EDIT BEFORE RELEASE!
+
+- now '\slash' is handled by `toRd.bibentryExtra` (previously was in Rdpack).
+
+- don't interpret '\slash' if the leading slash is escaped.
+
+- export `bibstyle_JSSextra` - not exported in v2.4.
+
+- modified the `bibentryExtra` method for `toRd` to process `\slash`.
+
+- improved handling of latex accents and  Unicode combining characters.
+
+- removed the deprecated `register_JSSextra`.
+
+
+# rbibutils 2.4
+
+## Advance warning about a future potentially incompatible change
+
+- A change of the default for argument `direct` of `readBib()` is planned for
+  rbibutils v3.0 (from `FALSE` to `TRUE`). For most users `direct = TRUE` is
+  superior (better handling of maths, additional capabilities). If you really
+  want `direct = FALSE`, please state that explicitly in the call to
+  `readBib()`.
+
+## New and improved features
+
+- now rbibutils gives warnings when it encounters undefined bibtex names (see
+  `@string` bibtex macro), fixes issue#10. Such strings are used for consistent
+  naming of journals, for example. The name is inserted in the output when
+  undefined (previously this was done silently).
+
+- consolidated `append_type` between the bibtex related formats.
+  Internal, but fixed a bug causing technical reports to be converted to MISC
+  when converting from isi and biblatex to bibtex.
+
+- added completion for `bibentryExtra` objects. Useful for interactive use. For
+  example in an R session if `be` is a `bibentryExtra` object, typing `be$bi`
+  then the 'Tab' key will be completed to `be$bibtype`. Also, `be$` then 'Tab'
+  will provide a choice from the available completions. This should work also in
+  RStudio, whereever it provides completion.
+
+- corrected some typo's in the draft vignette.
+
+- now using `bibentrydirectout_write` also in 'bibentryout.c'.
+  `bibentryout_write` was not in sync with changes in `bibentrydirectout_write`.
+
+- refactored `bibstyle_JSSextra`; new function `bibstyle_JSSextraLongNames` in
+  preparation of removing bibstyles 'JSSRd' and 'JSSRdLongNames' from Rdpack.
+
+  
+## Bug fixes
+
+- now bibstyle 'JSSextra' doesn't change the 'JSS' style (the fix in v2.3 didn't
+  resolve this completely).
+
+- some long standing unnoticed bugs or shortcomings of the processing
+  in `readBib()` and `convert()` in the case `direct = FALSE` have
+  been fixed. 
+
+
 # rbibutils 2.3
 
 ## New and improved features

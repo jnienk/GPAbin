@@ -1,12 +1,15 @@
 ---
-title: "Working with vtools: Flexible Variable Selection"
+title: "vtools: Flexible Variable Selection"
 author: "Søren Højsgaard"
 output:
   rmarkdown::html_vignette
+    toc: true
+    number_sections: true
 vignette: >
   %\VignetteIndexEntry{Working with vtools: Flexible Variable Selection}
+  %\VignettePackage{doBy}
   %\VignetteEngine{knitr::knitr}
-%\VignetteEncoding{UTF-8}
+  %\VignetteEncoding{UTF-8}
 ---
 
 ```r

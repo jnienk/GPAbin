@@ -1,3 +1,6 @@
+Version 0.72 (2026-09-13)
+o Minor fixes in documentation (plot.ca, plot.mjca, citation, namespace)
+
 Version 0.71 (2018-10-10)
 o S3 method issue with plot3d.ca fixed
 
@@ -35,7 +38,6 @@ Version 0.60 (2015-03-01)
 o Temporarily enabled plotting rows in plot.mjca 
 o Use requireNamespace("rgl") in plot3d.ca.r to avoid NOTE in R CMD check
 
-Version 0.59 (2015-01-29)
 
 Version 0.58 (2014-12-31)
 o mjca(): Added option 'reti' (logical, if TRUE returns the indicator matrix as $indmat). 

@@ -48,8 +48,9 @@ overflow: visible;
 }
 </style>
 <style type="text/css" data-origin="pandoc">
+html { -webkit-text-size-adjust: 100%; }
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -419,10 +420,10 @@ income:</p>
 <li><code>count</code> stored in the cell values.</li>
 </ul>
 <p>To tidy it we use <code>pivot_longer()</code>:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a>relig_income <span class="sc">%&gt;%</span> </span>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a>relig_income <span class="sc">|&gt;</span></span>
 <span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(</span>
-<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a>    <span class="at">cols =</span> <span class="sc">!</span>religion, </span>
-<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a>    <span class="at">names_to =</span> <span class="st">&quot;income&quot;</span>, </span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a>    <span class="at">cols =</span> <span class="sc">!</span>religion,</span>
+<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a>    <span class="at">names_to =</span> <span class="st">&quot;income&quot;</span>,</span>
 <span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a>    <span class="at">values_to =</span> <span class="st">&quot;count&quot;</span></span>
 <span id="cb3-6"><a href="#cb3-6" tabindex="-1"></a>  )</span>
 <span id="cb3-7"><a href="#cb3-7" tabindex="-1"></a><span class="co">#&gt; # A tibble: 180 × 3</span></span>
@@ -489,10 +490,10 @@ called <code>rank</code>. I also use <code>values_drop_na</code> to drop
 rows that correspond to missing values. Not every song stays in the
 charts for all 76 weeks, so the structure of the input data force the
 creation of unnecessary explicit <code>NA</code>s.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a>billboard <span class="sc">%&gt;%</span> </span>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a>billboard <span class="sc">|&gt;</span></span>
 <span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(</span>
-<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a>    <span class="at">cols =</span> <span class="fu">starts_with</span>(<span class="st">&quot;wk&quot;</span>), </span>
-<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a>    <span class="at">names_to =</span> <span class="st">&quot;week&quot;</span>, </span>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a>    <span class="at">cols =</span> <span class="fu">starts_with</span>(<span class="st">&quot;wk&quot;</span>),</span>
+<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a>    <span class="at">names_to =</span> <span class="st">&quot;week&quot;</span>,</span>
 <span id="cb5-5"><a href="#cb5-5" tabindex="-1"></a>    <span class="at">values_to =</span> <span class="st">&quot;rank&quot;</span>,</span>
 <span id="cb5-6"><a href="#cb5-6" tabindex="-1"></a>    <span class="at">values_drop_na =</span> <span class="cn">TRUE</span></span>
 <span id="cb5-7"><a href="#cb5-7" tabindex="-1"></a>  )</span>
@@ -516,10 +517,10 @@ variable to an integer. We can do that by using two additional
 arguments: <code>names_prefix</code> strips off the <code>wk</code>
 prefix, and <code>names_transform</code> converts <code>week</code> into
 an integer:</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a>billboard <span class="sc">%&gt;%</span> </span>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a>billboard <span class="sc">|&gt;</span></span>
 <span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(</span>
-<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a>    <span class="at">cols =</span> <span class="fu">starts_with</span>(<span class="st">&quot;wk&quot;</span>), </span>
-<span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a>    <span class="at">names_to =</span> <span class="st">&quot;week&quot;</span>, </span>
+<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a>    <span class="at">cols =</span> <span class="fu">starts_with</span>(<span class="st">&quot;wk&quot;</span>),</span>
+<span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a>    <span class="at">names_to =</span> <span class="st">&quot;week&quot;</span>,</span>
 <span id="cb6-5"><a href="#cb6-5" tabindex="-1"></a>    <span class="at">names_prefix =</span> <span class="st">&quot;wk&quot;</span>,</span>
 <span id="cb6-6"><a href="#cb6-6" tabindex="-1"></a>    <span class="at">names_transform =</span> as.integer,</span>
 <span id="cb6-7"><a href="#cb6-7" tabindex="-1"></a>    <span class="at">values_to =</span> <span class="st">&quot;rank&quot;</span>,</span>
@@ -528,10 +529,10 @@ an integer:</p>
 <p>Alternatively, you could do this with a single argument by using
 <code>readr::parse_number()</code> which automatically strips
 non-numeric components:</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a>billboard <span class="sc">%&gt;%</span> </span>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a>billboard <span class="sc">|&gt;</span></span>
 <span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(</span>
-<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a>    <span class="at">cols =</span> <span class="fu">starts_with</span>(<span class="st">&quot;wk&quot;</span>), </span>
-<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a>    <span class="at">names_to =</span> <span class="st">&quot;week&quot;</span>, </span>
+<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a>    <span class="at">cols =</span> <span class="fu">starts_with</span>(<span class="st">&quot;wk&quot;</span>),</span>
+<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a>    <span class="at">names_to =</span> <span class="st">&quot;week&quot;</span>,</span>
 <span id="cb7-5"><a href="#cb7-5" tabindex="-1"></a>    <span class="at">names_transform =</span> readr<span class="sc">::</span>parse_number,</span>
 <span id="cb7-6"><a href="#cb7-6" tabindex="-1"></a>    <span class="at">values_to =</span> <span class="st">&quot;rank&quot;</span>,</span>
 <span id="cb7-7"><a href="#cb7-7" tabindex="-1"></a>    <span class="at">values_drop_na =</span> <span class="cn">TRUE</span>,</span>
@@ -584,10 +585,10 @@ in <code>names_to</code>, and then either providing
 interface to <code>extract</code>: you give it a regular expression
 containing groups (defined by <code>()</code>) and it puts each group in
 a column.</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a>who <span class="sc">%&gt;%</span> </span>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a>who <span class="sc">|&gt;</span></span>
 <span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(</span>
 <span id="cb9-3"><a href="#cb9-3" tabindex="-1"></a>    <span class="at">cols =</span> new_sp_m014<span class="sc">:</span>newrel_f65,</span>
-<span id="cb9-4"><a href="#cb9-4" tabindex="-1"></a>    <span class="at">names_to =</span> <span class="fu">c</span>(<span class="st">&quot;diagnosis&quot;</span>, <span class="st">&quot;gender&quot;</span>, <span class="st">&quot;age&quot;</span>), </span>
+<span id="cb9-4"><a href="#cb9-4" tabindex="-1"></a>    <span class="at">names_to =</span> <span class="fu">c</span>(<span class="st">&quot;diagnosis&quot;</span>, <span class="st">&quot;gender&quot;</span>, <span class="st">&quot;age&quot;</span>),</span>
 <span id="cb9-5"><a href="#cb9-5" tabindex="-1"></a>    <span class="at">names_pattern =</span> <span class="st">&quot;new_?(.*)_(.)(.*)&quot;</span>,</span>
 <span id="cb9-6"><a href="#cb9-6" tabindex="-1"></a>    <span class="at">values_to =</span> <span class="st">&quot;count&quot;</span></span>
 <span id="cb9-7"><a href="#cb9-7" tabindex="-1"></a>  )</span>
@@ -608,16 +609,16 @@ a column.</p>
 <p>We could go one step further use readr functions to convert the
 gender and age to factors. I think this is good practice when you have
 categorical variables with a known set of values.</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a>who <span class="sc">%&gt;%</span> </span>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a>who <span class="sc">|&gt;</span></span>
 <span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(</span>
 <span id="cb10-3"><a href="#cb10-3" tabindex="-1"></a>    <span class="at">cols =</span> new_sp_m014<span class="sc">:</span>newrel_f65,</span>
-<span id="cb10-4"><a href="#cb10-4" tabindex="-1"></a>    <span class="at">names_to =</span> <span class="fu">c</span>(<span class="st">&quot;diagnosis&quot;</span>, <span class="st">&quot;gender&quot;</span>, <span class="st">&quot;age&quot;</span>), </span>
+<span id="cb10-4"><a href="#cb10-4" tabindex="-1"></a>    <span class="at">names_to =</span> <span class="fu">c</span>(<span class="st">&quot;diagnosis&quot;</span>, <span class="st">&quot;gender&quot;</span>, <span class="st">&quot;age&quot;</span>),</span>
 <span id="cb10-5"><a href="#cb10-5" tabindex="-1"></a>    <span class="at">names_pattern =</span> <span class="st">&quot;new_?(.*)_(.)(.*)&quot;</span>,</span>
 <span id="cb10-6"><a href="#cb10-6" tabindex="-1"></a>    <span class="at">names_transform =</span> <span class="fu">list</span>(</span>
 <span id="cb10-7"><a href="#cb10-7" tabindex="-1"></a>      <span class="at">gender =</span> <span class="sc">~</span> readr<span class="sc">::</span><span class="fu">parse_factor</span>(.x, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">&quot;f&quot;</span>, <span class="st">&quot;m&quot;</span>)),</span>
 <span id="cb10-8"><a href="#cb10-8" tabindex="-1"></a>      <span class="at">age =</span> <span class="sc">~</span> readr<span class="sc">::</span><span class="fu">parse_factor</span>(</span>
 <span id="cb10-9"><a href="#cb10-9" tabindex="-1"></a>        .x,</span>
-<span id="cb10-10"><a href="#cb10-10" tabindex="-1"></a>        <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">&quot;014&quot;</span>, <span class="st">&quot;1524&quot;</span>, <span class="st">&quot;2534&quot;</span>, <span class="st">&quot;3544&quot;</span>, <span class="st">&quot;4554&quot;</span>, <span class="st">&quot;5564&quot;</span>, <span class="st">&quot;65&quot;</span>), </span>
+<span id="cb10-10"><a href="#cb10-10" tabindex="-1"></a>        <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">&quot;014&quot;</span>, <span class="st">&quot;1524&quot;</span>, <span class="st">&quot;2534&quot;</span>, <span class="st">&quot;3544&quot;</span>, <span class="st">&quot;4554&quot;</span>, <span class="st">&quot;5564&quot;</span>, <span class="st">&quot;65&quot;</span>),</span>
 <span id="cb10-11"><a href="#cb10-11" tabindex="-1"></a>        <span class="at">ordered =</span> <span class="cn">TRUE</span></span>
 <span id="cb10-12"><a href="#cb10-12" tabindex="-1"></a>      )</span>
 <span id="cb10-13"><a href="#cb10-13" tabindex="-1"></a>    ),</span>
@@ -625,7 +626,7 @@ categorical variables with a known set of values.</p>
 <span id="cb10-15"><a href="#cb10-15" tabindex="-1"></a>)</span></code></pre></div>
 <p>Doing it this way is a little more efficient than doing a mutate
 after the fact, <code>pivot_longer()</code> only has to transform one
-occurence of each name where a <code>mutate()</code> would need to
+occurrence of each name where a <code>mutate()</code> would need to
 transform many repetitions.</p>
 </div>
 <div id="multiple-observations-per-row" class="section level3">
@@ -655,11 +656,11 @@ supply multiple variables to <code>names_to</code>, using
 name <code>.value</code>: this tells <code>pivot_longer()</code> that
 that part of the column name specifies the “value” being measured (which
 will become a variable in the output).</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a>household <span class="sc">%&gt;%</span> </span>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a>household <span class="sc">|&gt;</span></span>
 <span id="cb12-2"><a href="#cb12-2" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(</span>
-<span id="cb12-3"><a href="#cb12-3" tabindex="-1"></a>    <span class="at">cols =</span> <span class="sc">!</span>family, </span>
-<span id="cb12-4"><a href="#cb12-4" tabindex="-1"></a>    <span class="at">names_to =</span> <span class="fu">c</span>(<span class="st">&quot;.value&quot;</span>, <span class="st">&quot;child&quot;</span>), </span>
-<span id="cb12-5"><a href="#cb12-5" tabindex="-1"></a>    <span class="at">names_sep =</span> <span class="st">&quot;_&quot;</span>, </span>
+<span id="cb12-3"><a href="#cb12-3" tabindex="-1"></a>    <span class="at">cols =</span> <span class="sc">!</span>family,</span>
+<span id="cb12-4"><a href="#cb12-4" tabindex="-1"></a>    <span class="at">names_to =</span> <span class="fu">c</span>(<span class="st">&quot;.value&quot;</span>, <span class="st">&quot;child&quot;</span>),</span>
+<span id="cb12-5"><a href="#cb12-5" tabindex="-1"></a>    <span class="at">names_sep =</span> <span class="st">&quot;_&quot;</span>,</span>
 <span id="cb12-6"><a href="#cb12-6" tabindex="-1"></a>    <span class="at">values_drop_na =</span> <span class="cn">TRUE</span></span>
 <span id="cb12-7"><a href="#cb12-7" tabindex="-1"></a>  )</span>
 <span id="cb12-8"><a href="#cb12-8" tabindex="-1"></a><span class="co">#&gt; # A tibble: 9 × 4</span></span>
@@ -698,11 +699,11 @@ Anscombe’s quartet, a collection of four datasets that have the same
 summary statistics (mean, sd, correlation etc), but have quite different
 data. We want to produce a dataset with columns <code>set</code>,
 <code>x</code> and <code>y</code>.</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" tabindex="-1"></a>anscombe <span class="sc">%&gt;%</span> </span>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" tabindex="-1"></a>anscombe <span class="sc">|&gt;</span></span>
 <span id="cb14-2"><a href="#cb14-2" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(</span>
-<span id="cb14-3"><a href="#cb14-3" tabindex="-1"></a>    <span class="at">cols =</span> <span class="fu">everything</span>(), </span>
+<span id="cb14-3"><a href="#cb14-3" tabindex="-1"></a>    <span class="at">cols =</span> <span class="fu">everything</span>(),</span>
 <span id="cb14-4"><a href="#cb14-4" tabindex="-1"></a>    <span class="at">cols_vary =</span> <span class="st">&quot;slowest&quot;</span>,</span>
-<span id="cb14-5"><a href="#cb14-5" tabindex="-1"></a>    <span class="at">names_to =</span> <span class="fu">c</span>(<span class="st">&quot;.value&quot;</span>, <span class="st">&quot;set&quot;</span>), </span>
+<span id="cb14-5"><a href="#cb14-5" tabindex="-1"></a>    <span class="at">names_to =</span> <span class="fu">c</span>(<span class="st">&quot;.value&quot;</span>, <span class="st">&quot;set&quot;</span>),</span>
 <span id="cb14-6"><a href="#cb14-6" tabindex="-1"></a>    <span class="at">names_pattern =</span> <span class="st">&quot;(.)(.)&quot;</span></span>
 <span id="cb14-7"><a href="#cb14-7" tabindex="-1"></a>  )</span>
 <span id="cb14-8"><a href="#cb14-8" tabindex="-1"></a><span class="co">#&gt; # A tibble: 44 × 3</span></span>
@@ -737,23 +738,23 @@ can tidy it using the same approach as for <code>anscombe</code>:</p>
 <span id="cb15-8"><a href="#cb15-8" tabindex="-1"></a>  <span class="at">z2 =</span> <span class="fu">rep</span>(<span class="sc">-</span><span class="dv">2</span>, <span class="dv">4</span>),</span>
 <span id="cb15-9"><a href="#cb15-9" tabindex="-1"></a>)</span>
 <span id="cb15-10"><a href="#cb15-10" tabindex="-1"></a></span>
-<span id="cb15-11"><a href="#cb15-11" tabindex="-1"></a>pnl <span class="sc">%&gt;%</span> </span>
+<span id="cb15-11"><a href="#cb15-11" tabindex="-1"></a>pnl <span class="sc">|&gt;</span></span>
 <span id="cb15-12"><a href="#cb15-12" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(</span>
-<span id="cb15-13"><a href="#cb15-13" tabindex="-1"></a>    <span class="at">cols =</span> <span class="sc">!</span><span class="fu">c</span>(x, a, b), </span>
-<span id="cb15-14"><a href="#cb15-14" tabindex="-1"></a>    <span class="at">names_to =</span> <span class="fu">c</span>(<span class="st">&quot;.value&quot;</span>, <span class="st">&quot;time&quot;</span>), </span>
+<span id="cb15-13"><a href="#cb15-13" tabindex="-1"></a>    <span class="at">cols =</span> <span class="sc">!</span><span class="fu">c</span>(x, a, b),</span>
+<span id="cb15-14"><a href="#cb15-14" tabindex="-1"></a>    <span class="at">names_to =</span> <span class="fu">c</span>(<span class="st">&quot;.value&quot;</span>, <span class="st">&quot;time&quot;</span>),</span>
 <span id="cb15-15"><a href="#cb15-15" tabindex="-1"></a>    <span class="at">names_pattern =</span> <span class="st">&quot;(.)(.)&quot;</span></span>
 <span id="cb15-16"><a href="#cb15-16" tabindex="-1"></a>  )</span>
 <span id="cb15-17"><a href="#cb15-17" tabindex="-1"></a><span class="co">#&gt; # A tibble: 8 × 6</span></span>
-<span id="cb15-18"><a href="#cb15-18" tabindex="-1"></a><span class="co">#&gt;       x     a     b time       y     z</span></span>
-<span id="cb15-19"><a href="#cb15-19" tabindex="-1"></a><span class="co">#&gt;   &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;  &lt;dbl&gt; &lt;dbl&gt;</span></span>
-<span id="cb15-20"><a href="#cb15-20" tabindex="-1"></a><span class="co">#&gt; 1     1     1     0 1     -0.516     3</span></span>
-<span id="cb15-21"><a href="#cb15-21" tabindex="-1"></a><span class="co">#&gt; 2     1     1     0 2      2.48     -2</span></span>
-<span id="cb15-22"><a href="#cb15-22" tabindex="-1"></a><span class="co">#&gt; 3     2     1     1 1      0.240     3</span></span>
-<span id="cb15-23"><a href="#cb15-23" tabindex="-1"></a><span class="co">#&gt; 4     2     1     1 2      0.233    -2</span></span>
-<span id="cb15-24"><a href="#cb15-24" tabindex="-1"></a><span class="co">#&gt; 5     3     0     1 1     -1.33      3</span></span>
-<span id="cb15-25"><a href="#cb15-25" tabindex="-1"></a><span class="co">#&gt; 6     3     0     1 2     -0.986    -2</span></span>
-<span id="cb15-26"><a href="#cb15-26" tabindex="-1"></a><span class="co">#&gt; 7     4     0     1 1      0.401     3</span></span>
-<span id="cb15-27"><a href="#cb15-27" tabindex="-1"></a><span class="co">#&gt; 8     4     0     1 2     -0.965    -2</span></span></code></pre></div>
+<span id="cb15-18"><a href="#cb15-18" tabindex="-1"></a><span class="co">#&gt;       x     a     b time         y     z</span></span>
+<span id="cb15-19"><a href="#cb15-19" tabindex="-1"></a><span class="co">#&gt;   &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;    &lt;dbl&gt; &lt;dbl&gt;</span></span>
+<span id="cb15-20"><a href="#cb15-20" tabindex="-1"></a><span class="co">#&gt; 1     1     1     0 1     -0.414       3</span></span>
+<span id="cb15-21"><a href="#cb15-21" tabindex="-1"></a><span class="co">#&gt; 2     1     1     0 2     -1.11       -2</span></span>
+<span id="cb15-22"><a href="#cb15-22" tabindex="-1"></a><span class="co">#&gt; 3     2     1     1 1      0.486       3</span></span>
+<span id="cb15-23"><a href="#cb15-23" tabindex="-1"></a><span class="co">#&gt; 4     2     1     1 2     -0.0761     -2</span></span>
+<span id="cb15-24"><a href="#cb15-24" tabindex="-1"></a><span class="co">#&gt; 5     3     0     1 1      0.0484      3</span></span>
+<span id="cb15-25"><a href="#cb15-25" tabindex="-1"></a><span class="co">#&gt; 6     3     0     1 2     -0.00511    -2</span></span>
+<span id="cb15-26"><a href="#cb15-26" tabindex="-1"></a><span class="co">#&gt; 7     4     0     1 1      0.828       3</span></span>
+<span id="cb15-27"><a href="#cb15-27" tabindex="-1"></a><span class="co">#&gt; 8     4     0     1 2     -1.74       -2</span></span></code></pre></div>
 </div>
 </div>
 <div id="wider" class="section level2">
@@ -786,9 +787,9 @@ automatic monitoring stations:</p>
 <span id="cb16-15"><a href="#cb16-15" tabindex="-1"></a><span class="co">#&gt; # ℹ 104 more rows</span></span></code></pre></div>
 <p>Many tools used to analyse this data need it in a form where each
 station is a column:</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" tabindex="-1"></a>fish_encounters <span class="sc">%&gt;%</span> </span>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" tabindex="-1"></a>fish_encounters <span class="sc">|&gt;</span></span>
 <span id="cb17-2"><a href="#cb17-2" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(</span>
-<span id="cb17-3"><a href="#cb17-3" tabindex="-1"></a>    <span class="at">names_from =</span> station, </span>
+<span id="cb17-3"><a href="#cb17-3" tabindex="-1"></a>    <span class="at">names_from =</span> station,</span>
 <span id="cb17-4"><a href="#cb17-4" tabindex="-1"></a>    <span class="at">values_from =</span> seen</span>
 <span id="cb17-5"><a href="#cb17-5" tabindex="-1"></a>  )</span>
 <span id="cb17-6"><a href="#cb17-6" tabindex="-1"></a><span class="co">#&gt; # A tibble: 19 × 12</span></span>
@@ -812,9 +813,9 @@ However, in this case we know that the absence of a record means that
 the fish was not <code>seen</code>, so we can ask
 <code>pivot_wider()</code> to fill these missing values in with
 zeros:</p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" tabindex="-1"></a>fish_encounters <span class="sc">%&gt;%</span> </span>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" tabindex="-1"></a>fish_encounters <span class="sc">|&gt;</span></span>
 <span id="cb18-2"><a href="#cb18-2" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(</span>
-<span id="cb18-3"><a href="#cb18-3" tabindex="-1"></a>    <span class="at">names_from =</span> station, </span>
+<span id="cb18-3"><a href="#cb18-3" tabindex="-1"></a>    <span class="at">names_from =</span> station,</span>
 <span id="cb18-4"><a href="#cb18-4" tabindex="-1"></a>    <span class="at">values_from =</span> seen,</span>
 <span id="cb18-5"><a href="#cb18-5" tabindex="-1"></a>    <span class="at">values_fill =</span> <span class="dv">0</span></span>
 <span id="cb18-6"><a href="#cb18-6" tabindex="-1"></a>  )</span>
@@ -838,8 +839,8 @@ zeros:</p>
 <p>You can also use <code>pivot_wider()</code> to perform simple
 aggregation. For example, take the <code>warpbreaks</code> dataset built
 in to base R (converted to a tibble for the better print method):</p>
-<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" tabindex="-1"></a>warpbreaks <span class="ot">&lt;-</span> warpbreaks <span class="sc">%&gt;%</span> </span>
-<span id="cb19-2"><a href="#cb19-2" tabindex="-1"></a>  <span class="fu">as_tibble</span>() <span class="sc">%&gt;%</span> </span>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" tabindex="-1"></a>warpbreaks <span class="ot">&lt;-</span> warpbreaks <span class="sc">|&gt;</span></span>
+<span id="cb19-2"><a href="#cb19-2" tabindex="-1"></a>  <span class="fu">as_tibble</span>() <span class="sc">|&gt;</span></span>
 <span id="cb19-3"><a href="#cb19-3" tabindex="-1"></a>  <span class="fu">select</span>(wool, tension, breaks)</span>
 <span id="cb19-4"><a href="#cb19-4" tabindex="-1"></a>warpbreaks</span>
 <span id="cb19-5"><a href="#cb19-5" tabindex="-1"></a><span class="co">#&gt; # A tibble: 54 × 3</span></span>
@@ -860,7 +861,7 @@ in to base R (converted to a tibble for the better print method):</p>
 combination of <code>wool</code> (<code>A</code> and <code>B</code>) and
 <code>tension</code> (<code>L</code>, <code>M</code>,
 <code>H</code>):</p>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" tabindex="-1"></a>warpbreaks <span class="sc">%&gt;%</span> </span>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" tabindex="-1"></a>warpbreaks <span class="sc">|&gt;</span></span>
 <span id="cb20-2"><a href="#cb20-2" tabindex="-1"></a>  <span class="fu">count</span>(wool, tension)</span>
 <span id="cb20-3"><a href="#cb20-3" tabindex="-1"></a><span class="co">#&gt; # A tibble: 6 × 3</span></span>
 <span id="cb20-4"><a href="#cb20-4" tabindex="-1"></a><span class="co">#&gt;   wool  tension     n</span></span>
@@ -873,9 +874,9 @@ combination of <code>wool</code> (<code>A</code> and <code>B</code>) and
 <span id="cb20-11"><a href="#cb20-11" tabindex="-1"></a><span class="co">#&gt; 6 B     H           9</span></span></code></pre></div>
 <p>What happens if we attempt to pivot the levels of <code>wool</code>
 into the columns?</p>
-<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" tabindex="-1"></a>warpbreaks <span class="sc">%&gt;%</span> </span>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" tabindex="-1"></a>warpbreaks <span class="sc">|&gt;</span></span>
 <span id="cb21-2"><a href="#cb21-2" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(</span>
-<span id="cb21-3"><a href="#cb21-3" tabindex="-1"></a>    <span class="at">names_from =</span> wool, </span>
+<span id="cb21-3"><a href="#cb21-3" tabindex="-1"></a>    <span class="at">names_from =</span> wool,</span>
 <span id="cb21-4"><a href="#cb21-4" tabindex="-1"></a>    <span class="at">values_from =</span> breaks</span>
 <span id="cb21-5"><a href="#cb21-5" tabindex="-1"></a>  )</span>
 <span id="cb21-6"><a href="#cb21-6" tabindex="-1"></a><span class="co">#&gt; Warning: Values from `breaks` are not uniquely identified; output will contain</span></span>
@@ -897,9 +898,9 @@ cells in the input. The default behaviour produces list-columns, which
 contain all the individual values. A more useful output would be summary
 statistics, e.g. <code>mean</code> breaks for each combination of wool
 and tension:</p>
-<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" tabindex="-1"></a>warpbreaks <span class="sc">%&gt;%</span> </span>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" tabindex="-1"></a>warpbreaks <span class="sc">|&gt;</span></span>
 <span id="cb22-2"><a href="#cb22-2" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(</span>
-<span id="cb22-3"><a href="#cb22-3" tabindex="-1"></a>    <span class="at">names_from =</span> wool, </span>
+<span id="cb22-3"><a href="#cb22-3" tabindex="-1"></a>    <span class="at">names_from =</span> wool,</span>
 <span id="cb22-4"><a href="#cb22-4" tabindex="-1"></a>    <span class="at">values_from =</span> breaks,</span>
 <span id="cb22-5"><a href="#cb22-5" tabindex="-1"></a>    <span class="at">values_fn =</span> mean</span>
 <span id="cb22-6"><a href="#cb22-6" tabindex="-1"></a>  )</span>
@@ -918,58 +919,58 @@ within <code>pivot_wider()</code>.</p>
 <p>Imagine, as in <a href="https://stackoverflow.com/questions/24929954" class="uri">https://stackoverflow.com/questions/24929954</a>, that we
 have information containing the combination of product, country, and
 year. In tidy form it might look like this:</p>
-<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" tabindex="-1"></a>production <span class="ot">&lt;-</span> </span>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" tabindex="-1"></a>production <span class="ot">&lt;-</span></span>
 <span id="cb23-2"><a href="#cb23-2" tabindex="-1"></a>  <span class="fu">expand_grid</span>(</span>
-<span id="cb23-3"><a href="#cb23-3" tabindex="-1"></a>    <span class="at">product =</span> <span class="fu">c</span>(<span class="st">&quot;A&quot;</span>, <span class="st">&quot;B&quot;</span>), </span>
-<span id="cb23-4"><a href="#cb23-4" tabindex="-1"></a>    <span class="at">country =</span> <span class="fu">c</span>(<span class="st">&quot;AI&quot;</span>, <span class="st">&quot;EI&quot;</span>), </span>
+<span id="cb23-3"><a href="#cb23-3" tabindex="-1"></a>    <span class="at">product =</span> <span class="fu">c</span>(<span class="st">&quot;A&quot;</span>, <span class="st">&quot;B&quot;</span>),</span>
+<span id="cb23-4"><a href="#cb23-4" tabindex="-1"></a>    <span class="at">country =</span> <span class="fu">c</span>(<span class="st">&quot;AI&quot;</span>, <span class="st">&quot;EI&quot;</span>),</span>
 <span id="cb23-5"><a href="#cb23-5" tabindex="-1"></a>    <span class="at">year =</span> <span class="dv">2000</span><span class="sc">:</span><span class="dv">2014</span></span>
-<span id="cb23-6"><a href="#cb23-6" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb23-7"><a href="#cb23-7" tabindex="-1"></a>  <span class="fu">filter</span>((product <span class="sc">==</span> <span class="st">&quot;A&quot;</span> <span class="sc">&amp;</span> country <span class="sc">==</span> <span class="st">&quot;AI&quot;</span>) <span class="sc">|</span> product <span class="sc">==</span> <span class="st">&quot;B&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb23-8"><a href="#cb23-8" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">production =</span> <span class="fu">rnorm</span>(<span class="fu">nrow</span>(.)))</span>
+<span id="cb23-6"><a href="#cb23-6" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb23-7"><a href="#cb23-7" tabindex="-1"></a>  <span class="fu">filter</span>((product <span class="sc">==</span> <span class="st">&quot;A&quot;</span> <span class="sc">&amp;</span> country <span class="sc">==</span> <span class="st">&quot;AI&quot;</span>) <span class="sc">|</span> product <span class="sc">==</span> <span class="st">&quot;B&quot;</span>) <span class="sc">|&gt;</span></span>
+<span id="cb23-8"><a href="#cb23-8" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">production =</span> <span class="fu">rnorm</span>(<span class="fu">n</span>()))</span>
 <span id="cb23-9"><a href="#cb23-9" tabindex="-1"></a>production</span>
 <span id="cb23-10"><a href="#cb23-10" tabindex="-1"></a><span class="co">#&gt; # A tibble: 45 × 4</span></span>
 <span id="cb23-11"><a href="#cb23-11" tabindex="-1"></a><span class="co">#&gt;    product country  year production</span></span>
 <span id="cb23-12"><a href="#cb23-12" tabindex="-1"></a><span class="co">#&gt;    &lt;chr&gt;   &lt;chr&gt;   &lt;int&gt;      &lt;dbl&gt;</span></span>
-<span id="cb23-13"><a href="#cb23-13" tabindex="-1"></a><span class="co">#&gt;  1 A       AI       2000     0.722 </span></span>
-<span id="cb23-14"><a href="#cb23-14" tabindex="-1"></a><span class="co">#&gt;  2 A       AI       2001     2.79  </span></span>
-<span id="cb23-15"><a href="#cb23-15" tabindex="-1"></a><span class="co">#&gt;  3 A       AI       2002     0.0848</span></span>
-<span id="cb23-16"><a href="#cb23-16" tabindex="-1"></a><span class="co">#&gt;  4 A       AI       2003     0.351 </span></span>
-<span id="cb23-17"><a href="#cb23-17" tabindex="-1"></a><span class="co">#&gt;  5 A       AI       2004     1.12  </span></span>
-<span id="cb23-18"><a href="#cb23-18" tabindex="-1"></a><span class="co">#&gt;  6 A       AI       2005    -2.26  </span></span>
-<span id="cb23-19"><a href="#cb23-19" tabindex="-1"></a><span class="co">#&gt;  7 A       AI       2006     0.566 </span></span>
-<span id="cb23-20"><a href="#cb23-20" tabindex="-1"></a><span class="co">#&gt;  8 A       AI       2007    -0.451 </span></span>
-<span id="cb23-21"><a href="#cb23-21" tabindex="-1"></a><span class="co">#&gt;  9 A       AI       2008    -0.0190</span></span>
-<span id="cb23-22"><a href="#cb23-22" tabindex="-1"></a><span class="co">#&gt; 10 A       AI       2009    -1.69  </span></span>
+<span id="cb23-13"><a href="#cb23-13" tabindex="-1"></a><span class="co">#&gt;  1 A       AI       2000   -0.191  </span></span>
+<span id="cb23-14"><a href="#cb23-14" tabindex="-1"></a><span class="co">#&gt;  2 A       AI       2001    0.279  </span></span>
+<span id="cb23-15"><a href="#cb23-15" tabindex="-1"></a><span class="co">#&gt;  3 A       AI       2002   -0.203  </span></span>
+<span id="cb23-16"><a href="#cb23-16" tabindex="-1"></a><span class="co">#&gt;  4 A       AI       2003    0.212  </span></span>
+<span id="cb23-17"><a href="#cb23-17" tabindex="-1"></a><span class="co">#&gt;  5 A       AI       2004   -0.947  </span></span>
+<span id="cb23-18"><a href="#cb23-18" tabindex="-1"></a><span class="co">#&gt;  6 A       AI       2005   -0.644  </span></span>
+<span id="cb23-19"><a href="#cb23-19" tabindex="-1"></a><span class="co">#&gt;  7 A       AI       2006   -0.114  </span></span>
+<span id="cb23-20"><a href="#cb23-20" tabindex="-1"></a><span class="co">#&gt;  8 A       AI       2007   -0.00558</span></span>
+<span id="cb23-21"><a href="#cb23-21" tabindex="-1"></a><span class="co">#&gt;  9 A       AI       2008   -0.410  </span></span>
+<span id="cb23-22"><a href="#cb23-22" tabindex="-1"></a><span class="co">#&gt; 10 A       AI       2009    0.677  </span></span>
 <span id="cb23-23"><a href="#cb23-23" tabindex="-1"></a><span class="co">#&gt; # ℹ 35 more rows</span></span></code></pre></div>
 <p>We want to widen the data so we have one column for each combination
 of <code>product</code> and <code>country</code>. The key is to specify
 multiple variables for <code>names_from</code>:</p>
-<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" tabindex="-1"></a>production <span class="sc">%&gt;%</span> </span>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" tabindex="-1"></a>production <span class="sc">|&gt;</span></span>
 <span id="cb24-2"><a href="#cb24-2" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(</span>
-<span id="cb24-3"><a href="#cb24-3" tabindex="-1"></a>    <span class="at">names_from =</span> <span class="fu">c</span>(product, country), </span>
+<span id="cb24-3"><a href="#cb24-3" tabindex="-1"></a>    <span class="at">names_from =</span> <span class="fu">c</span>(product, country),</span>
 <span id="cb24-4"><a href="#cb24-4" tabindex="-1"></a>    <span class="at">values_from =</span> production</span>
 <span id="cb24-5"><a href="#cb24-5" tabindex="-1"></a>  )</span>
 <span id="cb24-6"><a href="#cb24-6" tabindex="-1"></a><span class="co">#&gt; # A tibble: 15 × 4</span></span>
-<span id="cb24-7"><a href="#cb24-7" tabindex="-1"></a><span class="co">#&gt;     year    A_AI    B_AI    B_EI</span></span>
-<span id="cb24-8"><a href="#cb24-8" tabindex="-1"></a><span class="co">#&gt;    &lt;int&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;</span></span>
-<span id="cb24-9"><a href="#cb24-9" tabindex="-1"></a><span class="co">#&gt;  1  2000  0.722   0.410  -0.270 </span></span>
-<span id="cb24-10"><a href="#cb24-10" tabindex="-1"></a><span class="co">#&gt;  2  2001  2.79   -0.402   1.17  </span></span>
-<span id="cb24-11"><a href="#cb24-11" tabindex="-1"></a><span class="co">#&gt;  3  2002  0.0848  0.789  -0.399 </span></span>
-<span id="cb24-12"><a href="#cb24-12" tabindex="-1"></a><span class="co">#&gt;  4  2003  0.351   0.164  -0.0338</span></span>
-<span id="cb24-13"><a href="#cb24-13" tabindex="-1"></a><span class="co">#&gt;  5  2004  1.12    0.344  -1.01  </span></span>
-<span id="cb24-14"><a href="#cb24-14" tabindex="-1"></a><span class="co">#&gt;  6  2005 -2.26   -1.70    0.692 </span></span>
-<span id="cb24-15"><a href="#cb24-15" tabindex="-1"></a><span class="co">#&gt;  7  2006  0.566  -0.661  -1.05  </span></span>
-<span id="cb24-16"><a href="#cb24-16" tabindex="-1"></a><span class="co">#&gt;  8  2007 -0.451   1.38    0.221 </span></span>
-<span id="cb24-17"><a href="#cb24-17" tabindex="-1"></a><span class="co">#&gt;  9  2008 -0.0190  0.456  -0.608 </span></span>
-<span id="cb24-18"><a href="#cb24-18" tabindex="-1"></a><span class="co">#&gt; 10  2009 -1.69    0.0122  0.771 </span></span>
+<span id="cb24-7"><a href="#cb24-7" tabindex="-1"></a><span class="co">#&gt;     year     A_AI    B_AI   B_EI</span></span>
+<span id="cb24-8"><a href="#cb24-8" tabindex="-1"></a><span class="co">#&gt;    &lt;int&gt;    &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;</span></span>
+<span id="cb24-9"><a href="#cb24-9" tabindex="-1"></a><span class="co">#&gt;  1  2000 -0.191    0.821   1.14 </span></span>
+<span id="cb24-10"><a href="#cb24-10" tabindex="-1"></a><span class="co">#&gt;  2  2001  0.279   -1.02    0.385</span></span>
+<span id="cb24-11"><a href="#cb24-11" tabindex="-1"></a><span class="co">#&gt;  3  2002 -0.203    0.295  -0.763</span></span>
+<span id="cb24-12"><a href="#cb24-12" tabindex="-1"></a><span class="co">#&gt;  4  2003  0.212   -1.14   -0.940</span></span>
+<span id="cb24-13"><a href="#cb24-13" tabindex="-1"></a><span class="co">#&gt;  5  2004 -0.947   -0.324   1.71 </span></span>
+<span id="cb24-14"><a href="#cb24-14" tabindex="-1"></a><span class="co">#&gt;  6  2005 -0.644    0.828   1.05 </span></span>
+<span id="cb24-15"><a href="#cb24-15" tabindex="-1"></a><span class="co">#&gt;  7  2006 -0.114   -0.364  -0.613</span></span>
+<span id="cb24-16"><a href="#cb24-16" tabindex="-1"></a><span class="co">#&gt;  8  2007 -0.00558  1.50    1.32 </span></span>
+<span id="cb24-17"><a href="#cb24-17" tabindex="-1"></a><span class="co">#&gt;  9  2008 -0.410    0.0354  1.31 </span></span>
+<span id="cb24-18"><a href="#cb24-18" tabindex="-1"></a><span class="co">#&gt; 10  2009  0.677   -0.397  -0.411</span></span>
 <span id="cb24-19"><a href="#cb24-19" tabindex="-1"></a><span class="co">#&gt; # ℹ 5 more rows</span></span></code></pre></div>
 <p>When either <code>names_from</code> or <code>values_from</code>
 select multiple variables, you can control how the column names in the
 output constructed with <code>names_sep</code> and
 <code>names_prefix</code>, or the workhorse <code>names_glue</code>:</p>
-<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" tabindex="-1"></a>production <span class="sc">%&gt;%</span> </span>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" tabindex="-1"></a>production <span class="sc">|&gt;</span></span>
 <span id="cb25-2"><a href="#cb25-2" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(</span>
-<span id="cb25-3"><a href="#cb25-3" tabindex="-1"></a>    <span class="at">names_from =</span> <span class="fu">c</span>(product, country), </span>
+<span id="cb25-3"><a href="#cb25-3" tabindex="-1"></a>    <span class="at">names_from =</span> <span class="fu">c</span>(product, country),</span>
 <span id="cb25-4"><a href="#cb25-4" tabindex="-1"></a>    <span class="at">values_from =</span> production,</span>
 <span id="cb25-5"><a href="#cb25-5" tabindex="-1"></a>    <span class="at">names_sep =</span> <span class="st">&quot;.&quot;</span>,</span>
 <span id="cb25-6"><a href="#cb25-6" tabindex="-1"></a>    <span class="at">names_prefix =</span> <span class="st">&quot;prod.&quot;</span></span>
@@ -977,37 +978,37 @@ output constructed with <code>names_sep</code> and
 <span id="cb25-8"><a href="#cb25-8" tabindex="-1"></a><span class="co">#&gt; # A tibble: 15 × 4</span></span>
 <span id="cb25-9"><a href="#cb25-9" tabindex="-1"></a><span class="co">#&gt;     year prod.A.AI prod.B.AI prod.B.EI</span></span>
 <span id="cb25-10"><a href="#cb25-10" tabindex="-1"></a><span class="co">#&gt;    &lt;int&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;</span></span>
-<span id="cb25-11"><a href="#cb25-11" tabindex="-1"></a><span class="co">#&gt;  1  2000    0.722     0.410    -0.270 </span></span>
-<span id="cb25-12"><a href="#cb25-12" tabindex="-1"></a><span class="co">#&gt;  2  2001    2.79     -0.402     1.17  </span></span>
-<span id="cb25-13"><a href="#cb25-13" tabindex="-1"></a><span class="co">#&gt;  3  2002    0.0848    0.789    -0.399 </span></span>
-<span id="cb25-14"><a href="#cb25-14" tabindex="-1"></a><span class="co">#&gt;  4  2003    0.351     0.164    -0.0338</span></span>
-<span id="cb25-15"><a href="#cb25-15" tabindex="-1"></a><span class="co">#&gt;  5  2004    1.12      0.344    -1.01  </span></span>
-<span id="cb25-16"><a href="#cb25-16" tabindex="-1"></a><span class="co">#&gt;  6  2005   -2.26     -1.70      0.692 </span></span>
-<span id="cb25-17"><a href="#cb25-17" tabindex="-1"></a><span class="co">#&gt;  7  2006    0.566    -0.661    -1.05  </span></span>
-<span id="cb25-18"><a href="#cb25-18" tabindex="-1"></a><span class="co">#&gt;  8  2007   -0.451     1.38      0.221 </span></span>
-<span id="cb25-19"><a href="#cb25-19" tabindex="-1"></a><span class="co">#&gt;  9  2008   -0.0190    0.456    -0.608 </span></span>
-<span id="cb25-20"><a href="#cb25-20" tabindex="-1"></a><span class="co">#&gt; 10  2009   -1.69      0.0122    0.771 </span></span>
+<span id="cb25-11"><a href="#cb25-11" tabindex="-1"></a><span class="co">#&gt;  1  2000  -0.191      0.821      1.14 </span></span>
+<span id="cb25-12"><a href="#cb25-12" tabindex="-1"></a><span class="co">#&gt;  2  2001   0.279     -1.02       0.385</span></span>
+<span id="cb25-13"><a href="#cb25-13" tabindex="-1"></a><span class="co">#&gt;  3  2002  -0.203      0.295     -0.763</span></span>
+<span id="cb25-14"><a href="#cb25-14" tabindex="-1"></a><span class="co">#&gt;  4  2003   0.212     -1.14      -0.940</span></span>
+<span id="cb25-15"><a href="#cb25-15" tabindex="-1"></a><span class="co">#&gt;  5  2004  -0.947     -0.324      1.71 </span></span>
+<span id="cb25-16"><a href="#cb25-16" tabindex="-1"></a><span class="co">#&gt;  6  2005  -0.644      0.828      1.05 </span></span>
+<span id="cb25-17"><a href="#cb25-17" tabindex="-1"></a><span class="co">#&gt;  7  2006  -0.114     -0.364     -0.613</span></span>
+<span id="cb25-18"><a href="#cb25-18" tabindex="-1"></a><span class="co">#&gt;  8  2007  -0.00558    1.50       1.32 </span></span>
+<span id="cb25-19"><a href="#cb25-19" tabindex="-1"></a><span class="co">#&gt;  9  2008  -0.410      0.0354     1.31 </span></span>
+<span id="cb25-20"><a href="#cb25-20" tabindex="-1"></a><span class="co">#&gt; 10  2009   0.677     -0.397     -0.411</span></span>
 <span id="cb25-21"><a href="#cb25-21" tabindex="-1"></a><span class="co">#&gt; # ℹ 5 more rows</span></span>
 <span id="cb25-22"><a href="#cb25-22" tabindex="-1"></a></span>
-<span id="cb25-23"><a href="#cb25-23" tabindex="-1"></a>production <span class="sc">%&gt;%</span> </span>
+<span id="cb25-23"><a href="#cb25-23" tabindex="-1"></a>production <span class="sc">|&gt;</span></span>
 <span id="cb25-24"><a href="#cb25-24" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(</span>
-<span id="cb25-25"><a href="#cb25-25" tabindex="-1"></a>    <span class="at">names_from =</span> <span class="fu">c</span>(product, country), </span>
+<span id="cb25-25"><a href="#cb25-25" tabindex="-1"></a>    <span class="at">names_from =</span> <span class="fu">c</span>(product, country),</span>
 <span id="cb25-26"><a href="#cb25-26" tabindex="-1"></a>    <span class="at">values_from =</span> production,</span>
 <span id="cb25-27"><a href="#cb25-27" tabindex="-1"></a>    <span class="at">names_glue =</span> <span class="st">&quot;prod_{product}_{country}&quot;</span></span>
 <span id="cb25-28"><a href="#cb25-28" tabindex="-1"></a>  )</span>
 <span id="cb25-29"><a href="#cb25-29" tabindex="-1"></a><span class="co">#&gt; # A tibble: 15 × 4</span></span>
 <span id="cb25-30"><a href="#cb25-30" tabindex="-1"></a><span class="co">#&gt;     year prod_A_AI prod_B_AI prod_B_EI</span></span>
 <span id="cb25-31"><a href="#cb25-31" tabindex="-1"></a><span class="co">#&gt;    &lt;int&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;</span></span>
-<span id="cb25-32"><a href="#cb25-32" tabindex="-1"></a><span class="co">#&gt;  1  2000    0.722     0.410    -0.270 </span></span>
-<span id="cb25-33"><a href="#cb25-33" tabindex="-1"></a><span class="co">#&gt;  2  2001    2.79     -0.402     1.17  </span></span>
-<span id="cb25-34"><a href="#cb25-34" tabindex="-1"></a><span class="co">#&gt;  3  2002    0.0848    0.789    -0.399 </span></span>
-<span id="cb25-35"><a href="#cb25-35" tabindex="-1"></a><span class="co">#&gt;  4  2003    0.351     0.164    -0.0338</span></span>
-<span id="cb25-36"><a href="#cb25-36" tabindex="-1"></a><span class="co">#&gt;  5  2004    1.12      0.344    -1.01  </span></span>
-<span id="cb25-37"><a href="#cb25-37" tabindex="-1"></a><span class="co">#&gt;  6  2005   -2.26     -1.70      0.692 </span></span>
-<span id="cb25-38"><a href="#cb25-38" tabindex="-1"></a><span class="co">#&gt;  7  2006    0.566    -0.661    -1.05  </span></span>
-<span id="cb25-39"><a href="#cb25-39" tabindex="-1"></a><span class="co">#&gt;  8  2007   -0.451     1.38      0.221 </span></span>
-<span id="cb25-40"><a href="#cb25-40" tabindex="-1"></a><span class="co">#&gt;  9  2008   -0.0190    0.456    -0.608 </span></span>
-<span id="cb25-41"><a href="#cb25-41" tabindex="-1"></a><span class="co">#&gt; 10  2009   -1.69      0.0122    0.771 </span></span>
+<span id="cb25-32"><a href="#cb25-32" tabindex="-1"></a><span class="co">#&gt;  1  2000  -0.191      0.821      1.14 </span></span>
+<span id="cb25-33"><a href="#cb25-33" tabindex="-1"></a><span class="co">#&gt;  2  2001   0.279     -1.02       0.385</span></span>
+<span id="cb25-34"><a href="#cb25-34" tabindex="-1"></a><span class="co">#&gt;  3  2002  -0.203      0.295     -0.763</span></span>
+<span id="cb25-35"><a href="#cb25-35" tabindex="-1"></a><span class="co">#&gt;  4  2003   0.212     -1.14      -0.940</span></span>
+<span id="cb25-36"><a href="#cb25-36" tabindex="-1"></a><span class="co">#&gt;  5  2004  -0.947     -0.324      1.71 </span></span>
+<span id="cb25-37"><a href="#cb25-37" tabindex="-1"></a><span class="co">#&gt;  6  2005  -0.644      0.828      1.05 </span></span>
+<span id="cb25-38"><a href="#cb25-38" tabindex="-1"></a><span class="co">#&gt;  7  2006  -0.114     -0.364     -0.613</span></span>
+<span id="cb25-39"><a href="#cb25-39" tabindex="-1"></a><span class="co">#&gt;  8  2007  -0.00558    1.50       1.32 </span></span>
+<span id="cb25-40"><a href="#cb25-40" tabindex="-1"></a><span class="co">#&gt;  9  2008  -0.410      0.0354     1.31 </span></span>
+<span id="cb25-41"><a href="#cb25-41" tabindex="-1"></a><span class="co">#&gt; 10  2009   0.677     -0.397     -0.411</span></span>
 <span id="cb25-42"><a href="#cb25-42" tabindex="-1"></a><span class="co">#&gt; # ℹ 5 more rows</span></span></code></pre></div>
 </div>
 <div id="tidy-census" class="section level3">
@@ -1032,9 +1033,9 @@ American Community Survey, retrieved with the <a href="https://walker-data.com/t
 <span id="cb26-15"><a href="#cb26-15" tabindex="-1"></a><span class="co">#&gt; # ℹ 94 more rows</span></span></code></pre></div>
 <p>Here both <code>estimate</code> and <code>moe</code> are values
 columns, so we can supply them to <code>values_from</code>:</p>
-<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" tabindex="-1"></a>us_rent_income <span class="sc">%&gt;%</span> </span>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" tabindex="-1"></a>us_rent_income <span class="sc">|&gt;</span></span>
 <span id="cb27-2"><a href="#cb27-2" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(</span>
-<span id="cb27-3"><a href="#cb27-3" tabindex="-1"></a>    <span class="at">names_from =</span> variable, </span>
+<span id="cb27-3"><a href="#cb27-3" tabindex="-1"></a>    <span class="at">names_from =</span> variable,</span>
 <span id="cb27-4"><a href="#cb27-4" tabindex="-1"></a>    <span class="at">values_from =</span> <span class="fu">c</span>(estimate, moe)</span>
 <span id="cb27-5"><a href="#cb27-5" tabindex="-1"></a>  )</span>
 <span id="cb27-6"><a href="#cb27-6" tabindex="-1"></a><span class="co">#&gt; # A tibble: 52 × 6</span></span>
@@ -1077,9 +1078,9 @@ encoded as a factor, but not all of the data will be represented.</p>
 values that are actually represented in the data, but you might want to
 include a column for each possible level in case the data changes in the
 future.</p>
-<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" tabindex="-1"></a>daily <span class="sc">%&gt;%</span></span>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" tabindex="-1"></a>daily <span class="sc">|&gt;</span></span>
 <span id="cb29-2"><a href="#cb29-2" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(</span>
-<span id="cb29-3"><a href="#cb29-3" tabindex="-1"></a>    <span class="at">names_from =</span> day, </span>
+<span id="cb29-3"><a href="#cb29-3" tabindex="-1"></a>    <span class="at">names_from =</span> day,</span>
 <span id="cb29-4"><a href="#cb29-4" tabindex="-1"></a>    <span class="at">values_from =</span> value</span>
 <span id="cb29-5"><a href="#cb29-5" tabindex="-1"></a>  )</span>
 <span id="cb29-6"><a href="#cb29-6" tabindex="-1"></a><span class="co">#&gt; # A tibble: 1 × 4</span></span>
@@ -1090,10 +1091,10 @@ future.</p>
 levels into explicit ones, forcing them to be represented in the result.
 It also sorts the column names using the level order, which produces
 more intuitive results in this case.</p>
-<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" tabindex="-1"></a>daily <span class="sc">%&gt;%</span> </span>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" tabindex="-1"></a>daily <span class="sc">|&gt;</span></span>
 <span id="cb30-2"><a href="#cb30-2" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(</span>
-<span id="cb30-3"><a href="#cb30-3" tabindex="-1"></a>    <span class="at">names_from =</span> day, </span>
-<span id="cb30-4"><a href="#cb30-4" tabindex="-1"></a>    <span class="at">values_from =</span> value, </span>
+<span id="cb30-3"><a href="#cb30-3" tabindex="-1"></a>    <span class="at">names_from =</span> day,</span>
+<span id="cb30-4"><a href="#cb30-4" tabindex="-1"></a>    <span class="at">values_from =</span> value,</span>
 <span id="cb30-5"><a href="#cb30-5" tabindex="-1"></a>    <span class="at">names_expand =</span> <span class="cn">TRUE</span></span>
 <span id="cb30-6"><a href="#cb30-6" tabindex="-1"></a>  )</span>
 <span id="cb30-7"><a href="#cb30-7" tabindex="-1"></a><span class="co">#&gt; # A tibble: 1 × 7</span></span>
@@ -1121,7 +1122,7 @@ those explicit during the pivot.</p>
 <span id="cb31-13"><a href="#cb31-13" tabindex="-1"></a><span class="co">#&gt; 3  2020 A             40</span></span>
 <span id="cb31-14"><a href="#cb31-14" tabindex="-1"></a><span class="co">#&gt; 4  2020 B             60</span></span>
 <span id="cb31-15"><a href="#cb31-15" tabindex="-1"></a></span>
-<span id="cb31-16"><a href="#cb31-16" tabindex="-1"></a>percentages <span class="sc">%&gt;%</span> </span>
+<span id="cb31-16"><a href="#cb31-16" tabindex="-1"></a>percentages <span class="sc">|&gt;</span></span>
 <span id="cb31-17"><a href="#cb31-17" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(</span>
 <span id="cb31-18"><a href="#cb31-18" tabindex="-1"></a>    <span class="at">names_from =</span> <span class="fu">c</span>(year, type),</span>
 <span id="cb31-19"><a href="#cb31-19" tabindex="-1"></a>    <span class="at">values_from =</span> percentage,</span>
@@ -1150,9 +1151,9 @@ with a <code>type</code> column, and pivot on that instead, keeping
 <p>All of our <code>type</code> levels are represented in the columns,
 but we are missing some rows related to the unrepresented
 <code>day</code> factor levels.</p>
-<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" tabindex="-1"></a>daily <span class="sc">%&gt;%</span></span>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" tabindex="-1"></a>daily <span class="sc">|&gt;</span></span>
 <span id="cb33-2"><a href="#cb33-2" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(</span>
-<span id="cb33-3"><a href="#cb33-3" tabindex="-1"></a>    <span class="at">names_from =</span> type, </span>
+<span id="cb33-3"><a href="#cb33-3" tabindex="-1"></a>    <span class="at">names_from =</span> type,</span>
 <span id="cb33-4"><a href="#cb33-4" tabindex="-1"></a>    <span class="at">values_from =</span> value,</span>
 <span id="cb33-5"><a href="#cb33-5" tabindex="-1"></a>    <span class="at">values_fill =</span> <span class="dv">0</span></span>
 <span id="cb33-6"><a href="#cb33-6" tabindex="-1"></a>  )</span>
@@ -1166,9 +1167,9 @@ but we are missing some rows related to the unrepresented
 <p>We can use <code>id_expand</code> in the same way that we used
 <code>names_expand</code>, which will expand out (and sort) the implicit
 missing rows in the <code>id_cols</code>.</p>
-<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" tabindex="-1"></a>daily <span class="sc">%&gt;%</span> </span>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" tabindex="-1"></a>daily <span class="sc">|&gt;</span></span>
 <span id="cb34-2"><a href="#cb34-2" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(</span>
-<span id="cb34-3"><a href="#cb34-3" tabindex="-1"></a>    <span class="at">names_from =</span> type, </span>
+<span id="cb34-3"><a href="#cb34-3" tabindex="-1"></a>    <span class="at">names_from =</span> type,</span>
 <span id="cb34-4"><a href="#cb34-4" tabindex="-1"></a>    <span class="at">values_from =</span> value,</span>
 <span id="cb34-5"><a href="#cb34-5" tabindex="-1"></a>    <span class="at">values_fill =</span> <span class="dv">0</span>,</span>
 <span id="cb34-6"><a href="#cb34-6" tabindex="-1"></a>    <span class="at">id_expand =</span> <span class="cn">TRUE</span></span>
@@ -1210,10 +1211,10 @@ column to create one row summaries of each county’s system updates.</p>
 <p>We could do that with a typical <code>pivot_wider()</code> call, but
 we completely lose all information about the <code>date</code>
 column.</p>
-<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" tabindex="-1"></a>updates <span class="sc">%&gt;%</span> </span>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" tabindex="-1"></a>updates <span class="sc">|&gt;</span></span>
 <span id="cb36-2"><a href="#cb36-2" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(</span>
-<span id="cb36-3"><a href="#cb36-3" tabindex="-1"></a>    <span class="at">id_cols =</span> county, </span>
-<span id="cb36-4"><a href="#cb36-4" tabindex="-1"></a>    <span class="at">names_from =</span> system, </span>
+<span id="cb36-3"><a href="#cb36-3" tabindex="-1"></a>    <span class="at">id_cols =</span> county,</span>
+<span id="cb36-4"><a href="#cb36-4" tabindex="-1"></a>    <span class="at">names_from =</span> system,</span>
 <span id="cb36-5"><a href="#cb36-5" tabindex="-1"></a>    <span class="at">values_from =</span> value</span>
 <span id="cb36-6"><a href="#cb36-6" tabindex="-1"></a>  )</span>
 <span id="cb36-7"><a href="#cb36-7" tabindex="-1"></a><span class="co">#&gt; # A tibble: 2 × 4</span></span>
@@ -1225,10 +1226,10 @@ column.</p>
 across all systems in a particular county. To accomplish that we can use
 the <code>unused_fn</code> argument, which allows us to summarize values
 from the columns not utilized in the pivoting process.</p>
-<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" tabindex="-1"></a>updates <span class="sc">%&gt;%</span> </span>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" tabindex="-1"></a>updates <span class="sc">|&gt;</span></span>
 <span id="cb37-2"><a href="#cb37-2" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(</span>
-<span id="cb37-3"><a href="#cb37-3" tabindex="-1"></a>    <span class="at">id_cols =</span> county, </span>
-<span id="cb37-4"><a href="#cb37-4" tabindex="-1"></a>    <span class="at">names_from =</span> system, </span>
+<span id="cb37-3"><a href="#cb37-3" tabindex="-1"></a>    <span class="at">id_cols =</span> county,</span>
+<span id="cb37-4"><a href="#cb37-4" tabindex="-1"></a>    <span class="at">names_from =</span> system,</span>
 <span id="cb37-5"><a href="#cb37-5" tabindex="-1"></a>    <span class="at">values_from =</span> value,</span>
 <span id="cb37-6"><a href="#cb37-6" tabindex="-1"></a>    <span class="at">unused_fn =</span> <span class="fu">list</span>(<span class="at">date =</span> max)</span>
 <span id="cb37-7"><a href="#cb37-7" tabindex="-1"></a>  )</span>
@@ -1239,10 +1240,10 @@ from the columns not utilized in the pivoting process.</p>
 <span id="cb37-12"><a href="#cb37-12" tabindex="-1"></a><span class="co">#&gt; 2 Guilford   2      NA   1.2 2020-01-04</span></span></code></pre></div>
 <p>You can also retain the data but delay the aggregation entirely by
 using <code>list()</code> as the summary function.</p>
-<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" tabindex="-1"></a>updates <span class="sc">%&gt;%</span> </span>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" tabindex="-1"></a>updates <span class="sc">|&gt;</span></span>
 <span id="cb38-2"><a href="#cb38-2" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(</span>
-<span id="cb38-3"><a href="#cb38-3" tabindex="-1"></a>    <span class="at">id_cols =</span> county, </span>
-<span id="cb38-4"><a href="#cb38-4" tabindex="-1"></a>    <span class="at">names_from =</span> system, </span>
+<span id="cb38-3"><a href="#cb38-3" tabindex="-1"></a>    <span class="at">id_cols =</span> county,</span>
+<span id="cb38-4"><a href="#cb38-4" tabindex="-1"></a>    <span class="at">names_from =</span> system,</span>
 <span id="cb38-5"><a href="#cb38-5" tabindex="-1"></a>    <span class="at">values_from =</span> value,</span>
 <span id="cb38-6"><a href="#cb38-6" tabindex="-1"></a>    <span class="at">unused_fn =</span> <span class="fu">list</span>(<span class="at">date =</span> list)</span>
 <span id="cb38-7"><a href="#cb38-7" tabindex="-1"></a>  )</span>
@@ -1260,9 +1261,9 @@ from a website:</p>
 <div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" tabindex="-1"></a>contacts <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
 <span id="cb39-2"><a href="#cb39-2" tabindex="-1"></a>  <span class="sc">~</span>field, <span class="sc">~</span>value,</span>
 <span id="cb39-3"><a href="#cb39-3" tabindex="-1"></a>  <span class="st">&quot;name&quot;</span>, <span class="st">&quot;Jiena McLellan&quot;</span>,</span>
-<span id="cb39-4"><a href="#cb39-4" tabindex="-1"></a>  <span class="st">&quot;company&quot;</span>, <span class="st">&quot;Toyota&quot;</span>, </span>
-<span id="cb39-5"><a href="#cb39-5" tabindex="-1"></a>  <span class="st">&quot;name&quot;</span>, <span class="st">&quot;John Smith&quot;</span>, </span>
-<span id="cb39-6"><a href="#cb39-6" tabindex="-1"></a>  <span class="st">&quot;company&quot;</span>, <span class="st">&quot;google&quot;</span>, </span>
+<span id="cb39-4"><a href="#cb39-4" tabindex="-1"></a>  <span class="st">&quot;company&quot;</span>, <span class="st">&quot;Toyota&quot;</span>,</span>
+<span id="cb39-5"><a href="#cb39-5" tabindex="-1"></a>  <span class="st">&quot;name&quot;</span>, <span class="st">&quot;John Smith&quot;</span>,</span>
+<span id="cb39-6"><a href="#cb39-6" tabindex="-1"></a>  <span class="st">&quot;company&quot;</span>, <span class="st">&quot;google&quot;</span>,</span>
 <span id="cb39-7"><a href="#cb39-7" tabindex="-1"></a>  <span class="st">&quot;email&quot;</span>, <span class="st">&quot;john@google.com&quot;</span>,</span>
 <span id="cb39-8"><a href="#cb39-8" tabindex="-1"></a>  <span class="st">&quot;name&quot;</span>, <span class="st">&quot;Huxley Ratcliffe&quot;</span></span>
 <span id="cb39-9"><a href="#cb39-9" tabindex="-1"></a>)</span></code></pre></div>
@@ -1270,7 +1271,7 @@ from a website:</p>
 observations belong together. We can fix this by noting that every
 contact starts with a name, so we can create a unique id by counting
 every time we see “name” as the <code>field</code>:</p>
-<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" tabindex="-1"></a>contacts <span class="ot">&lt;-</span> contacts <span class="sc">%&gt;%</span> </span>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" tabindex="-1"></a>contacts <span class="ot">&lt;-</span> contacts <span class="sc">|&gt;</span></span>
 <span id="cb40-2"><a href="#cb40-2" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
 <span id="cb40-3"><a href="#cb40-3" tabindex="-1"></a>    <span class="at">person_id =</span> <span class="fu">cumsum</span>(field <span class="sc">==</span> <span class="st">&quot;name&quot;</span>)</span>
 <span id="cb40-4"><a href="#cb40-4" tabindex="-1"></a>  )</span>
@@ -1286,9 +1287,9 @@ every time we see “name” as the <code>field</code>:</p>
 <span id="cb40-14"><a href="#cb40-14" tabindex="-1"></a><span class="co">#&gt; 6 name    Huxley Ratcliffe         3</span></span></code></pre></div>
 <p>Now that we have a unique identifier for each person, we can pivot
 <code>field</code> and <code>value</code> into the columns:</p>
-<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" tabindex="-1"></a>contacts <span class="sc">%&gt;%</span> </span>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" tabindex="-1"></a>contacts <span class="sc">|&gt;</span></span>
 <span id="cb41-2"><a href="#cb41-2" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(</span>
-<span id="cb41-3"><a href="#cb41-3" tabindex="-1"></a>    <span class="at">names_from =</span> field, </span>
+<span id="cb41-3"><a href="#cb41-3" tabindex="-1"></a>    <span class="at">names_from =</span> field,</span>
 <span id="cb41-4"><a href="#cb41-4" tabindex="-1"></a>    <span class="at">values_from =</span> value</span>
 <span id="cb41-5"><a href="#cb41-5" tabindex="-1"></a>  )</span>
 <span id="cb41-6"><a href="#cb41-6" tabindex="-1"></a><span class="co">#&gt; # A tibble: 3 × 4</span></span>
@@ -1331,10 +1332,10 @@ population per country from 2000 to 2018.</p>
 column. It’s not obvious exactly what steps are needed yet, but I’ll
 start with the most obvious problem: year is spread across multiple
 columns.</p>
-<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" tabindex="-1"></a>pop2 <span class="ot">&lt;-</span> world_bank_pop <span class="sc">%&gt;%</span> </span>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" tabindex="-1"></a>pop2 <span class="ot">&lt;-</span> world_bank_pop <span class="sc">|&gt;</span></span>
 <span id="cb43-2"><a href="#cb43-2" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(</span>
-<span id="cb43-3"><a href="#cb43-3" tabindex="-1"></a>    <span class="at">cols =</span> <span class="st">`</span><span class="at">2000</span><span class="st">`</span><span class="sc">:</span><span class="st">`</span><span class="at">2017</span><span class="st">`</span>, </span>
-<span id="cb43-4"><a href="#cb43-4" tabindex="-1"></a>    <span class="at">names_to =</span> <span class="st">&quot;year&quot;</span>, </span>
+<span id="cb43-3"><a href="#cb43-3" tabindex="-1"></a>    <span class="at">cols =</span> <span class="st">`</span><span class="at">2000</span><span class="st">`</span><span class="sc">:</span><span class="st">`</span><span class="at">2017</span><span class="st">`</span>,</span>
+<span id="cb43-4"><a href="#cb43-4" tabindex="-1"></a>    <span class="at">names_to =</span> <span class="st">&quot;year&quot;</span>,</span>
 <span id="cb43-5"><a href="#cb43-5" tabindex="-1"></a>    <span class="at">values_to =</span> <span class="st">&quot;value&quot;</span></span>
 <span id="cb43-6"><a href="#cb43-6" tabindex="-1"></a>  )</span>
 <span id="cb43-7"><a href="#cb43-7" tabindex="-1"></a>pop2</span>
@@ -1353,7 +1354,7 @@ columns.</p>
 <span id="cb43-20"><a href="#cb43-20" tabindex="-1"></a><span class="co">#&gt; 10 ABW     SP.URB.TOTL 2009  43079</span></span>
 <span id="cb43-21"><a href="#cb43-21" tabindex="-1"></a><span class="co">#&gt; # ℹ 19,142 more rows</span></span></code></pre></div>
 <p>Next we need to consider the <code>indicator</code> variable:</p>
-<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" tabindex="-1"></a>pop2 <span class="sc">%&gt;%</span> </span>
+<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" tabindex="-1"></a>pop2 <span class="sc">|&gt;</span></span>
 <span id="cb44-2"><a href="#cb44-2" tabindex="-1"></a>  <span class="fu">count</span>(indicator)</span>
 <span id="cb44-3"><a href="#cb44-3" tabindex="-1"></a><span class="co">#&gt; # A tibble: 4 × 2</span></span>
 <span id="cb44-4"><a href="#cb44-4" tabindex="-1"></a><span class="co">#&gt;   indicator       n</span></span>
@@ -1367,7 +1368,7 @@ columns.</p>
 are the same but only for urban areas. Let’s split this up into two
 variables: <code>area</code> (total or urban) and the actual variable
 (population or growth):</p>
-<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" tabindex="-1"></a>pop3 <span class="ot">&lt;-</span> pop2 <span class="sc">%&gt;%</span> </span>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" tabindex="-1"></a>pop3 <span class="ot">&lt;-</span> pop2 <span class="sc">|&gt;</span></span>
 <span id="cb45-2"><a href="#cb45-2" tabindex="-1"></a>  <span class="fu">separate</span>(indicator, <span class="fu">c</span>(<span class="cn">NA</span>, <span class="st">&quot;area&quot;</span>, <span class="st">&quot;variable&quot;</span>))</span>
 <span id="cb45-3"><a href="#cb45-3" tabindex="-1"></a>pop3</span>
 <span id="cb45-4"><a href="#cb45-4" tabindex="-1"></a><span class="co">#&gt; # A tibble: 19,152 × 5</span></span>
@@ -1387,9 +1388,9 @@ variables: <code>area</code> (total or urban) and the actual variable
 <p>Now we can complete the tidying by pivoting <code>variable</code> and
 <code>value</code> to make <code>TOTL</code> and <code>GROW</code>
 columns:</p>
-<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" tabindex="-1"></a>pop3 <span class="sc">%&gt;%</span> </span>
+<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" tabindex="-1"></a>pop3 <span class="sc">|&gt;</span></span>
 <span id="cb46-2"><a href="#cb46-2" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(</span>
-<span id="cb46-3"><a href="#cb46-3" tabindex="-1"></a>    <span class="at">names_from =</span> variable, </span>
+<span id="cb46-3"><a href="#cb46-3" tabindex="-1"></a>    <span class="at">names_from =</span> variable,</span>
 <span id="cb46-4"><a href="#cb46-4" tabindex="-1"></a>    <span class="at">values_from =</span> value</span>
 <span id="cb46-5"><a href="#cb46-5" tabindex="-1"></a>  )</span>
 <span id="cb46-6"><a href="#cb46-6" tabindex="-1"></a><span class="co">#&gt; # A tibble: 9,576 × 5</span></span>
@@ -1424,11 +1425,11 @@ individual questions in the columns. You can achieve the desired
 transformation in two steps. First, you make the data longer,
 eliminating the explicit <code>NA</code>s, and adding a column to
 indicate that this choice was chosen:</p>
-<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" tabindex="-1"></a>multi2 <span class="ot">&lt;-</span> multi <span class="sc">%&gt;%</span> </span>
+<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" tabindex="-1"></a>multi2 <span class="ot">&lt;-</span> multi <span class="sc">|&gt;</span></span>
 <span id="cb48-2"><a href="#cb48-2" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(</span>
-<span id="cb48-3"><a href="#cb48-3" tabindex="-1"></a>    <span class="at">cols =</span> <span class="sc">!</span>id, </span>
+<span id="cb48-3"><a href="#cb48-3" tabindex="-1"></a>    <span class="at">cols =</span> <span class="sc">!</span>id,</span>
 <span id="cb48-4"><a href="#cb48-4" tabindex="-1"></a>    <span class="at">values_drop_na =</span> <span class="cn">TRUE</span></span>
-<span id="cb48-5"><a href="#cb48-5" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span> </span>
+<span id="cb48-5"><a href="#cb48-5" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
 <span id="cb48-6"><a href="#cb48-6" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">checked =</span> <span class="cn">TRUE</span>)</span>
 <span id="cb48-7"><a href="#cb48-7" tabindex="-1"></a>multi2</span>
 <span id="cb48-8"><a href="#cb48-8" tabindex="-1"></a><span class="co">#&gt; # A tibble: 8 × 4</span></span>
@@ -1444,11 +1445,11 @@ indicate that this choice was chosen:</p>
 <span id="cb48-18"><a href="#cb48-18" tabindex="-1"></a><span class="co">#&gt; 8     4 choice2 D     TRUE</span></span></code></pre></div>
 <p>Then you make the data wider, filling in the missing observations
 with <code>FALSE</code>:</p>
-<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" tabindex="-1"></a>multi2 <span class="sc">%&gt;%</span> </span>
+<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" tabindex="-1"></a>multi2 <span class="sc">|&gt;</span></span>
 <span id="cb49-2"><a href="#cb49-2" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(</span>
 <span id="cb49-3"><a href="#cb49-3" tabindex="-1"></a>    <span class="at">id_cols =</span> id,</span>
-<span id="cb49-4"><a href="#cb49-4" tabindex="-1"></a>    <span class="at">names_from =</span> value, </span>
-<span id="cb49-5"><a href="#cb49-5" tabindex="-1"></a>    <span class="at">values_from =</span> checked, </span>
+<span id="cb49-4"><a href="#cb49-4" tabindex="-1"></a>    <span class="at">names_from =</span> value,</span>
+<span id="cb49-5"><a href="#cb49-5" tabindex="-1"></a>    <span class="at">values_from =</span> checked,</span>
 <span id="cb49-6"><a href="#cb49-6" tabindex="-1"></a>    <span class="at">values_fill =</span> <span class="cn">FALSE</span></span>
 <span id="cb49-7"><a href="#cb49-7" tabindex="-1"></a>  )</span>
 <span id="cb49-8"><a href="#cb49-8" tabindex="-1"></a><span class="co">#&gt; # A tibble: 4 × 5</span></span>
@@ -1480,9 +1481,9 @@ applied to the <code>relig_income</code> dataset. Now pivoting happens
 in two steps: we first create a spec object (using
 <code>build_longer_spec()</code>) then use that to describe the pivoting
 operation:</p>
-<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" tabindex="-1"></a>spec <span class="ot">&lt;-</span> relig_income <span class="sc">%&gt;%</span> </span>
+<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" tabindex="-1"></a>spec <span class="ot">&lt;-</span> relig_income <span class="sc">|&gt;</span></span>
 <span id="cb50-2"><a href="#cb50-2" tabindex="-1"></a>  <span class="fu">build_longer_spec</span>(</span>
-<span id="cb50-3"><a href="#cb50-3" tabindex="-1"></a>    <span class="at">cols =</span> <span class="sc">!</span>religion, </span>
+<span id="cb50-3"><a href="#cb50-3" tabindex="-1"></a>    <span class="at">cols =</span> <span class="sc">!</span>religion,</span>
 <span id="cb50-4"><a href="#cb50-4" tabindex="-1"></a>    <span class="at">names_to =</span> <span class="st">&quot;income&quot;</span>,</span>
 <span id="cb50-5"><a href="#cb50-5" tabindex="-1"></a>    <span class="at">values_to =</span> <span class="st">&quot;count&quot;</span></span>
 <span id="cb50-6"><a href="#cb50-6" tabindex="-1"></a>  )</span>
@@ -1540,9 +1541,9 @@ character vector of the names of columns being pivoted.</p>
 <p>Below we widen <code>us_rent_income</code> with
 <code>pivot_wider()</code>. The result is ok, but I think it could be
 improved:</p>
-<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" tabindex="-1"></a>us_rent_income <span class="sc">%&gt;%</span> </span>
+<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" tabindex="-1"></a>us_rent_income <span class="sc">|&gt;</span></span>
 <span id="cb52-2"><a href="#cb52-2" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(</span>
-<span id="cb52-3"><a href="#cb52-3" tabindex="-1"></a>    <span class="at">names_from =</span> variable, </span>
+<span id="cb52-3"><a href="#cb52-3" tabindex="-1"></a>    <span class="at">names_from =</span> variable,</span>
 <span id="cb52-4"><a href="#cb52-4" tabindex="-1"></a>    <span class="at">values_from =</span> <span class="fu">c</span>(estimate, moe)</span>
 <span id="cb52-5"><a href="#cb52-5" tabindex="-1"></a>  )</span>
 <span id="cb52-6"><a href="#cb52-6" tabindex="-1"></a><span class="co">#&gt; # A tibble: 52 × 6</span></span>
@@ -1563,9 +1564,9 @@ improved:</p>
 <code>rent</code>, <code>income_moe</code>, and <code>rent_moe</code>,
 which we can achieve with a manual spec. The current spec looks like
 this:</p>
-<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" tabindex="-1"></a>spec1 <span class="ot">&lt;-</span> us_rent_income <span class="sc">%&gt;%</span> </span>
+<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" tabindex="-1"></a>spec1 <span class="ot">&lt;-</span> us_rent_income <span class="sc">|&gt;</span></span>
 <span id="cb53-2"><a href="#cb53-2" tabindex="-1"></a>  <span class="fu">build_wider_spec</span>(</span>
-<span id="cb53-3"><a href="#cb53-3" tabindex="-1"></a>    <span class="at">names_from =</span> variable, </span>
+<span id="cb53-3"><a href="#cb53-3" tabindex="-1"></a>    <span class="at">names_from =</span> variable,</span>
 <span id="cb53-4"><a href="#cb53-4" tabindex="-1"></a>    <span class="at">values_from =</span> <span class="fu">c</span>(estimate, moe)</span>
 <span id="cb53-5"><a href="#cb53-5" tabindex="-1"></a>  )</span>
 <span id="cb53-6"><a href="#cb53-6" tabindex="-1"></a>spec1</span>
@@ -1578,7 +1579,7 @@ this:</p>
 <span id="cb53-13"><a href="#cb53-13" tabindex="-1"></a><span class="co">#&gt; 4 moe_rent        moe      rent</span></span></code></pre></div>
 <p>For this case, we mutate <code>spec</code> to carefully construct the
 column names:</p>
-<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" tabindex="-1"></a>spec2 <span class="ot">&lt;-</span> spec1 <span class="sc">%&gt;%</span></span>
+<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" tabindex="-1"></a>spec2 <span class="ot">&lt;-</span> spec1 <span class="sc">|&gt;</span></span>
 <span id="cb54-2"><a href="#cb54-2" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
 <span id="cb54-3"><a href="#cb54-3" tabindex="-1"></a>    <span class="at">.name =</span> <span class="fu">paste0</span>(variable, <span class="fu">ifelse</span>(.value <span class="sc">==</span> <span class="st">&quot;moe&quot;</span>, <span class="st">&quot;_moe&quot;</span>, <span class="st">&quot;&quot;</span>))</span>
 <span id="cb54-4"><a href="#cb54-4" tabindex="-1"></a>  )</span>
@@ -1592,7 +1593,7 @@ column names:</p>
 <span id="cb54-12"><a href="#cb54-12" tabindex="-1"></a><span class="co">#&gt; 4 rent_moe   moe      rent</span></span></code></pre></div>
 <p>Supplying this spec to <code>pivot_wider()</code> gives us the result
 we’re looking for:</p>
-<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" tabindex="-1"></a>us_rent_income <span class="sc">%&gt;%</span> </span>
+<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" tabindex="-1"></a>us_rent_income <span class="sc">|&gt;</span></span>
 <span id="cb55-2"><a href="#cb55-2" tabindex="-1"></a>  <span class="fu">pivot_wider_spec</span>(spec2)</span>
 <span id="cb55-3"><a href="#cb55-3" tabindex="-1"></a><span class="co">#&gt; # A tibble: 52 × 6</span></span>
 <span id="cb55-4"><a href="#cb55-4" tabindex="-1"></a><span class="co">#&gt;    GEOID NAME                 income  rent income_moe rent_moe</span></span>
@@ -1635,17 +1636,17 @@ summaries for number of units (1, 2-4, 5+) and regions of the country
 (NE, NW, midwest, S, W). We can most easily describe that with a
 tibble:</p>
 <div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" tabindex="-1"></a>spec <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
-<span id="cb57-2"><a href="#cb57-2" tabindex="-1"></a>  <span class="sc">~</span>.name,            <span class="sc">~</span>.value, <span class="sc">~</span>units,  <span class="sc">~</span>region,     </span>
-<span id="cb57-3"><a href="#cb57-3" tabindex="-1"></a>  <span class="st">&quot;1 unit&quot;</span>,          <span class="st">&quot;n&quot;</span>,     <span class="st">&quot;1&quot;</span>,     <span class="cn">NA</span>,          </span>
-<span id="cb57-4"><a href="#cb57-4" tabindex="-1"></a>  <span class="st">&quot;2 to 4 units&quot;</span>,    <span class="st">&quot;n&quot;</span>,     <span class="st">&quot;2-4&quot;</span>,   <span class="cn">NA</span>,          </span>
-<span id="cb57-5"><a href="#cb57-5" tabindex="-1"></a>  <span class="st">&quot;5 units or more&quot;</span>, <span class="st">&quot;n&quot;</span>,     <span class="st">&quot;5+&quot;</span>,    <span class="cn">NA</span>,          </span>
-<span id="cb57-6"><a href="#cb57-6" tabindex="-1"></a>  <span class="st">&quot;Northeast&quot;</span>,       <span class="st">&quot;n&quot;</span>,     <span class="cn">NA</span>,      <span class="st">&quot;Northeast&quot;</span>, </span>
-<span id="cb57-7"><a href="#cb57-7" tabindex="-1"></a>  <span class="st">&quot;Midwest&quot;</span>,         <span class="st">&quot;n&quot;</span>,     <span class="cn">NA</span>,      <span class="st">&quot;Midwest&quot;</span>,   </span>
-<span id="cb57-8"><a href="#cb57-8" tabindex="-1"></a>  <span class="st">&quot;South&quot;</span>,           <span class="st">&quot;n&quot;</span>,     <span class="cn">NA</span>,      <span class="st">&quot;South&quot;</span>,     </span>
-<span id="cb57-9"><a href="#cb57-9" tabindex="-1"></a>  <span class="st">&quot;West&quot;</span>,            <span class="st">&quot;n&quot;</span>,     <span class="cn">NA</span>,      <span class="st">&quot;West&quot;</span>,      </span>
+<span id="cb57-2"><a href="#cb57-2" tabindex="-1"></a>  <span class="sc">~</span>.name,            <span class="sc">~</span>.value, <span class="sc">~</span>units,  <span class="sc">~</span>region,</span>
+<span id="cb57-3"><a href="#cb57-3" tabindex="-1"></a>  <span class="st">&quot;1 unit&quot;</span>,          <span class="st">&quot;n&quot;</span>,     <span class="st">&quot;1&quot;</span>,     <span class="cn">NA</span>,</span>
+<span id="cb57-4"><a href="#cb57-4" tabindex="-1"></a>  <span class="st">&quot;2 to 4 units&quot;</span>,    <span class="st">&quot;n&quot;</span>,     <span class="st">&quot;2-4&quot;</span>,   <span class="cn">NA</span>,</span>
+<span id="cb57-5"><a href="#cb57-5" tabindex="-1"></a>  <span class="st">&quot;5 units or more&quot;</span>, <span class="st">&quot;n&quot;</span>,     <span class="st">&quot;5+&quot;</span>,    <span class="cn">NA</span>,</span>
+<span id="cb57-6"><a href="#cb57-6" tabindex="-1"></a>  <span class="st">&quot;Northeast&quot;</span>,       <span class="st">&quot;n&quot;</span>,     <span class="cn">NA</span>,      <span class="st">&quot;Northeast&quot;</span>,</span>
+<span id="cb57-7"><a href="#cb57-7" tabindex="-1"></a>  <span class="st">&quot;Midwest&quot;</span>,         <span class="st">&quot;n&quot;</span>,     <span class="cn">NA</span>,      <span class="st">&quot;Midwest&quot;</span>,</span>
+<span id="cb57-8"><a href="#cb57-8" tabindex="-1"></a>  <span class="st">&quot;South&quot;</span>,           <span class="st">&quot;n&quot;</span>,     <span class="cn">NA</span>,      <span class="st">&quot;South&quot;</span>,</span>
+<span id="cb57-9"><a href="#cb57-9" tabindex="-1"></a>  <span class="st">&quot;West&quot;</span>,            <span class="st">&quot;n&quot;</span>,     <span class="cn">NA</span>,      <span class="st">&quot;West&quot;</span>,</span>
 <span id="cb57-10"><a href="#cb57-10" tabindex="-1"></a>)</span></code></pre></div>
 <p>Which yields the following longer form:</p>
-<div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" tabindex="-1"></a>construction <span class="sc">%&gt;%</span> <span class="fu">pivot_longer_spec</span>(spec)</span>
+<div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" tabindex="-1"></a>construction <span class="sc">|&gt;</span> <span class="fu">pivot_longer_spec</span>(spec)</span>
 <span id="cb58-2"><a href="#cb58-2" tabindex="-1"></a><span class="co">#&gt; # A tibble: 63 × 5</span></span>
 <span id="cb58-3"><a href="#cb58-3" tabindex="-1"></a><span class="co">#&gt;     Year Month    units region        n</span></span>
 <span id="cb58-4"><a href="#cb58-4" tabindex="-1"></a><span class="co">#&gt;    &lt;dbl&gt; &lt;chr&gt;    &lt;chr&gt; &lt;chr&gt;     &lt;dbl&gt;</span></span>
@@ -1669,8 +1670,8 @@ naturally described in two independent tables.</p>
 <p>One neat property of the <code>spec</code> is that you need the same
 spec for <code>pivot_longer()</code> and <code>pivot_wider()</code>.
 This makes it very clear that the two operations are symmetric:</p>
-<div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" tabindex="-1"></a>construction <span class="sc">%&gt;%</span> </span>
-<span id="cb59-2"><a href="#cb59-2" tabindex="-1"></a>  <span class="fu">pivot_longer_spec</span>(spec) <span class="sc">%&gt;%</span> </span>
+<div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" tabindex="-1"></a>construction <span class="sc">|&gt;</span></span>
+<span id="cb59-2"><a href="#cb59-2" tabindex="-1"></a>  <span class="fu">pivot_longer_spec</span>(spec) <span class="sc">|&gt;</span></span>
 <span id="cb59-3"><a href="#cb59-3" tabindex="-1"></a>  <span class="fu">pivot_wider_spec</span>(spec)</span>
 <span id="cb59-4"><a href="#cb59-4" tabindex="-1"></a><span class="co">#&gt; # A tibble: 9 × 9</span></span>
 <span id="cb59-5"><a href="#cb59-5" tabindex="-1"></a><span class="co">#&gt;    Year Month  `1 unit` `2 to 4 units` `5 units or more` Northeast Midwest South</span></span>

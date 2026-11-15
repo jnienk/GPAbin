@@ -49,8 +49,9 @@ overflow: visible;
 }
 </style>
 <style type="text/css" data-origin="pandoc">
+html { -webkit-text-size-adjust: 100%; }
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -376,10 +377,10 @@ retrieving data. It releases the resources associated with the
 <span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a></span>
 <span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a>con <span class="ot">&lt;-</span> <span class="fu">dbConnect</span>(</span>
 <span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a>  RMariaDB<span class="sc">::</span><span class="fu">MariaDB</span>(),</span>
-<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a>  <span class="at">host =</span> <span class="st">&quot;db.relational-data.org&quot;</span>,</span>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a>  <span class="at">host =</span> <span class="st">&quot;relational.fel.cvut.cz&quot;</span>,</span>
 <span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a>  <span class="at">port =</span> <span class="dv">3306</span>,</span>
 <span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a>  <span class="at">username =</span> <span class="st">&quot;guest&quot;</span>,</span>
-<span id="cb1-8"><a href="#cb1-8" tabindex="-1"></a>  <span class="at">password =</span> <span class="st">&quot;relational&quot;</span>,</span>
+<span id="cb1-8"><a href="#cb1-8" tabindex="-1"></a>  <span class="at">password =</span> <span class="st">&quot;ctu-relational&quot;</span>,</span>
 <span id="cb1-9"><a href="#cb1-9" tabindex="-1"></a>  <span class="at">dbname =</span> <span class="st">&quot;sakila&quot;</span></span>
 <span id="cb1-10"><a href="#cb1-10" tabindex="-1"></a>)</span>
 <span id="cb1-11"><a href="#cb1-11" tabindex="-1"></a></span>
@@ -482,7 +483,7 @@ expression unchanged.</p>
 unnamed list of parameter values. Other DBMS may use named parameters.
 We recommend consulting the documentation for the DBMS you are using. As
 an example, a web search for “mariadb parameterized queries” leads to
-the documentation for the <a href="https://mariadb.com/kb/en/prepare-statement/"><code>PREPARE</code>
+the documentation for the <a href="https://mariadb.com/docs/server/reference/sql-statements/prepared-statements/prepare-statement"><code>PREPARE</code>
 statement</a> which mentions:</p>
 <blockquote>
 <p>Within the statement, “?” characters can be used as parameter markers
@@ -756,7 +757,8 @@ execute the code and call <code>dbCommit()</code> on success and call
 <span id="cb52-8"><a href="#cb52-8" tabindex="-1"></a>}</span>
 <span id="cb52-9"><a href="#cb52-9" tabindex="-1"></a></span>
 <span id="cb52-10"><a href="#cb52-10" tabindex="-1"></a><span class="fu">withdraw_safely</span>(<span class="dv">5000</span>)</span></code></pre></div>
-<pre><code>## Error: Error: insufficient funds</code></pre>
+<pre><code>## Error:
+## ! Error: insufficient funds</code></pre>
 <div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" tabindex="-1"></a><span class="fu">dbReadTable</span>(con, <span class="st">&quot;cash&quot;</span>)</span></code></pre></div>
 <pre><code>##   amount
 ## 1    400</code></pre>

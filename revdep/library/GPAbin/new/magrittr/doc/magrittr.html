@@ -482,7 +482,7 @@ example (where the actual plot is omitted here):</p>
 <span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a><span class="fu">matrix</span>(<span class="at">ncol =</span> <span class="dv">2</span>) <span class="sc">%T&gt;%</span></span>
 <span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a>plot <span class="sc">%&gt;%</span> <span class="co"># plot usually does not return anything. </span></span>
 <span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a>colSums</span>
-<span id="cb6-5"><a href="#cb6-5" tabindex="-1"></a><span class="co">#&gt; [1] -2.644548  3.016342</span></span></code></pre></div>
+<span id="cb6-5"><a href="#cb6-5" tabindex="-1"></a><span class="co">#&gt; [1]  6.998850 -7.059263</span></span></code></pre></div>
 <p>The “exposition” pipe, <code>%$%</code> exposes the names within the
 left-hand side object to the right-hand side expression. Essentially, it
 is a short-hand for using the <code>with</code> functions (and the same
@@ -526,8 +526,8 @@ As an example, consider:</p>
 <span id="cb9-6"><a href="#cb9-6" tabindex="-1"></a>       <span class="st">&quot;Variance:&quot;</span>, <span class="fu">var</span>(.), <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span>
 <span id="cb9-7"><a href="#cb9-7" tabindex="-1"></a>   <span class="fu">head</span>(.)</span>
 <span id="cb9-8"><a href="#cb9-8" tabindex="-1"></a>}</span>
-<span id="cb9-9"><a href="#cb9-9" tabindex="-1"></a><span class="co">#&gt; Mean: 5.121458 Variance: 25.13575</span></span>
-<span id="cb9-10"><a href="#cb9-10" tabindex="-1"></a><span class="co">#&gt; [1] -0.6005174 10.3576256  4.5484599  9.1013981  3.4924093  7.3918907</span></span></code></pre></div>
+<span id="cb9-9"><a href="#cb9-9" tabindex="-1"></a><span class="co">#&gt; Mean: 4.839548 Variance: 25.4877</span></span>
+<span id="cb9-10"><a href="#cb9-10" tabindex="-1"></a><span class="co">#&gt; [1]  2.716119  8.623134  8.734029  1.519661  5.831992 -0.538930</span></span></code></pre></div>
 <p>which could be written in more compact form as:</p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a><span class="fu">rnorm</span>(<span class="dv">100</span>) <span class="sc">%&gt;%</span> <span class="st">`</span><span class="at">*</span><span class="st">`</span>(<span class="dv">5</span>) <span class="sc">%&gt;%</span> <span class="st">`</span><span class="at">+</span><span class="st">`</span>(<span class="dv">5</span>) <span class="sc">%&gt;%</span> </span>
 <span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a>{</span>

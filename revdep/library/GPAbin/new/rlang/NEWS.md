@@ -1,3 +1,43 @@
+# rlang 1.3.0
+
+* `hash()` now uses its own walking strategy to make it independent of pecularities of the R serialiser. This fixes stability issues with function bytecode and shrinkable vectors on R 4.6.0 (#1681).
+
+  This does mean that with this version all hash values will now be different. In general we gain stability across versions of R, but may lose some stability across versions of rlang. We'll try and avoid changes to our hash algorithm for the sake of stability but you should assume it's always possible for a new version to invalidate existing hashes.
+
+* Fixed `env_get()` issue causing double evaluation of active bindings on older R versions <= 4.4 (#1893).
+
+# rlang 1.2.0
+
+* rlang and tidyeval are now fully backed by official C APIs of R!
+  Thanks to the R core team for collaborating with us on this.
+
+* `ns_registry_env()` is defunct in R >= 4.6.0 for compliance with the C API of R.
+
+* New type-checking functions exported from rlang: `check_bool()`,
+  `check_string()`, `check_number_decimal()`,
+  `check_number_whole()`, and `check_data_frame()`. These were
+  previously only available via the `standalone-types-check.R`
+  standalone file. `stop_input_type()` is also now exported.
+
+* Fixed a protection issue discovered by rchk (#1865).
+
+
+# rlang 1.1.7
+
+* Progress towards making rlang conformant with the public C API of R.
+
+* R >=4.0.0 is now required. This is still more permissive than the general tidyverse policy of supporting the [5 most recent versions of R](https://tidyverse.org/blog/2019/04/r-version-support/).
+
+* `list2()` is now a little faster (#1837).
+
+* New `%&&%` operator that returns RHS when LHS is non-NULL (#1774, @snystrom).
+
+* C code no longer calls `memcpy()` and `memset()` on 0-length R object memory
+  (#1797).
+* `is_syntactic_literal()` returns `FALSE` for objects with attributes, such as `array(1)` or `factor("x")` (#1817, @jonthegeek).
+* `is_syntactic_literal()` returns `FALSE` for negative numbers and complex numbers with negative imaginary components (#1799, @jonthegeek).
+
+
 # rlang 1.1.6
 
 * Fixes for CRAN checks.
@@ -43,7 +83,7 @@
 
 * `obj_type_friendly()` now only displays the first class of S3 objects (#1622).
 
-* `expr_label()` now has back-compatility with respect to changes made by R version 4.4 and `is.atomic(NULL)` (#1655)
+* `expr_label()` now has back-compatibility with respect to changes made by R version 4.4 and `is.atomic(NULL)` (#1655)
 
 * Performance improvement in `.rlang_cli_compat()` (#1657).
 
@@ -483,7 +523,7 @@ extensive changes to the display of error messages.
   We've added the function `is_call_simple()` to make it easier to
   work safely with `call_name()`. The invariant is that `call_name()`
   always returns a string when `is_call_simple()` returns `TRUE`.
-  Conversely it always returns `NULL` when `is_call_simple()` retuns
+  Conversely it always returns `NULL` when `is_call_simple()` returns
   `FALSE`.
 
 * `is_expression()` now returns `FALSE` for manually constructed
@@ -864,7 +904,7 @@ extensive changes to the display of error messages.
 * Added `compat-cli.R` file to format message elements consistently
   with cli in zero-deps packages.
 
-* `compat-purrr.R` now longer includes `pluck*` helpers; these used a defintion
+* `compat-purrr.R` now longer includes `pluck*` helpers; these used a definition
   of pluck that predated purrr (#1159). `*_cpl()` has also been removed.
   The `map*` wrappers now call `as_function()` so that you can pass short
   anonymous functions that use `~` (#1157).
@@ -1028,7 +1068,7 @@ extensive changes to the display of error messages.
   dplyr issue involving rowwise data frames and list-columns of
   functions (tidyverse/dplyr#5608).
 
-* `as_data_mask()` now intialises environments of the correct size to
+* `as_data_mask()` now initialises environments of the correct size to
   improve efficiency (#1048).
 
 * `eval_bare()`, `eval_tidy()` (#961), and `with_handlers()` (#518)
@@ -1085,7 +1125,7 @@ extensive changes to the display of error messages.
   is displayed.
 
   This change simplifies the display (#851) and makes it possible to
-  rethow errors from a calling handler rather than an exiting handler,
+  rethrow errors from a calling handler rather than an exiting handler,
   which we now think is more appropriate because it allows users to
   `recover()` into the error.
 
@@ -1284,7 +1324,7 @@ extensive changes to the display of error messages.
 # rlang 0.4.1
 
 * New experimental framework for creating bulleted error messages. See
-  `?cnd_message` for the motivation and an overwiew of the tools we
+  `?cnd_message` for the motivation and an overview of the tools we
   have created to support this approach. In particular, `abort()` now
   takes character vectors to assemble a bullet list. Elements named
   `x` are prefixed with a red cross, elements named `i` are prefixed
@@ -1479,7 +1519,7 @@ really a data frame.
   field of `rlang::last_error()`.
 
 * `ns_env()` and `ns_env_name()` (experimental functions) now support
-  functions and environments consisently. They also require an
+  functions and environments consistently. They also require an
   argument from now on.
 
 * `is_interactive()` is aware of the `TESTTHAT` environment variable and
@@ -2387,7 +2427,7 @@ prepared to deal with occasional backward incompatible updates.
 
 * `exprs()` and `quos()` gain a `.unquote_names` arguments to switch
   off interpretation of `:=` as a name operator. This should be useful
-  for programming on the language targetting APIs such as
+  for programming on the language targeting APIs such as
   data.table.
 
 * `exprs()` gains a `.named` option to auto-label its arguments (#267).
@@ -2473,7 +2513,7 @@ prepared to deal with occasional backward incompatible updates.
 
 ## Environments
 
-* `env_get_list()` retrieves muliple bindings from an environment into
+* `env_get_list()` retrieves multiple bindings from an environment into
   a named list.
 
 * `with_bindings()` and `scoped_bindings()` establish temporary
@@ -2651,7 +2691,7 @@ lifecycle status of exported functions.
 
 * `quo_expr()` is soft-deprecated in favour of `quo_squash()`.
   `quo_expr()` was a misnomer because it implied that it was a mere
-  expression acccessor for quosures whereas it was really a lossy
+  expression accessor for quosures whereas it was really a lossy
   operation that squashed all nested quosures.
 
 * With the renaming of the `lang` particle to `call`, all these

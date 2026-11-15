@@ -22,7 +22,11 @@ chol2pre	ltMatrices
 condDist	interface
 condDist.mvnorm	interface
 cond_mvnorm	margcond
+cov2chol	ltMatrices
+cov2invchol	ltMatrices
 Crossprod	ltMatrices
+crossprod.ltMatrices	ltMatrices
+crossprod.syMatrices	ltMatrices
 Dchol	ltMatrices
 deperma	ltMatrices
 destandardize	ltMatrices
@@ -37,6 +41,8 @@ diagonals<-.syMatrices	ltMatrices
 dmvnorm	Mvnorm
 dmvt	Mvt
 GenzBretz	algorithms
+invchol	ltMatrices
+invchol.syMatrices	ltMatrices
 invchol2chol	ltMatrices
 invchol2cor	ltMatrices
 invchol2cov	ltMatrices
@@ -81,5 +87,7 @@ solve.ltMatrices	ltMatrices
 standardize	ltMatrices
 syMatrices	ltMatrices
 Tcrossprod	ltMatrices
+tcrossprod.ltMatrices	ltMatrices
+tcrossprod.syMatrices	ltMatrices
 TVPACK	algorithms
 vectrick	ltMatrices

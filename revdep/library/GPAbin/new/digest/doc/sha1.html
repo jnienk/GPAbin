@@ -34,7 +34,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
 { counter-reset: source-line 0; }
@@ -233,7 +233,7 @@ hash function.</p>
 <span id="faq7_31digest-25"><a href="#faq7_31digest-25" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="st">&quot;169388cf1ce60dc4e9904a22bc934c5db33d975b&quot;</span></span>
 <span id="faq7_31digest-26"><a href="#faq7_31digest-26" aria-hidden="true" tabindex="-1"></a>[<span class="dv">2</span>] <span class="st">&quot;20dc38536b6689d5f2d053f30efb09c44af78378&quot;</span></span>
 <span id="faq7_31digest-27"><a href="#faq7_31digest-27" aria-hidden="true" tabindex="-1"></a>[<span class="dv">3</span>] <span class="st">&quot;3a727417bd1807af2f0148cf3de69abff32c23ec&quot;</span></span></code></pre></div>
-<p>The result of floating point arithematic on 32-bit and 64-bit can be
+<p>The result of floating point arithmetic on 32-bit and 64-bit can be
 slightly different. E.g. <code>print(pi ^ 11, 22)</code> returns
 <code>294204.01797389047</code> on 32-bit and
 <code>294204.01797389053</code> on 64-bit. Note that only the last 2

@@ -10,7 +10,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-<meta name="author" content="estimability package, Version 1.5.1" />
+<meta name="author" content="estimability package, Version 2.0.0" />
 
 
 <title>How to add estimability checking to your model’s predict method</title>
@@ -40,6 +40,108 @@ ul.task-list{list-style: none;}
 
 
 
+<style type="text/css">
+code {
+white-space: pre;
+}
+.sourceCode {
+overflow: visible;
+}
+</style>
+<style type="text/css" data-origin="pandoc">
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+{ counter-reset: source-line 0; }
+pre.numberSource code > span
+{ position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+{ content: counter(source-line);
+position: relative; left: -1em; text-align: right; vertical-align: baseline;
+border: none; display: inline-block;
+-webkit-touch-callout: none; -webkit-user-select: none;
+-khtml-user-select: none; -moz-user-select: none;
+-ms-user-select: none; user-select: none;
+padding: 0 4px; width: 4em;
+color: #aaaaaa;
+}
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa; padding-left: 4px; }
+div.sourceCode
+{ }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } 
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.at { color: #7d9029; } 
+code span.bn { color: #40a070; } 
+code span.bu { color: #008000; } 
+code span.cf { color: #007020; font-weight: bold; } 
+code span.ch { color: #4070a0; } 
+code span.cn { color: #880000; } 
+code span.co { color: #60a0b0; font-style: italic; } 
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.do { color: #ba2121; font-style: italic; } 
+code span.dt { color: #902000; } 
+code span.dv { color: #40a070; } 
+code span.er { color: #ff0000; font-weight: bold; } 
+code span.ex { } 
+code span.fl { color: #40a070; } 
+code span.fu { color: #06287e; } 
+code span.im { color: #008000; font-weight: bold; } 
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.kw { color: #007020; font-weight: bold; } 
+code span.op { color: #666666; } 
+code span.ot { color: #007020; } 
+code span.pp { color: #bc7a00; } 
+code span.sc { color: #4070a0; } 
+code span.ss { color: #bb6688; } 
+code span.st { color: #4070a0; } 
+code span.va { color: #19177c; } 
+code span.vs { color: #4070a0; } 
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } 
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    var j = 0;
+    while (j < rules.length) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") {
+        j++;
+        continue;
+      }
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') {
+        j++;
+        continue;
+      }
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
 
 
 
@@ -238,7 +340,7 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 
 <h1 class="title toc-ignore">How to add estimability checking to your
 model’s <code>predict</code> method</h1>
-<h4 class="author">estimability package, Version 1.5.1</h4>
+<h4 class="author">estimability package, Version 2.0.0</h4>
 
 
 
@@ -303,6 +405,98 @@ non-estimable cases are flagged as <code>NA</code> in the
 estimability.</p>
 <p>The only other thing you need to do is add <code>estimability</code>
 to the <code>Imports</code> list in your `Description file.</p>
+<div id="a-complete-example" class="section level2">
+<h2>A complete example</h2>
+<p>Below is a complete model-fitting function that illustrates how to
+navigate the various practical aspects of incorporating estimability
+checking in your code. This code emphasises readability rather than
+computational efficiency, and lacks many aspects of robustness or
+checking of inputs. The function returns information about the model
+terms and factor levels, the computed coefficients <code>coef</code> and
+their variance-covariance matrix <code>vcov</code>, and the basis
+<code>nbasis</code> of the null space of the model matrix. It utilizes
+the Cholesky decomposition with pivoting. Pivoting involves rearranging
+the order of predictors, managing rank-deficient cases by moving some
+linearly dependent predictors to the end of the line. We can the ignore
+or “discard” those dependent predictors, which in estimability parlance
+is obtaining a solution by constraining the coefficients of those
+predictors to be zero.</p>
+<p>Much of what is shown here is how to deal with the <code>pivot</code>
+attribute, which comprises the indices of the reordered predictors. The
+<code>rank</code> attribute tells us how many nonzero coefficients there
+are. We compute <code>coef</code> using the first <code>rank</code>
+pivoted predictors, and by putting <code>NA</code>s for the coefficients
+constrained to zero, while <code>vcov</code> is only for the
+non-<code>NA</code> elements of <code>coef</code>. As is also true in
+the standard <code>lm</code> function, the <code>NA</code> elements are
+just used to signal which coefficients were constrained to zero. The
+<code>nonest.basis()</code> function sees the <code>pivot</code>
+attribute and re-orders the predictors accordingly, so we don’t un-pivot
+that result. The last few lines of code are necessary for passing needed
+information to the <code>predict</code> method.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a>mylm <span class="ot">&lt;-</span> <span class="cf">function</span>(formula, data) {</span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a>    y <span class="ot">&lt;-</span> data[[<span class="fu">all.vars</span>(formula)[<span class="dv">1</span>]]]</span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a>    X <span class="ot">&lt;-</span> <span class="fu">model.matrix</span>(formula[<span class="sc">-</span><span class="dv">2</span>], <span class="at">data =</span> data)</span>
+<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a>    ch <span class="ot">&lt;-</span> <span class="fu">chol</span>(<span class="fu">t</span>(X) <span class="sc">%*%</span> X, <span class="at">pivot =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span> <span class="fu">suppressWarnings</span>()</span>
+<span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a>    rank <span class="ot">=</span> <span class="fu">attr</span>(ch, <span class="st">&quot;rank&quot;</span>)</span>
+<span id="cb2-6"><a href="#cb2-6" tabindex="-1"></a>    pivot <span class="ot">&lt;-</span> <span class="fu">attr</span>(ch, <span class="st">&quot;pivot&quot;</span>)</span>
+<span id="cb2-7"><a href="#cb2-7" tabindex="-1"></a>    XpXinv <span class="ot">&lt;-</span> <span class="fu">chol2inv</span>(ch, <span class="at">size =</span> rank)</span>
+<span id="cb2-8"><a href="#cb2-8" tabindex="-1"></a>    coef <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="cn">NA</span>, <span class="fu">ncol</span>(X))</span>
+<span id="cb2-9"><a href="#cb2-9" tabindex="-1"></a>    <span class="fu">names</span>(coef) <span class="ot">&lt;-</span> <span class="fu">colnames</span>(X)</span>
+<span id="cb2-10"><a href="#cb2-10" tabindex="-1"></a>    coef[pivot[<span class="dv">1</span><span class="sc">:</span>rank]] <span class="ot">&lt;-</span> XpXinv <span class="sc">%*%</span> (<span class="fu">t</span>(X[, pivot[<span class="dv">1</span><span class="sc">:</span>rank], <span class="at">drop =</span> <span class="cn">FALSE</span>]) <span class="sc">%*%</span> y)</span>
+<span id="cb2-11"><a href="#cb2-11" tabindex="-1"></a>    nonNA <span class="ot">&lt;-</span> <span class="fu">which</span>(<span class="sc">!</span><span class="fu">is.na</span>(coef))</span>
+<span id="cb2-12"><a href="#cb2-12" tabindex="-1"></a>    fit <span class="ot">&lt;-</span> X[ , nonNA, drop <span class="ot">=</span> <span class="cn">FALSE</span>] <span class="sc">%*%</span> coef[nonNA]</span>
+<span id="cb2-13"><a href="#cb2-13" tabindex="-1"></a>    mse <span class="ot">&lt;-</span> <span class="fu">sum</span>((y <span class="sc">-</span> fit)<span class="sc">^</span><span class="dv">2</span>) <span class="sc">/</span> (<span class="fu">length</span>(y) <span class="sc">-</span> rank)</span>
+<span id="cb2-14"><a href="#cb2-14" tabindex="-1"></a>    ord <span class="ot">&lt;-</span> <span class="fu">order</span>(pivot[<span class="dv">1</span><span class="sc">:</span>rank])</span>
+<span id="cb2-15"><a href="#cb2-15" tabindex="-1"></a>    vcov <span class="ot">&lt;-</span> mse <span class="sc">*</span> XpXinv[ord, ord, drop <span class="ot">=</span> <span class="cn">FALSE</span>]</span>
+<span id="cb2-16"><a href="#cb2-16" tabindex="-1"></a>    <span class="fu">dimnames</span>(vcov) <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="fu">names</span>(coef)[nonNA], <span class="fu">names</span>(coef)[nonNA])</span>
+<span id="cb2-17"><a href="#cb2-17" tabindex="-1"></a>    nbasis <span class="ot">&lt;-</span> estimability<span class="sc">::</span><span class="fu">nonest.basis</span>(ch)</span>
+<span id="cb2-18"><a href="#cb2-18" tabindex="-1"></a>    terms <span class="ot">&lt;-</span> <span class="fu">terms</span>(formula) <span class="sc">|&gt;</span> <span class="fu">delete.response</span>()</span>
+<span id="cb2-19"><a href="#cb2-19" tabindex="-1"></a>    xlev <span class="ot">=</span> <span class="fu">list</span>()</span>
+<span id="cb2-20"><a href="#cb2-20" tabindex="-1"></a>    <span class="cf">for</span> (v <span class="cf">in</span> <span class="fu">all.vars</span>(terms))</span>
+<span id="cb2-21"><a href="#cb2-21" tabindex="-1"></a>        <span class="cf">if</span>(<span class="sc">!</span><span class="fu">is.null</span>(lv <span class="ot">&lt;-</span> <span class="fu">levels</span>(data[[v]])))</span>
+<span id="cb2-22"><a href="#cb2-22" tabindex="-1"></a>            xlev[[v]] <span class="ot">&lt;-</span> lv</span>
+<span id="cb2-23"><a href="#cb2-23" tabindex="-1"></a>    obj <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">terms =</span> terms, <span class="at">xlev =</span> xlev, <span class="at">coef =</span> coef, <span class="at">vcov =</span> vcov, <span class="at">nbasis =</span> nbasis)</span>
+<span id="cb2-24"><a href="#cb2-24" tabindex="-1"></a>    <span class="fu">class</span>(obj) <span class="ot">&lt;-</span> <span class="st">&quot;mylm&quot;</span></span>
+<span id="cb2-25"><a href="#cb2-25" tabindex="-1"></a>    obj</span>
+<span id="cb2-26"><a href="#cb2-26" tabindex="-1"></a>}</span></code></pre></div>
+<p>The following code is a corresponding S3 method to provide
+predictions and standard errors for new data, with estimability
+checking. The <code>model.frame</code> call ensures that we incorporate
+the original factor coding in the new data. We then construct the
+corresponding model matrix <code>X</code> for the new data, and test the
+rows for estimability. Once that is determined, we obtain the matrix
+<code>XX</code> with only the estimable rows and corresponding to
+non-<code>NA</code> elements of <code>coef</code>. The predictions and
+SEs of any non-estimable rows are set to <code>NA</code>.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a>predict.mylm <span class="ot">&lt;-</span> <span class="cf">function</span>(mod, newdata) {</span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a>    mf <span class="ot">&lt;-</span> <span class="fu">model.frame</span>(mod<span class="sc">$</span>terms, <span class="at">data =</span> newdata, <span class="at">xlev =</span> mod<span class="sc">$</span>xlev)</span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a>    X <span class="ot">&lt;-</span> <span class="fu">model.matrix</span>(mod<span class="sc">$</span>terms, <span class="at">data =</span> mf)</span>
+<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a>    pred <span class="ot">&lt;-</span> se <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="cn">NA</span>, <span class="fu">nrow</span>(X))</span>
+<span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a>    estble <span class="ot">&lt;-</span> estimability<span class="sc">::</span><span class="fu">is.estble</span>(X, mod<span class="sc">$</span>nbasis)</span>
+<span id="cb3-6"><a href="#cb3-6" tabindex="-1"></a>    XX <span class="ot">&lt;-</span> X[estble, <span class="sc">!</span><span class="fu">is.na</span>(mod<span class="sc">$</span>coef), drop <span class="ot">=</span> <span class="cn">FALSE</span>]</span>
+<span id="cb3-7"><a href="#cb3-7" tabindex="-1"></a>    pred[estble] <span class="ot">&lt;-</span> XX <span class="sc">%*%</span> mod<span class="sc">$</span>coef[<span class="sc">!</span><span class="fu">is.na</span>(mod<span class="sc">$</span>coef)]</span>
+<span id="cb3-8"><a href="#cb3-8" tabindex="-1"></a>    se[estble] <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(<span class="fu">diag</span>(XX <span class="sc">%*%</span> mod<span class="sc">$</span>vcov <span class="sc">%*%</span> <span class="fu">t</span>(XX)))</span>
+<span id="cb3-9"><a href="#cb3-9" tabindex="-1"></a>    <span class="fu">list</span>(<span class="at">pred =</span> pred, <span class="at">se =</span> se)</span>
+<span id="cb3-10"><a href="#cb3-10" tabindex="-1"></a>}</span></code></pre></div>
+<p>Finally, here is a test of these functions, using a subset of the
+<code>warpbreaks</code> data with two complete cells excluded along with
+a few more observations. Then we obtain predictions for all factor
+combinations. We find that the two excluded cells are non-estimable.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="co"># test code</span></span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a>warp <span class="ot">=</span> warpbreaks[<span class="dv">11</span><span class="sc">:</span><span class="dv">40</span>, ]</span>
+<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a>warp.mylm <span class="ot">=</span> <span class="fu">mylm</span>(breaks <span class="sc">~</span> wool<span class="sc">*</span>tension, warp)</span>
+<span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a></span>
+<span id="cb4-5"><a href="#cb4-5" tabindex="-1"></a>new <span class="ot">=</span> <span class="fu">do.call</span>(expand.grid, warp.mylm<span class="sc">$</span>xlev)</span>
+<span id="cb4-6"><a href="#cb4-6" tabindex="-1"></a><span class="fu">cbind</span>(new, <span class="fu">predict</span>(warp.mylm, <span class="at">newdata =</span> new))</span></code></pre></div>
+<pre class="ro"><code>##   wool tension     pred       se
+## 1    A       L       NA       NA
+## 2    B       L 28.22222 3.324365
+## 3    A       M 24.75000 3.526021
+## 4    B       M 25.75000 4.986547
+## 5    A       H 24.55556 3.324365
+## 6    B       H       NA       NA</code></pre>
+</div>
 
 
 

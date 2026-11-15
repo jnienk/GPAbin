@@ -104,7 +104,6 @@ rebib	rebib
 reprompt	reprompt
 RStudio_reprompt	RStudio_reprompt
 S4formals	S4formals
-set_Rdpack_bibstyle	set_Rdpack_bibstyle
 update_aliases_tmp	update_aliases_tmp
 viewRd	viewRd
 vigbib	makeVignetteReference

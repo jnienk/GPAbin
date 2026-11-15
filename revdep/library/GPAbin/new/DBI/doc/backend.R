@@ -107,7 +107,5 @@ setMethod("dbDataType", "KazamConnection", function(dbObj, obj, ...) {
 
 ## -----------------------------------------------------------------------------
 #' @export
-setMethod("dbHasCompleted", "KazamResult", function(res, ...) {
-
-})
+setMethod("dbHasCompleted", "KazamResult", function(res, ...) {})
 

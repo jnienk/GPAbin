@@ -11,6 +11,10 @@ extractForm	formfuns
 findbars	formfuns
 findbars_x	formfuns
 findReTrmClasses	findReTrmClasses
+formatVC	formatVC
+format_corr	format_sdvar
+format_sdvar	format_sdvar
+get_sd	format_sdvar
 inForm	formfuns
 isNested	isNested
 makeOp	formfuns
@@ -19,6 +23,7 @@ nobars	nobars
 nobars_	nobars
 noSpecials	splitForm
 no_specials	no_specials
+randint	randint
 reOnly	formfuns
 replaceForm	formfuns
 RHSForm	RHSForm

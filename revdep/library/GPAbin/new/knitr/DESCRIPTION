@@ -1,7 +1,7 @@
 Package: knitr
 Type: Package
 Title: A General-Purpose Package for Dynamic Report Generation in R
-Version: 1.50
+Version: 1.52
 Authors@R: c(
     person("Yihui", "Xie", role = c("aut", "cre"), email = "xie@yihui.name", comment = c(ORCID = "0000-0003-0645-5666", URL = "https://yihui.org")),
     person("Abhraneel", "Sarma", role = "ctb"),
@@ -53,6 +53,7 @@ Authors@R: c(
     person("Jeremy", "Stephens", role = "ctb"),
     person("Jim", "Hester", role = "ctb"),
     person("Joe", "Cheng", role = "ctb"),
+    person("Johan", "Larsson", role = "ctb"),
     person("Johannes", "Ranke", role = "ctb"),
     person("John", "Honaker", role = "ctb"),
     person("John", "Muschelli", role = "ctb"),
@@ -68,6 +69,7 @@ Authors@R: c(
     person(c("Kevin", "K."), "Smith", role = "ctb"),
     person("Kirill", "Mueller", role = "ctb"),
     person("Kohske", "Takahashi", role = "ctb"),
+    person("Leonidas", "Zhak", role = "ctb"),
     person("Lorenz", "Walthert", role = "ctb"),
     person("Lucas", "Gallindo", role = "ctb"),
     person("Marius", "Hofert", role = "ctb"),
@@ -115,14 +117,14 @@ Description: Provides a general-purpose tool for dynamic report generation in R
     using Literate Programming techniques.
 Depends: R (>= 3.6.0)
 Imports: evaluate (>= 0.15), highr (>= 0.11), methods, tools, xfun (>=
-        0.51), yaml (>= 2.1.19)
-Suggests: bslib, codetools, DBI (>= 0.4-1), digest, formatR, gifski,
-        gridSVG, htmlwidgets (>= 0.7), jpeg, JuliaCall (>= 0.11.1),
-        magick, litedown, markdown (>= 1.3), png, ragg, reticulate (>=
-        1.4), rgl (>= 0.95.1201), rlang, rmarkdown, sass, showtext,
-        styler (>= 1.2.0), targets (>= 0.6.0), testit, tibble,
-        tikzDevice (>= 0.10), tinytex (>= 0.56), webshot, rstudioapi,
-        svglite
+        0.52), yaml (>= 2.1.19)
+Suggests: bslib, DBI (>= 0.4-1), digest, formatR, gifski, gridSVG,
+        htmlwidgets (>= 0.7), jpeg, JuliaCall (>= 0.11.1), magick,
+        litedown (>= 0.10), otel, otelsdk, png, ragg (>= 1.5.0),
+        reticulate (>= 1.4), rgl (>= 0.95.1201), rlang, rmarkdown,
+        sass, showtext, styler (>= 1.2.0), targets (>= 0.6.0), testit,
+        tibble, tikzDevice (>= 0.10), tinytex (>= 0.56), webshot,
+        rstudioapi, svglite
 License: GPL
 URL: https://yihui.org/knitr/
 BugReports: https://github.com/yihui/knitr/issues
@@ -136,16 +138,16 @@ Collate: 'block.R' 'cache.R' 'citation.R' 'hooks-html.R' 'plot.R'
         'utils.R' 'defaults.R' 'concordance.R' 'engine.R' 'highlight.R'
         'themes.R' 'header.R' 'hooks-asciidoc.R' 'hooks-chunk.R'
         'hooks-extra.R' 'hooks-latex.R' 'hooks-md.R' 'hooks-rst.R'
-        'hooks-textile.R' 'hooks.R' 'output.R' 'package.R' 'pandoc.R'
-        'params.R' 'parser.R' 'pattern.R' 'rocco.R' 'spin.R' 'table.R'
-        'template.R' 'utils-conversion.R' 'utils-rd2html.R'
-        'utils-string.R' 'utils-sweave.R' 'utils-upload.R'
-        'utils-vignettes.R' 'zzz.R'
-RoxygenNote: 7.3.2
+        'hooks-textile.R' 'hooks-typst.R' 'hooks.R' 'otel.R' 'output.R'
+        'package.R' 'pandoc.R' 'params.R' 'parser.R' 'pattern.R'
+        'rocco.R' 'spin.R' 'table.R' 'template.R' 'utils-conversion.R'
+        'utils-rd2html.R' 'utils-string.R' 'utils-sweave.R'
+        'utils-upload.R' 'utils-vignettes.R' 'zzz.R'
+Config/roxygen2/version: 8.1.0
 NeedsCompilation: no
-Packaged: 2025-03-15 00:17:19 UTC; runner
-Author: Yihui Xie [aut, cre] (<https://orcid.org/0000-0003-0645-5666>,
-    https://yihui.org),
+Packaged: 2026-09-05 14:51:05 UTC; yihui
+Author: Yihui Xie [aut, cre] (ORCID: <https://orcid.org/0000-0003-0645-5666>,
+    URL: https://yihui.org),
   Abhraneel Sarma [ctb],
   Adam Vogt [ctb],
   Alastair Andrew [ctb],
@@ -156,7 +158,7 @@ Author: Yihui Xie [aut, cre] (<https://orcid.org/0000-0003-0645-5666>,
   Aron Atkins [ctb],
   Aaron Wolen [ctb],
   Ashley Manton [ctb],
-  Atsushi Yasumoto [ctb] (<https://orcid.org/0000-0002-8335-495X>),
+  Atsushi Yasumoto [ctb] (ORCID: <https://orcid.org/0000-0002-8335-495X>),
   Ben Baumer [ctb],
   Brian Diggs [ctb],
   Brian Zhang [ctb],
@@ -197,6 +199,7 @@ Author: Yihui Xie [aut, cre] (<https://orcid.org/0000-0003-0645-5666>,
   Jeremy Stephens [ctb],
   Jim Hester [ctb],
   Joe Cheng [ctb],
+  Johan Larsson [ctb],
   Johannes Ranke [ctb],
   John Honaker [ctb],
   John Muschelli [ctb],
@@ -212,6 +215,7 @@ Author: Yihui Xie [aut, cre] (<https://orcid.org/0000-0003-0645-5666>,
   Kevin K. Smith [ctb],
   Kirill Mueller [ctb],
   Kohske Takahashi [ctb],
+  Leonidas Zhak [ctb],
   Lorenz Walthert [ctb],
   Lucas Gallindo [ctb],
   Marius Hofert [ctb],
@@ -226,7 +230,8 @@ Author: Yihui Xie [aut, cre] (<https://orcid.org/0000-0003-0645-5666>,
   Niels Richard Hansen [ctb],
   Noam Ross [ctb],
   Obada Mahdi [ctb],
-  Pavel N. Krivitsky [ctb] (<https://orcid.org/0000-0002-9101-3362>),
+  Pavel N. Krivitsky [ctb] (ORCID:
+    <https://orcid.org/0000-0002-9101-3362>),
   Pedro Faria [ctb],
   Qiang Li [ctb],
   Ramnath Vaidyanathan [ctb],
@@ -235,7 +240,7 @@ Author: Yihui Xie [aut, cre] (<https://orcid.org/0000-0003-0645-5666>,
   Rodrigo Copetti [ctb],
   Romain Francois [ctb],
   Ruaridh Williamson [ctb],
-  Sagiru Mati [ctb] (<https://orcid.org/0000-0003-1413-3974>),
+  Sagiru Mati [ctb] (ORCID: <https://orcid.org/0000-0003-1413-3974>),
   Scott Kostyshak [ctb],
   Sebastian Meyer [ctb],
   Sietse Brouwer [ctb],
@@ -252,9 +257,9 @@ Author: Yihui Xie [aut, cre] (<https://orcid.org/0000-0003-0645-5666>,
   Weicheng Zhu [ctb],
   Wush Wu [ctb],
   Zachary Foster [ctb],
-  Zhian N. Kamvar [ctb] (<https://orcid.org/0000-0003-1458-7108>),
+  Zhian N. Kamvar [ctb] (ORCID: <https://orcid.org/0000-0003-1458-7108>),
   Posit Software, PBC [cph, fnd]
 Maintainer: Yihui Xie <xie@yihui.name>
 Repository: CRAN
-Date/Publication: 2025-03-16 09:20:02 UTC
-Built: R 4.5.1; ; 2025-07-14 01:31:36 UTC; windows
+Date/Publication: 2026-09-06 19:10:02 UTC
+Built: R 4.6.2; ; 2026-11-11 03:39:04 UTC; windows

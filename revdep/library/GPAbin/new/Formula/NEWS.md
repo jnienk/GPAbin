@@ -1,3 +1,14 @@
+# Formula 1.2-6
+
+* Code repository changed from R-Forge to Codeberg at:
+  <https://codeberg.org/zeileis/Formula/>
+
+* Added basic altdoc page with overview and documentation at:
+  <https://zeileis.codeberg.page/Formula/>
+
+* Converted the package vignette from `Sweave` to `rmarkdown`.
+
+
 # Formula 1.2-5
 
 * Improve `dot` handling in `model.matrix()` method when setting up the
@@ -114,6 +125,9 @@
 * `vignette("Formula", package = "Formula")` illustrates usage of
   the tools provided by the package and explains the ideas underlying
   its implementation.
+  
+* Excluded `has.intercept()` functionality, rely on standard `terms` attribute
+  instead.
 
 
 # Formula 0.1-3

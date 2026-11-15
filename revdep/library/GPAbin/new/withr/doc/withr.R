@@ -142,21 +142,21 @@ neatest(pi, 2)
 neatest(pi, 4)
 
 ## ----eval = FALSE-------------------------------------------------------------
-#  neat_with <- function(x, sig_digits) {
-#    # imagine lots of code here
-#    withr::with_options(
-#      list(digits = sig_digits),
-#      print(x)
-#    )
-#    # ... and a lot more code here
-#  }
+# neat_with <- function(x, sig_digits) {
+#   # imagine lots of code here
+#   withr::with_options(
+#     list(digits = sig_digits),
+#     print(x)
+#   )
+#   # ... and a lot more code here
+# }
 
 ## ----eval = FALSE-------------------------------------------------------------
-#  neat_local <- function(x, sig_digits) {
-#    withr::local_options(list(digits = sig_digits))
-#    print(x)
-#    # imagine lots of code here
-#  }
+# neat_local <- function(x, sig_digits) {
+#   withr::local_options(list(digits = sig_digits))
+#   print(x)
+#   # imagine lots of code here
+# }
 
 ## -----------------------------------------------------------------------------
 library(withr)
@@ -175,10 +175,10 @@ deferred_run()
 pi
 
 ## ----eval = FALSE-------------------------------------------------------------
-#  defer(print("hi"))
-#  #> Setting global deferred event(s).
-#  #> i These will be run:
-#  #>   * Automatically, when the R session ends.
-#  #>   * On demand, if you call `withr::deferred_run()`.
-#  #> i Use `withr::deferred_clear()` to clear them without executing.
+# defer(print("hi"))
+# #> Setting global deferred event(s).
+# #> i These will be run:
+# #>   * Automatically, when the R session ends.
+# #>   * On demand, if you call `withr::deferred_run()`.
+# #> i Use `withr::deferred_clear()` to clear them without executing.
 

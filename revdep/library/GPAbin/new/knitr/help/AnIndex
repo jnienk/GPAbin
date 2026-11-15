@@ -24,6 +24,7 @@ hooks_markdown	output_hooks
 hooks_rst	output_hooks
 hooks_sweave	output_hooks
 hooks_textile	output_hooks
+hooks_typst	output_hooks
 hook_ffmpeg_html	hook_animation
 hook_gifski	hook_animation
 hook_mogrify	chunk_hook
@@ -37,6 +38,7 @@ hook_plot_md	hook_plot
 hook_plot_rst	hook_plot
 hook_plot_tex	hook_plot
 hook_plot_textile	hook_plot
+hook_plot_typst	hook_plot
 hook_pngquant	chunk_hook
 hook_purl	chunk_hook
 hook_r2swf	hook_animation
@@ -95,6 +97,7 @@ pat_rnw	pat_fun
 pat_rst	pat_fun
 pat_tex	pat_fun
 pat_textile	pat_fun
+pat_typst	pat_fun
 plot_crop	plot_crop
 purl	knit
 rand_seed	rand_seed
@@ -113,6 +116,7 @@ render_markdown	output_hooks
 render_rst	output_hooks
 render_sweave	output_hooks
 render_textile	output_hooks
+render_typst	output_hooks
 restore_raw_output	raw_output
 rnw2pdf	rnw2pdf
 rocco	rocco

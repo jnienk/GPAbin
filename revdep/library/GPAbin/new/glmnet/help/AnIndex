@@ -23,13 +23,10 @@ coef.glmnet	predict.glmnet
 coef.relaxed	predict.glmnet
 coefnorm	glmnet-internal
 confusion.glmnet	assess.glmnet
-cox.fit	cox.fit
-cox.path	cox.path
 CoxExample	CoxExample
 coxgrad	coxgrad
-coxnet	glmnet-internal
+coxnet	coxnet
 coxnet.deviance	coxnet.deviance
-cox_obj_function	cox_obj_function
 cv.coxnet	glmnet-internal
 cv.elnet	glmnet-internal
 cv.fishnet	glmnet-internal
@@ -55,7 +52,6 @@ getcoef.multinomial	glmnet-internal
 getmin	glmnet-internal
 getOptcv.glmnet	glmnet-internal
 getOptcv.relaxed	glmnet-internal
-get_cox_lambda_max	get_cox_lambda_max
 get_eta	get_eta
 get_start	get_start
 glmnet	glmnet
@@ -119,7 +115,6 @@ SparseExample	SparseExample
 stratifySurv	stratifySurv
 survfit.coxnet	survfit.coxnet
 survfit.cv.glmnet	survfit.cv.glmnet
-use.cox.path	use.cox.path
 weighted_mean_sd	weighted_mean_sd
 x	beta_CVX
 y	beta_CVX

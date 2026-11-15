@@ -1,4 +1,3 @@
-multcompView-package	multcompView-package
 extract_p	extract_p
 extract_p.default	extract_p
 extract_p.mc	extract_p
@@ -9,7 +8,6 @@ multcompLetters2	multcompLetters
 multcompLetters3	multcompLetters
 multcompLetters4	multcompLetters
 multcompTs	multcompTs
-multcompView	multcompView-package
 plot.multcomp	plot.multcompLetters
 plot.multcompLetters	plot.multcompLetters
 plot.multcompTs	plot.multcompTs

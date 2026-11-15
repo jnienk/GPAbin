@@ -1,5 +1,22 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# tibble 3.3.1
+
+## Chore
+
+- Remove deprecated `vctrs::partial_factor()` and `vctrs::partial_frame()` references (#1678, #1680).
+
+- Avoid use of `SET_OBJECT()`, `ATTRIB()` and `SET_ATTRIB()` (#1671).
+
+- Spring Cleaning (@Layalchristine24, #1643, #1644).
+
+- Use Quarto-style formatting in vignettes.
+
+## Documentation
+
+- Posit as copyright holder.
+
+
 # tibble 3.3.0
 
 ## Bug fixes
@@ -57,13 +74,13 @@
 - Deprecated functions and arguments where we could not detect usage by other CRAN packages (#1515):
 
     - `data_frame_()`, `lst_()`, `frame_data()`
-    
+
     - `as_tibble(validate = )`, `as_tibble(NULL)`, `new_tibble(subclass = )`
-    
+
     - `add_row()` and `add_column()` for non-data-frame input
-    
+
     - `add_column()` for input with non-unique names
-    
+
     - corner cases for `tbl[[x]]`
 
 - Breaking change: Remove `knit_print.trunc_mat()` method (#1516).
@@ -175,7 +192,7 @@
 
 ## Bug fixes
 
-- `tbl[row, col] <- rhs` treats an all-`NA` logical vector as a missing value both for existing data (#773) and for the right-hand side value (#868). This means that a column initialized with `NA` (of type `logical`) will change its type when a row is updated to a value of a different type. 
+- `tbl[row, col] <- rhs` treats an all-`NA` logical vector as a missing value both for existing data (#773) and for the right-hand side value (#868). This means that a column initialized with `NA` (of type `logical`) will change its type when a row is updated to a value of a different type.
 - `[[<-()` supports symbols (#893).
 
 ## Features

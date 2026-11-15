@@ -1,5 +1,8 @@
-({library(vroom); library(dplyr)})
-x <- vroom_fwf(file, fields, col_types = types, altrep_opts = FALSE)
+({
+  library(vroom)
+  library(dplyr)
+})
+x <- vroom_fwf(file, fields, col_types = types, altrep = FALSE)
 print(x)
 a <- head(x)
 b <- tail(x)

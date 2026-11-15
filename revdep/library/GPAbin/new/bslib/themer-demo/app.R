@@ -173,8 +173,11 @@ shinyApp(
               "danger",
               "Danger",
               icon(
-                if (packageVersion("fontawesome") >= "0.3")
-                  "triangle-exclamation" else "exclamation-triangle"
+                if (packageVersion("fontawesome") >= "0.3") {
+                  "triangle-exclamation"
+                } else {
+                  "exclamation-triangle"
+                }
               ),
               class = "btn-danger m-2"
             ),
@@ -349,7 +352,7 @@ shinyApp(
       br(),
       tags$p(
         "With the default settings, enabling of box shadows adds a very subtle and
-              barely noticable inner box-shadow to most input widgets. The difference is
+              barely noticeable inner box-shadow to most input widgets. The difference is
               a little more obvious in a progress bar:"
       ),
       progressBar,
@@ -496,7 +499,9 @@ shinyApp(
     })
 
     output$thematic_needed <- renderUI({
-      if (bslib:::is_installed("thematic")) return(NULL)
+      if (bslib:::is_installed("thematic")) {
+        return(NULL)
+      }
 
       htmltools::HTML(
         "<span class=\"bg-warning\">&nbsp;!! Install the <a href='https://rstudio.github.io/thematic/'><code>thematic</code></a> package to enable auto-theming of static R plots !!&nbsp;</span>"

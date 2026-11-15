@@ -53,7 +53,6 @@ spec	spec
 starts_with	reexports
 vroom	vroom
 vroom_altrep	vroom_altrep
-vroom_altrep_opts	vroom_altrep_opts
 vroom_example	vroom_example
 vroom_examples	vroom_example
 vroom_format	vroom_format

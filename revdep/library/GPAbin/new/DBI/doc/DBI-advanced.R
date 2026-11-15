@@ -20,10 +20,10 @@ library(DBI)
 
 con <- dbConnect(
   RMariaDB::MariaDB(),
-  host = "db.relational-data.org",
+  host = "relational.fel.cvut.cz",
   port = 3306,
   username = "guest",
-  password = "relational",
+  password = "ctu-relational",
   dbname = "sakila"
 )
 
@@ -177,6 +177,7 @@ dbReadTable(con, "cash")
 dbReadTable(con, "account")
 
 ## ----error = TRUE-------------------------------------------------------------
+try({
 withdraw_safely <- function(amount) {
   dbWithTransaction(con, {
     withdraw(amount)
@@ -189,6 +190,7 @@ withdraw_safely <- function(amount) {
 withdraw_safely(5000)
 dbReadTable(con, "cash")
 dbReadTable(con, "account")
+})
 
 ## -----------------------------------------------------------------------------
 dbDisconnect(con)
