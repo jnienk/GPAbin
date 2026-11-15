@@ -252,7 +252,10 @@ base graphics.
 
 ``` r
 
-missbp <- plot(missbp, title = "GPAbin biplot", CLP.col = "#DCAA5F", Z.col = "#9686AA")
+missbp <- plot(missbp, 
+               title = "GPAbin biplot", 
+               CLP.col = "#DCAA5F", 
+               Z.col = "#9686AA")
 ```
 
 ![](GPAbin_files/figure-html/plot-1.png)
@@ -275,7 +278,10 @@ carries exactly the same information.
 
 ``` r
 
-missbp |> plot(engine = "base", title = "GPAbin biplot", CLP.col = "#DCAA5F", Z.col = "#9686AA")
+missbp |> plot(engine = "base", 
+               title = "GPAbin biplot", 
+               CLP.col = "#DCAA5F", 
+               Z.col = "#9686AA")
 #> [1] "Missing data with a total of 21 % missing values."
 ```
 
@@ -306,10 +312,17 @@ studies or examples like this one.
 
 ``` r
 
-missbp <- evalMeas(missbp, compdat = compdat)
-missbp$tab
-#> NULL
+missbp <- evaluation(missbp, compdat = compdat)
+missbp$eval.tab
 ```
+
+|      | Evaluation measures |
+|:-----|--------------------:|
+| 1-PS |              0.8089 |
+| SP   |              0.8581 |
+| RPR  |              0.4914 |
+| AMB  |              0.2100 |
+| RMSB |              0.2963 |
 
 The table contains five measures:
 
@@ -319,9 +332,8 @@ The table contains five measures:
 - **SP** (similarity proportion): the proportion of all responses for
   which the category predicted from the GPAbin biplot equals the
   category in the complete data. Observed responses are kept as they
-  are, so they count as correct by construction (here 79% of all cells).
-  Only the missing cells are actually predicted. Again, values close to
-  1 are good.
+  are, so they count as correct by construction. Only the missing cells
+  are actually predicted. Again, values close to 1 are good.
 - **RPR** (response profile recovery): the proportion of respondents
   whose *entire* response profile is recovered correctly. This is a much
   stricter criterion than SP, with values close to 1 again reflecting

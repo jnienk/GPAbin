@@ -21,7 +21,7 @@
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
 
 
-    <nav class="navbar navbar-expand-lg fixed-top bg-#DCAA5F" data-bs-theme="dark" aria-label="Site navigation"><div class="container">
+    <nav class="navbar navbar-expand-lg fixed-top bg-light" data-bs-theme="light" aria-label="Site navigation"><div class="container">
 
     <a class="navbar-brand me-2" href="../index.html">GPAbin</a>
 
@@ -389,7 +389,10 @@ to align to a particular reference configuration.</p>
 <code>ggplot2</code>; use <code>engine = "base"</code> for base
 graphics.</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">missbp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">missbp</span>, title <span class="op">=</span> <span class="st">"GPAbin biplot"</span>, CLP.col <span class="op">=</span> <span class="st">"#DCAA5F"</span>, Z.col <span class="op">=</span> <span class="st">"#9686AA"</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">missbp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">missbp</span>, </span>
+<span>               title <span class="op">=</span> <span class="st">"GPAbin biplot"</span>, </span>
+<span>               CLP.col <span class="op">=</span> <span class="st">"#DCAA5F"</span>, </span>
+<span>               Z.col <span class="op">=</span> <span class="st">"#9686AA"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="GPAbin_files/figure-html/plot-1.png" class="r-plt" alt="" width="576" style="display: block; margin: auto;"></p>
 <p>Dark points are respondents; gold squares are the category level
 points, labelled <code>variable:level</code>. A respondent tends to have
@@ -407,7 +410,10 @@ plot stored in <code>missbp$plot</code>.</p>
 <h3 id="base-graphics">Base graphics<a class="anchor" aria-label="anchor" href="#base-graphics"></a>
 </h3>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">missbp</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span>engine <span class="op">=</span> <span class="st">"base"</span>, title <span class="op">=</span> <span class="st">"GPAbin biplot"</span>, CLP.col <span class="op">=</span> <span class="st">"#DCAA5F"</span>, Z.col <span class="op">=</span> <span class="st">"#9686AA"</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">missbp</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span>engine <span class="op">=</span> <span class="st">"base"</span>, </span>
+<span>               title <span class="op">=</span> <span class="st">"GPAbin biplot"</span>, </span>
+<span>               CLP.col <span class="op">=</span> <span class="st">"#DCAA5F"</span>, </span>
+<span>               Z.col <span class="op">=</span> <span class="st">"#9686AA"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] "Missing data with a total of 21 % missing values."</span></span></code></pre></div>
 <p><img src="GPAbin_files/figure-html/biplfig-1.png" class="r-plt" alt="" width="75%" style="display: block; margin: auto;"></p>
 </div>
@@ -434,9 +440,36 @@ through <code>compdat</code>, and compares it with the GPAbin biplot.
 This is only possible for simulation studies or examples like this
 one.</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">missbp</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/evaluation.html">evalMeas</a></span><span class="op">(</span><span class="va">missbp</span>, compdat <span class="op">=</span> <span class="va">compdat</span><span class="op">)</span></span>
-<span><span class="va">missbp</span><span class="op">$</span><span class="va">tab</span></span>
-<span><span class="co">#&gt; NULL</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">missbp</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/evaluation.html">evaluation</a></span><span class="op">(</span><span class="va">missbp</span>, compdat <span class="op">=</span> <span class="va">compdat</span><span class="op">)</span></span>
+<span><span class="va">missbp</span><span class="op">$</span><span class="va">eval.tab</span></span></code></pre></div>
+<table class="table">
+<thead><tr class="header">
+<th align="left"></th>
+<th align="right">Evaluation measures</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">1-PS</td>
+<td align="right">0.8089</td>
+</tr>
+<tr class="even">
+<td align="left">SP</td>
+<td align="right">0.8581</td>
+</tr>
+<tr class="odd">
+<td align="left">RPR</td>
+<td align="right">0.4914</td>
+</tr>
+<tr class="even">
+<td align="left">AMB</td>
+<td align="right">0.2100</td>
+</tr>
+<tr class="odd">
+<td align="left">RMSB</td>
+<td align="right">0.2963</td>
+</tr>
+</tbody>
+</table>
 <p>The table contains five measures:</p>
 <ul>
 <li>
@@ -447,9 +480,8 @@ possible rotation. Values close to 1 are good.</li>
 <strong>SP</strong> (similarity proportion): the proportion of all
 responses for which the category predicted from the GPAbin biplot equals
 the category in the complete data. Observed responses are kept as they
-are, so they count as correct by construction (here 79% of all cells).
-Only the missing cells are actually predicted. Again, values close to 1
-are good.</li>
+are, so they count as correct by construction. Only the missing cells
+are actually predicted. Again, values close to 1 are good.</li>
 <li>
 <strong>RPR</strong> (response profile recovery): the proportion of
 respondents whose <em>entire</em> response profile is recovered
