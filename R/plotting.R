@@ -36,7 +36,7 @@ plot.missmi <- function (missbp, engine = c("ggplot2", "base"), Z.col = "#61223b
 { 
   engine <- match.arg(engine)
   if (engine == "ggplot2") {
-      return(ggbiplFig(missbp, Z.col = "#61223b", CLP.col = "#b79962", 
+      return(ggbiplFig(missbp, Z.col = Z.col, CLP.col = CLP.col, 
                         Z.pch = 19, CLP.pch = 15, title = title))
   }
   

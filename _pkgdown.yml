@@ -1,4 +1,9 @@
 url: https://jnienk.github.io/GPAbin/
 template:
   bootstrap: 5
+    bslib:
+    primary: "#4E386E"
+    link-color: "#9686AA"
+navbar:
+  bg: "#DCAA5F"
 

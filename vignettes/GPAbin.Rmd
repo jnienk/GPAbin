@@ -1,6 +1,6 @@
 ---
 title: "Getting started with GPAbin"
-author: "Claude and Johané Nienkemper-Swanepoel"
+author: "Johané Nienkemper-Swanepoel and Claude"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
@@ -214,7 +214,10 @@ Four new elements are added to the object:
 To see what GPA did, we plot the category level points of all five imputations
 (first two dimensions, one colour per imputation) before and after alignment.
 
-```{r before-after-plot, fig.height = 4.5}
+```{r before-after-plot, fig.height = 4.5, echo=FALSE}
+
+gpabin_cols <- c("#4E386E", "#DCAA5F", "#4F9DA6", "#D9728A", "#9686AA")
+
 stack_clps <- function(clp_list, stage) {
   do.call(rbind, lapply(seq_along(clp_list), function(i) {
     data.frame(Dim1 = clp_list[[i]][, 1],
@@ -226,7 +229,7 @@ stack_clps <- function(clp_list, stage) {
 }
 
 clps <- rbind(
-  stack_clps(missbp$CLP,          "Before GPA"),
+  stack_clps(missbp$CLP, "Before GPA"),
   stack_clps(missbp$CLP.GPA.list, "After GPA")
 )
 clps$stage <- factor(clps$stage, levels = c("Before GPA", "After GPA"))
@@ -235,7 +238,7 @@ ggplot(clps, aes(Dim1, Dim2, colour = imputation)) +
   geom_point(size = 1.8) +
   facet_wrap(~ stage) +
   coord_fixed() +
-  scale_colour_brewer(palette = "Set2") +
+  scale_colour_manual(values = gpabin_cols) +
   labs(colour = "Imputation") +
   theme_void()
 ```
@@ -256,7 +259,7 @@ reference configuration.
 `engine = "base"` for base graphics.
 
 ```{r plot, fig.height = 6.5}
-missbp <- plot(missbp, title = "GPAbin biplot")
+missbp <- plot(missbp, title = "GPAbin biplot", CLP.col = "#DCAA5F", Z.col = "#9686AA")
 ```
 
 Dark points are respondents; gold squares are the category level points,
@@ -269,28 +272,26 @@ centre of the display, so age is only weakly related to the attitude
 responses. Take note: the orientation of a biplot is arbitrary: a mirrored or rotated
 version carries exactly the same information.
 
-`plot()` returns the `missmi` object with the plot stored in `missbp$plot`, so
-you can add to it like any other `ggplot` object:
+`plot()` returns the `missmi` object with the plot stored in `missbp$plot`.
 
-```{r plot-custom, eval = FALSE}
-missbp$plot + labs(subtitle = "Five imputations, aligned with GPA")
-```
 
 ### Base graphics
 
 ```{r biplfig, fig.show = "hold", out.width = "75%"}
-missbp |> plot(engine = "base", title = "GPAbin biplot")
+missbp |> plot(engine = "base", title = "GPAbin biplot", CLP.col = "#DCAA5F", Z.col = "#9686AA")
 ```
 
 ### ggplot2
 
-```{r ggbiplfig}
-missbp <- missbp |> plot() |> evaluation(compdat = compdat)
+Because these are ordinary `ggplot` objects, you can customise them further
+with the usual `ggplot2` layers and themes:
+
+```{r plot-custom}
+missbp$plot + 
+  labs(subtitle = "Five imputations, aligned with GPA") + 
+  theme_minimal()
 ```
 
-
-Because these are ordinary `ggplot` objects, you can customise them further
-with the usual `ggplot2` layers and themes.
 
 ## Step 6 (optional): evaluating against the complete data
 
@@ -355,9 +356,9 @@ ggplot(overlay) +
   geom_segment(aes(x = cx, y = cy, xend = gx, yend = gy),
                colour = "grey60") +
   geom_point(aes(cx, cy, shape = "Complete data"),
-             colour = "#61223b", size = 2.5) +
+             colour = "#4F9DA6", size = 2.5) +
   geom_point(aes(gx, gy, shape = "GPAbin"),
-             colour = "#b79962", size = 3) +
+             colour = "#9686AA", size = 3) +
   ggrepel::geom_text_repel(aes(cx, cy, label = level), size = 3) +
   scale_shape_manual(name = NULL,
                      values = c("Complete data" = 16, "GPAbin" = 15)) +
