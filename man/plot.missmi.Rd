@@ -3,7 +3,7 @@
 \name{plot.missmi}
 \alias{plot.missmi}
 \alias{biplFig}
-\title{Biplot function}
+\title{Biplot plotting function}
 \usage{
 \method{plot}{missmi}(
   x,
