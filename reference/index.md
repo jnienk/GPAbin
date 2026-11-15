@@ -27,6 +27,6 @@
   First step before constructing unified biplots
 - [`plot(`*`<missmi>`*`)`](https://jnienk.github.io/GPAbin/reference/plot.missmi.md)
   [`biplFig()`](https://jnienk.github.io/GPAbin/reference/plot.missmi.md)
-  : Biplot function
+  : Biplot plotting function
 - [`print(`*`<missmi>`*`)`](https://jnienk.github.io/GPAbin/reference/print.missmi.md)
   : Generic print function for objects of class missmi

@@ -318,11 +318,11 @@ missbp$eval.tab
 
 |      | Evaluation measures |
 |:-----|--------------------:|
-| 1-PS |              0.8033 |
-| SP   |              0.8592 |
+| 1-PS |              0.8005 |
+| SP   |              0.8583 |
 | RPR  |              0.4994 |
-| AMB  |              0.2313 |
-| RMSB |              0.3133 |
+| AMB  |              0.1951 |
+| RMSB |              0.2813 |
 
 The table contains five measures:
 

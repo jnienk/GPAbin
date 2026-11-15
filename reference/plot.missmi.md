@@ -1,4 +1,4 @@
-# Biplot function
+# Biplot plotting function
 
 Creates a multiple correspondence analysis (MCA) biplot `biplFig()` was
 renamed to [`plot()`](https://rdrr.io/r/graphics/plot.default.html).
