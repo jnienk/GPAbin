@@ -10,6 +10,10 @@
 
   - `plot` is used in the place of `biplFig`.
 
+    - The first argument of `plot` is now `x`, for consistency with the
+      generic [`plot()`](https://rdrr.io/r/graphics/plot.default.html)
+      function. This argument is typically not explicitly called.
+
 - A vignette has been added that walks through the full workflow.
 
 ## GPAbin 1.1.1

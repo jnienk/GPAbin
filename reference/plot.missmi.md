@@ -1,14 +1,14 @@
 # Biplot function
 
-`biplFig()` was renamed to
-[`plot()`](https://rdrr.io/r/graphics/plot.default.html).
+Creates a multiple correspondence analysis (MCA) biplot `biplFig()` was
+renamed to [`plot()`](https://rdrr.io/r/graphics/plot.default.html).
 
 ## Usage
 
 ``` r
 # S3 method for class 'missmi'
 plot(
-  missbp,
+  x,
   engine = c("ggplot2", "base"),
   Z.col = "#61223b",
   CLP.col = "#b79962",
@@ -21,7 +21,7 @@ plot(
 )
 
 biplFig(
-  missbp,
+  x,
   engine = c("ggplot2", "base"),
   Z.col = "#61223b",
   CLP.col = "#b79962",
@@ -36,9 +36,9 @@ biplFig(
 
 ## Arguments
 
-- missbp:
+- x:
 
-  An object of class `missbp` obtained from preceding function
+  An object of class `missmi`, obtained from preceding function
   [`missmi()`](https://jnienk.github.io/GPAbin/reference/missmi.md).
 
 - engine:
@@ -74,30 +74,38 @@ biplFig(
 
   Title of the GPAbin biplot.
 
+- ...:
+
+  additional arguments.
+
 ## Value
 
 - If `compdat = NULL` in
-  [`evalMeas`](https://jnienk.github.io/GPAbin/reference/evaluation.md),
+  [`evaluation`](https://jnienk.github.io/GPAbin/reference/evaluation.md),
   only a GPAbin biplot will be constructed.
 
 - If a complete data set (`compdat`) was specified in
-  [`evalMeas`](https://jnienk.github.io/GPAbin/reference/evaluation.md),
+  [`evaluation`](https://jnienk.github.io/GPAbin/reference/evaluation.md),
   two biplots will be constructed: (1) Complete MCA biplot and (2)
   GPAbin biplot.
-
-## Details
-
-Creates a multiple correspondence analysis (MCA) biplot
 
 ## Examples
 
 ``` r
 data(implist)
-missbp <- missmi(implist)|> DRT() |> GPAbin() |> plot(title = "GPAbin biplot")
-
 data(compdat)
-missmi(implist) |> DRT() |> GPAbin() |> evalMeas(compdat=compdat) |> plot()
+missbp <- missmi(implist)|> DRT() |> GPAbin() |> 
+evaluation(compdat = compdat) |> plot()
 
 
-#> [1] "There are 5 imputations / variations of your data available."
+
+### GPAbin biplot
+
+missbp$plot
+
+
+### MCA biplot
+
+missbp$plotC
+
 ```
