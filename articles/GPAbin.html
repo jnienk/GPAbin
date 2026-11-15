@@ -21,7 +21,7 @@
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
 
 
-    <nav class="navbar navbar-expand-lg fixed-top bg-light" data-bs-theme="light" aria-label="Site navigation"><div class="container">
+    <nav class="navbar navbar-expand-lg fixed-top bg-#DCAA5F" data-bs-theme="dark" aria-label="Site navigation"><div class="container">
 
     <a class="navbar-brand me-2" href="../index.html">GPAbin</a>
 
@@ -56,10 +56,10 @@
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Getting started with GPAbin</h1>
-                        <h4 data-toc-skip class="author">Claude and
-Johané Nienkemper-Swanepoel</h4>
+                        <h4 data-toc-skip class="author">Johané
+Nienkemper-Swanepoel and Claude</h4>
             
-            <h4 data-toc-skip class="date">2026-11-14</h4>
+            <h4 data-toc-skip class="date">2026-11-15</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/jnienk/GPAbin/blob/main/vignettes/GPAbin.Rmd" class="external-link"><code>vignettes/GPAbin.Rmd</code></a></small>
       <div class="d-none name"><code>GPAbin.Rmd</code></div>
@@ -372,30 +372,6 @@ for the GPAbin biplot</td>
 <p>To see what GPA did, we plot the category level points of all five
 imputations (first two dimensions, one colour per imputation) before and
 after alignment.</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">stack_clps</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">clp_list</span>, <span class="va">stage</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/base/do.call.html" class="external-link">do.call</a></span><span class="op">(</span><span class="va">rbind</span>, <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_along</a></span><span class="op">(</span><span class="va">clp_list</span><span class="op">)</span>, <span class="kw">function</span><span class="op">(</span><span class="va">i</span><span class="op">)</span> <span class="op">{</span></span>
-<span>    <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>Dim1 <span class="op">=</span> <span class="va">clp_list</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span><span class="op">[</span>, <span class="fl">1</span><span class="op">]</span>,</span>
-<span>               Dim2 <span class="op">=</span> <span class="va">clp_list</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span><span class="op">[</span>, <span class="fl">2</span><span class="op">]</span>,</span>
-<span>               level <span class="op">=</span> <span class="va">missbp</span><span class="op">$</span><span class="va">lvls</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span>,</span>
-<span>               imputation <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">i</span><span class="op">)</span>,</span>
-<span>               stage <span class="op">=</span> <span class="va">stage</span><span class="op">)</span></span>
-<span>  <span class="op">}</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="op">}</span></span>
-<span></span>
-<span><span class="va">clps</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind</a></span><span class="op">(</span></span>
-<span>  <span class="fu">stack_clps</span><span class="op">(</span><span class="va">missbp</span><span class="op">$</span><span class="va">CLP</span>,          <span class="st">"Before GPA"</span><span class="op">)</span>,</span>
-<span>  <span class="fu">stack_clps</span><span class="op">(</span><span class="va">missbp</span><span class="op">$</span><span class="va">CLP.GPA.list</span>, <span class="st">"After GPA"</span><span class="op">)</span></span>
-<span><span class="op">)</span></span>
-<span><span class="va">clps</span><span class="op">$</span><span class="va">stage</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">clps</span><span class="op">$</span><span class="va">stage</span>, levels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Before GPA"</span>, <span class="st">"After GPA"</span><span class="op">)</span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu">ggplot</span><span class="op">(</span><span class="va">clps</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">Dim1</span>, <span class="va">Dim2</span>, colour <span class="op">=</span> <span class="va">imputation</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu">geom_point</span><span class="op">(</span>size <span class="op">=</span> <span class="fl">1.8</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu">facet_wrap</span><span class="op">(</span><span class="op">~</span> <span class="va">stage</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu">coord_fixed</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu">scale_colour_brewer</span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"Set2"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu">labs</span><span class="op">(</span>colour <span class="op">=</span> <span class="st">"Imputation"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu">theme_void</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p><img src="GPAbin_files/figure-html/before-after-plot-1.png" class="r-plt" alt="" width="576" style="display: block; margin: auto;"></p>
 <p>On the left, the five MCA solutions are scattered: every imputation
 produced a differently rotated or reflected picture, so a simple average
@@ -412,8 +388,8 @@ to align to a particular reference configuration.</p>
 <p><code><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot()</a></code> draws the GPAbin biplot. By default it uses
 <code>ggplot2</code>; use <code>engine = "base"</code> for base
 graphics.</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">missbp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">missbp</span>, title <span class="op">=</span> <span class="st">"GPAbin biplot"</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">missbp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">missbp</span>, title <span class="op">=</span> <span class="st">"GPAbin biplot"</span>, CLP.col <span class="op">=</span> <span class="st">"#DCAA5F"</span>, Z.col <span class="op">=</span> <span class="st">"#9686AA"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="GPAbin_files/figure-html/plot-1.png" class="r-plt" alt="" width="576" style="display: block; margin: auto;"></p>
 <p>Dark points are respondents; gold squares are the category level
 points, labelled <code>variable:level</code>. A respondent tends to have
@@ -426,27 +402,26 @@ the centre of the display, so age is only weakly related to the attitude
 responses. Take note: the orientation of a biplot is arbitrary: a
 mirrored or rotated version carries exactly the same information.</p>
 <p><code><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot()</a></code> returns the <code>missmi</code> object with the
-plot stored in <code>missbp$plot</code>, so you can add to it like any
-other <code>ggplot</code> object:</p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">missbp</span><span class="op">$</span><span class="va">plot</span> <span class="op">+</span> <span class="fu">labs</span><span class="op">(</span>subtitle <span class="op">=</span> <span class="st">"Five imputations, aligned with GPA"</span><span class="op">)</span></span></code></pre></div>
+plot stored in <code>missbp$plot</code>.</p>
 <div class="section level3">
 <h3 id="base-graphics">Base graphics<a class="anchor" aria-label="anchor" href="#base-graphics"></a>
 </h3>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">missbp</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span>engine <span class="op">=</span> <span class="st">"base"</span>, title <span class="op">=</span> <span class="st">"GPAbin biplot"</span><span class="op">)</span></span>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">missbp</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span>engine <span class="op">=</span> <span class="st">"base"</span>, title <span class="op">=</span> <span class="st">"GPAbin biplot"</span>, CLP.col <span class="op">=</span> <span class="st">"#DCAA5F"</span>, Z.col <span class="op">=</span> <span class="st">"#9686AA"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] "Missing data with a total of 21 % missing values."</span></span></code></pre></div>
 <p><img src="GPAbin_files/figure-html/biplfig-1.png" class="r-plt" alt="" width="75%" style="display: block; margin: auto;"></p>
 </div>
 <div class="section level3">
 <h3 id="ggplot2">ggplot2<a class="anchor" aria-label="anchor" href="#ggplot2"></a>
 </h3>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">missbp</span> <span class="op">&lt;-</span> <span class="va">missbp</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/evaluation.html">evaluation</a></span><span class="op">(</span>compdat <span class="op">=</span> <span class="va">compdat</span><span class="op">)</span></span></code></pre></div>
-<p><img src="GPAbin_files/figure-html/ggbiplfig-1.png" class="r-plt" alt="" width="576" style="display: block; margin: auto;"></p>
 <p>Because these are ordinary <code>ggplot</code> objects, you can
 customise them further with the usual <code>ggplot2</code> layers and
-themes.</p>
+themes:</p>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">missbp</span><span class="op">$</span><span class="va">plot</span> <span class="op">+</span> </span>
+<span>  <span class="fu">labs</span><span class="op">(</span>subtitle <span class="op">=</span> <span class="st">"Five imputations, aligned with GPA"</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu">theme_minimal</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<p><img src="GPAbin_files/figure-html/plot-custom-1.png" class="r-plt" alt="" width="576" style="display: block; margin: auto;"></p>
 </div>
 </div>
 <div class="section level2">
@@ -458,7 +433,7 @@ biplot of the <em>complete</em> data looks like.
 through <code>compdat</code>, and compares it with the GPAbin biplot.
 This is only possible for simulation studies or examples like this
 one.</p>
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">missbp</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/evaluation.html">evalMeas</a></span><span class="op">(</span><span class="va">missbp</span>, compdat <span class="op">=</span> <span class="va">compdat</span><span class="op">)</span></span>
 <span><span class="va">missbp</span><span class="op">$</span><span class="va">tab</span></span>
 <span><span class="co">#&gt; NULL</span></span></code></pre></div>
@@ -514,7 +489,7 @@ imputations yourself, for example with <code>mice</code>, pass the list
 of completed data sets straight to <code><a href="../reference/missmi.html">missmi()</a></code>. A list is
 recognised as “already imputed”, so <code><a href="../reference/impute.html">impute()</a></code> is
 skipped.</p>
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">imp</span> <span class="op">&lt;-</span> <span class="fu">mice</span><span class="fu">::</span><span class="fu"><a href="https://amices.org/mice/reference/mice.html" class="external-link">mice</a></span><span class="op">(</span><span class="va">missdat</span>, m <span class="op">=</span> <span class="fl">5</span>, method <span class="op">=</span> <span class="st">"polyreg"</span>, maxit <span class="op">=</span> <span class="fl">5</span>,</span>
 <span>                  printFlag <span class="op">=</span> <span class="cn">FALSE</span>, seed <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
 <span><span class="va">implist_own</span> <span class="op">&lt;-</span> <span class="fu">mice</span><span class="fu">::</span><span class="fu"><a href="https://tidyr.tidyverse.org/reference/complete.html" class="external-link">complete</a></span><span class="op">(</span><span class="va">imp</span>, <span class="st">"all"</span><span class="op">)</span>   <span class="co"># list of 5 completed data frames</span></span>
@@ -527,7 +502,7 @@ skipped.</p>
 <code>implist</code> (five imputations of it) and <code>compdat</code>
 (the complete data), which are handy for trying out the functions
 quickly:</p>
-<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">implist</span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/missmi.html">missmi</a></span><span class="op">(</span><span class="va">implist</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/DRT.html">DRT</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/GPAbin.html">GPAbin</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/evaluation.html">evaluation</a></span><span class="op">(</span>compdat <span class="op">=</span> <span class="va">compdat</span><span class="op">)</span></span></code></pre></div>
 </div>

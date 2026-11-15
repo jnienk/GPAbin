@@ -232,33 +232,6 @@ To see what GPA did, we plot the category level points of all five
 imputations (first two dimensions, one colour per imputation) before and
 after alignment.
 
-``` r
-
-stack_clps <- function(clp_list, stage) {
-  do.call(rbind, lapply(seq_along(clp_list), function(i) {
-    data.frame(Dim1 = clp_list[[i]][, 1],
-               Dim2 = clp_list[[i]][, 2],
-               level = missbp$lvls[[i]],
-               imputation = factor(i),
-               stage = stage)
-  }))
-}
-
-clps <- rbind(
-  stack_clps(missbp$CLP,          "Before GPA"),
-  stack_clps(missbp$CLP.GPA.list, "After GPA")
-)
-clps$stage <- factor(clps$stage, levels = c("Before GPA", "After GPA"))
-
-ggplot(clps, aes(Dim1, Dim2, colour = imputation)) +
-  geom_point(size = 1.8) +
-  facet_wrap(~ stage) +
-  coord_fixed() +
-  scale_colour_brewer(palette = "Set2") +
-  labs(colour = "Imputation") +
-  theme_void()
-```
-
 ![](GPAbin_files/figure-html/before-after-plot-1.png)
 
 On the left, the five MCA solutions are scattered: every imputation
@@ -279,7 +252,7 @@ base graphics.
 
 ``` r
 
-missbp <- plot(missbp, title = "GPAbin biplot")
+missbp <- plot(missbp, title = "GPAbin biplot", CLP.col = "#DCAA5F", Z.col = "#9686AA")
 ```
 
 ![](GPAbin_files/figure-html/plot-1.png)
@@ -296,19 +269,13 @@ orientation of a biplot is arbitrary: a mirrored or rotated version
 carries exactly the same information.
 
 [`plot()`](https://rdrr.io/r/graphics/plot.default.html) returns the
-`missmi` object with the plot stored in `missbp$plot`, so you can add to
-it like any other `ggplot` object:
-
-``` r
-
-missbp$plot + labs(subtitle = "Five imputations, aligned with GPA")
-```
+`missmi` object with the plot stored in `missbp$plot`.
 
 ### Base graphics
 
 ``` r
 
-missbp |> plot(engine = "base", title = "GPAbin biplot")
+missbp |> plot(engine = "base", title = "GPAbin biplot", CLP.col = "#DCAA5F", Z.col = "#9686AA")
 #> [1] "Missing data with a total of 21 % missing values."
 ```
 
@@ -316,15 +283,17 @@ missbp |> plot(engine = "base", title = "GPAbin biplot")
 
 ### ggplot2
 
+Because these are ordinary `ggplot` objects, you can customise them
+further with the usual `ggplot2` layers and themes:
+
 ``` r
 
-missbp <- missbp |> plot() |> evaluation(compdat = compdat)
+missbp$plot + 
+  labs(subtitle = "Five imputations, aligned with GPA") + 
+  theme_minimal()
 ```
 
-![](GPAbin_files/figure-html/ggbiplfig-1.png)
-
-Because these are ordinary `ggplot` objects, you can customise them
-further with the usual `ggplot2` layers and themes.
+![](GPAbin_files/figure-html/plot-custom-1.png)
 
 ## Step 6 (optional): evaluating against the complete data
 
