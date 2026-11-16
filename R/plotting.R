@@ -27,6 +27,10 @@
 #'  
 #' @examples
 #' data(implist)
+#' missbp <- missmi(implist)|> DRT() |> GPAbin() |> plot()
+#' 
+#' \donttest{
+#' data(implist)
 #' data(compdat)
 #' missbp <- missmi(implist)|> DRT() |> GPAbin() |> 
 #' evaluation(compdat = compdat) |> plot()
@@ -37,7 +41,7 @@
 #' 
 #' ### MCA biplot
 #' 
-#' missbp$plotC
+#' missbp$plotC}
 #' 
 plot.missmi <- function (x, engine = c("ggplot2", "base"), Z.col = "#61223b", 
                          CLP.col = "#b79962", Z.pch = 19, CLP.pch = 15, 

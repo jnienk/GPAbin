@@ -35,7 +35,7 @@ Calculates measures of comparison based on distances between two configurations 
 \donttest{
 data(compdat)
 data(implist)
-missbp <- missmi(implist) |> DRT() |> GPAbin() |> evalMeas(compdat=compdat)
+missbp <- missmi(implist) |> DRT() |> GPAbin() |> evaluation(compdat=compdat)
 missbp$tab}
 
 }

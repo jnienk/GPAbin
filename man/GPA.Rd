@@ -13,7 +13,7 @@ GPA(Xk, G.target = NULL, iter = 500, eps = 0.001)
 
 \item{iter}{Number of iterations allowed before convergence}
 
-\item{eps}{Threshold value for convergence of the alogrithm}
+\item{eps}{Threshold value for convergence of the algorithm}
 }
 \value{
 \item{Xk.F}{List containing the updated testee configurations}

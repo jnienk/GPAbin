@@ -2,8 +2,8 @@
 
 MINOR version release: This version includes the construction of ggplot2 and base plotting biplots. The package is now accompanied by a vignette.
 
-── R CMD check results ─────────────────────────────────────────────────────────────────────── GPAbin 1.1.1 ────
-Duration: 2m 30.4s
+── R CMD check results ────────────────────────────────────────────────────────────────────────────── GPAbin 1.2.0 ────
+Duration: 2m 47.7s
 
 0 errors ✔ | 0 warnings ✔ | 0 notes ✔
 

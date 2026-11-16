@@ -91,7 +91,7 @@ CLPpred <- function (CLPs=CLPs, Zs=Zs, p=p, n=n, lvls=lvls, datIN = datIN)
 #' \donttest{
 #' data(compdat)
 #' data(implist)
-#' missbp <- missmi(implist) |> DRT() |> GPAbin() |> evalMeas(compdat=compdat)
+#' missbp <- missmi(implist) |> DRT() |> GPAbin() |> evaluation(compdat=compdat)
 #' missbp$tab}
 #' 
 #' @seealso \code{\link{missmi}}, \code{\link{impute}}, \code{\link{DRT}},
