@@ -78,7 +78,7 @@ https://doi.org/10.1080/03610918.2021.1914089.
 # \donttest{
 data(compdat)
 data(implist)
-missbp <- missmi(implist) |> DRT() |> GPAbin() |> evalMeas(compdat=compdat)
+missbp <- missmi(implist) |> DRT() |> GPAbin() |> evaluation(compdat=compdat)
 missbp$tab# }
 #> NULL
 ```

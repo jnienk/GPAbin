@@ -27,7 +27,7 @@ GPA(Xk, G.target = NULL, iter = 500, eps = 0.001)
 
 - eps:
 
-  Threshold value for convergence of the alogrithm
+  Threshold value for convergence of the algorithm
 
 ## Value
 

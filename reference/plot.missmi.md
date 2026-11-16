@@ -93,6 +93,11 @@ biplFig(
 
 ``` r
 data(implist)
+missbp <- missmi(implist)|> DRT() |> GPAbin() |> plot()
+
+
+# \donttest{
+data(implist)
 data(compdat)
 missbp <- missmi(implist)|> DRT() |> GPAbin() |> 
 evaluation(compdat = compdat) |> plot()
@@ -106,6 +111,6 @@ missbp$plot
 
 ### MCA biplot
 
-missbp$plotC
+missbp$plotC# }
 
 ```
